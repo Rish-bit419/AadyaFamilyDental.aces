@@ -8,6 +8,12 @@ import About from "./pages/About";
 import Services from "./pages/Services";
 import BookAppointment from "./pages/BookAppointment";
 import Contact from "./pages/Contact";
+import AdminLogin from "./pages/admin/AdminLogin";
+import AdminLayout from "./components/admin/AdminLayout";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminAppointments from "./pages/admin/AdminAppointments";
+import AdminServices from "./pages/admin/AdminServices";
+import AdminSettings from "./pages/admin/AdminSettings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -19,12 +25,23 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
+          {/* Public Routes */}
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
           <Route path="/book-appointment" element={<BookAppointment />} />
           <Route path="/contact" element={<Contact />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          
+          {/* Admin Routes */}
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="appointments" element={<AdminAppointments />} />
+            <Route path="services" element={<AdminServices />} />
+            <Route path="settings" element={<AdminSettings />} />
+          </Route>
+          
+          {/* 404 */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
