@@ -5,8 +5,20 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calendar, Clock, User, Phone, Mail, MessageCircle, CheckCircle } from "lucide-react";
+import { Calendar, User, MessageCircle, CheckCircle, Phone } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { z } from "zod";
+
+const appointmentSchema = z.object({
+  name: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
+  email: z.string().trim().email("Please enter a valid email").optional().or(z.literal("")),
+  phone: z.string().trim().min(10, "Please enter a valid phone number").max(20),
+  service: z.string().min(1, "Please select a service"),
+  date: z.string().min(1, "Please select a date"),
+  time: z.string().min(1, "Please select a time"),
+  message: z.string().max(1000).optional(),
+});
 
 const services = [
   "General Checkup",
@@ -34,6 +46,7 @@ const timeSlots = [
 const BookAppointment = () => {
   const { toast } = useToast();
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -43,31 +56,62 @@ const BookAppointment = () => {
     time: "",
     message: "",
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrors({});
     
     // Validate form
-    if (!formData.name || !formData.phone || !formData.service || !formData.date || !formData.time) {
-      toast({
-        title: "Please fill in all required fields",
-        variant: "destructive",
+    const result = appointmentSchema.safeParse(formData);
+    if (!result.success) {
+      const fieldErrors: Record<string, string> = {};
+      result.error.errors.forEach((error) => {
+        if (error.path[0]) {
+          fieldErrors[error.path[0] as string] = error.message;
+        }
       });
+      setErrors(fieldErrors);
       return;
     }
 
-    // Simulate form submission
-    setIsSubmitted(true);
-    
-    // Create WhatsApp message
-    const whatsappMessage = encodeURIComponent(
-      `Hello! I'd like to book an appointment.\n\nName: ${formData.name}\nPhone: ${formData.phone}\nService: ${formData.service}\nDate: ${formData.date}\nTime: ${formData.time}\n${formData.message ? `Message: ${formData.message}` : ""}`
-    );
-    
-    // Open WhatsApp after a short delay
-    setTimeout(() => {
-      window.open(`https://wa.me/1234567890?text=${whatsappMessage}`, "_blank");
-    }, 2000);
+    setIsLoading(true);
+
+    try {
+      // Save to database
+      const { error } = await supabase.from("appointments").insert({
+        patient_name: formData.name,
+        patient_email: formData.email || null,
+        patient_phone: formData.phone,
+        service_name: formData.service,
+        preferred_date: formData.date,
+        preferred_time: formData.time,
+        message: formData.message || null,
+        status: "pending",
+      });
+
+      if (error) throw error;
+
+      setIsSubmitted(true);
+      
+      // Create WhatsApp message
+      const whatsappMessage = encodeURIComponent(
+        `Hello! I'd like to book an appointment.\n\nName: ${formData.name}\nPhone: ${formData.phone}\nService: ${formData.service}\nDate: ${formData.date}\nTime: ${formData.time}\n${formData.message ? `Message: ${formData.message}` : ""}`
+      );
+      
+      // Open WhatsApp after a short delay
+      setTimeout(() => {
+        window.open(`https://wa.me/1234567890?text=${whatsappMessage}`, "_blank");
+      }, 2000);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to submit appointment. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (isSubmitted) {
@@ -142,8 +186,9 @@ const BookAppointment = () => {
                       placeholder="John Doe"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      required
+                      className={errors.name ? "border-destructive" : ""}
                     />
+                    {errors.name && <p className="text-sm text-destructive">{errors.name}</p>}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="phone">Phone Number *</Label>
@@ -153,8 +198,9 @@ const BookAppointment = () => {
                       placeholder="(123) 456-7890"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      required
+                      className={errors.phone ? "border-destructive" : ""}
                     />
+                    {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
                   </div>
                 </div>
 
@@ -166,7 +212,9 @@ const BookAppointment = () => {
                     placeholder="john@example.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className={errors.email ? "border-destructive" : ""}
                   />
+                  {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
                 </div>
               </div>
 
@@ -183,7 +231,7 @@ const BookAppointment = () => {
                     value={formData.service}
                     onValueChange={(value) => setFormData({ ...formData, service: value })}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className={errors.service ? "border-destructive" : ""}>
                       <SelectValue placeholder="Select a service" />
                     </SelectTrigger>
                     <SelectContent>
@@ -194,6 +242,7 @@ const BookAppointment = () => {
                       ))}
                     </SelectContent>
                   </Select>
+                  {errors.service && <p className="text-sm text-destructive">{errors.service}</p>}
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-6">
@@ -205,8 +254,9 @@ const BookAppointment = () => {
                       value={formData.date}
                       onChange={(e) => setFormData({ ...formData, date: e.target.value })}
                       min={new Date().toISOString().split("T")[0]}
-                      required
+                      className={errors.date ? "border-destructive" : ""}
                     />
+                    {errors.date && <p className="text-sm text-destructive">{errors.date}</p>}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="time">Preferred Time *</Label>
@@ -214,7 +264,7 @@ const BookAppointment = () => {
                       value={formData.time}
                       onValueChange={(value) => setFormData({ ...formData, time: value })}
                     >
-                      <SelectTrigger>
+                      <SelectTrigger className={errors.time ? "border-destructive" : ""}>
                         <SelectValue placeholder="Select time" />
                       </SelectTrigger>
                       <SelectContent>
@@ -225,6 +275,7 @@ const BookAppointment = () => {
                         ))}
                       </SelectContent>
                     </Select>
+                    {errors.time && <p className="text-sm text-destructive">{errors.time}</p>}
                   </div>
                 </div>
 
@@ -242,9 +293,9 @@ const BookAppointment = () => {
 
               {/* Submit */}
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button type="submit" variant="cta" size="xl" className="flex-1">
+                <Button type="submit" variant="cta" size="xl" className="flex-1" disabled={isLoading}>
                   <MessageCircle className="w-5 h-5 mr-2" />
-                  Book via WhatsApp
+                  {isLoading ? "Submitting..." : "Book via WhatsApp"}
                 </Button>
                 <a href="tel:+1234567890" className="flex-1">
                   <Button type="button" variant="outline" size="xl" className="w-full">
