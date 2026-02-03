@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { Award, Clock, ArrowRight, User } from "lucide-react";
+import { SkeletonDoctorCard } from "@/components/ui/skeleton-cards";
 
 interface Doctor {
   id: string;
@@ -40,9 +41,17 @@ const DoctorsPreview = () => {
     return (
       <section className="section-padding bg-secondary">
         <div className="container-custom">
-          <div className="animate-pulse grid md:grid-cols-3 gap-8">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <span className="inline-block text-sm font-semibold text-primary uppercase tracking-wider mb-4">
+              Our Specialists
+            </span>
+            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
+              Meet Our Expert Doctors
+            </h2>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="h-96 bg-muted rounded-2xl" />
+              <SkeletonDoctorCard key={i} />
             ))}
           </div>
         </div>
@@ -74,7 +83,7 @@ const DoctorsPreview = () => {
           {doctors.map((doctor, index) => (
             <div
               key={doctor.id}
-              className="group bg-card rounded-3xl overflow-hidden border border-border/50 shadow-soft hover:shadow-medium transition-all duration-300 animate-slide-up"
+              className="group bg-card rounded-3xl overflow-hidden border border-border/50 shadow-soft hover:shadow-medium transition-all duration-300 animate-slide-up interactive-card"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Image */}
@@ -83,11 +92,11 @@ const DoctorsPreview = () => {
                   <img
                     src={doctor.image_url}
                     alt={doctor.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
-                    <div className="w-24 h-24 rounded-full bg-primary/20 flex items-center justify-center">
+                    <div className="w-24 h-24 rounded-full bg-primary/20 flex items-center justify-center group-hover:scale-110 transition-transform">
                       <User className="w-12 h-12 text-primary" />
                     </div>
                   </div>
@@ -95,18 +104,21 @@ const DoctorsPreview = () => {
                 
                 {/* Experience Badge */}
                 {doctor.experience_years && (
-                  <div className="absolute top-4 right-4 bg-card/90 backdrop-blur-sm rounded-full px-3 py-1.5 flex items-center gap-1.5 shadow-md">
+                  <div className="absolute top-4 right-4 bg-card/90 backdrop-blur-sm rounded-full px-3 py-1.5 flex items-center gap-1.5 shadow-md group-hover:scale-105 transition-transform">
                     <Clock className="w-4 h-4 text-primary" />
                     <span className="text-sm font-semibold text-foreground">
                       {doctor.experience_years}+ Years
                     </span>
                   </div>
                 )}
+
+                {/* Overlay on hover */}
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
 
               {/* Content */}
               <div className="p-6">
-                <h3 className="font-display text-xl font-bold text-foreground mb-1">
+                <h3 className="font-display text-xl font-bold text-foreground mb-1 group-hover:text-primary transition-colors">
                   {doctor.name}
                 </h3>
                 <p className="text-primary font-medium text-sm mb-2">

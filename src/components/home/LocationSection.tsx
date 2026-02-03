@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
-import { MapPin, Phone, Clock, MessageCircle } from "lucide-react";
+import { MapPin, Phone, Clock, MessageCircle, Mail, ExternalLink } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const LocationSection = () => {
   const [settings, setSettings] = useState<Record<string, string>>({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [mapLoaded, setMapLoaded] = useState(false);
 
   useEffect(() => {
     const fetchSettings = async () => {
@@ -17,9 +20,37 @@ const LocationSection = () => {
         });
         setSettings(settingsMap);
       }
+      setIsLoading(false);
     };
     fetchSettings();
   }, []);
+
+  const contactCards = [
+    {
+      icon: MapPin,
+      title: "Our Address",
+      content: settings.address || "123 Dental Street, Medical District, City 12345",
+      action: null,
+    },
+    {
+      icon: Clock,
+      title: "Working Hours",
+      content: "Mon - Fri: 9:00 AM - 7:00 PM\nSat: 9:00 AM - 5:00 PM\nSun: Closed",
+      action: null,
+    },
+    {
+      icon: Phone,
+      title: "Phone",
+      content: settings.phone || "+1 (234) 567-890",
+      action: `tel:${settings.phone || "+1234567890"}`,
+    },
+    {
+      icon: Mail,
+      title: "Email",
+      content: settings.email || "info@dentalcare.com",
+      action: `mailto:${settings.email || "info@dentalcare.com"}`,
+    },
+  ];
 
   return (
     <section className="section-padding bg-background">
@@ -39,50 +70,46 @@ const LocationSection = () => {
             </p>
 
             {/* Contact Cards */}
-            <div className="space-y-4 mb-8">
-              <div className="flex items-start gap-4 p-4 bg-secondary rounded-2xl">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <p className="font-semibold text-foreground mb-1">Our Address</p>
-                  <p className="text-muted-foreground text-sm">
-                    {settings.address || "123 Dental Street, Medical District, City 12345"}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4 p-4 bg-secondary rounded-2xl">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <Clock className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <p className="font-semibold text-foreground mb-1">Working Hours</p>
-                  <p className="text-muted-foreground text-sm">
-                    Mon - Fri: 9:00 AM - 7:00 PM<br />
-                    Sat: 9:00 AM - 5:00 PM<br />
-                    Sun: Closed
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4 p-4 bg-secondary rounded-2xl">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <p className="font-semibold text-foreground mb-1">Contact Us</p>
-                  <p className="text-muted-foreground text-sm">
-                    Phone: {settings.phone || "+1 (234) 567-890"}<br />
-                    Email: {settings.email || "info@dentalcare.com"}
-                  </p>
-                </div>
-              </div>
+            <div className="grid sm:grid-cols-2 gap-4 mb-8">
+              {isLoading ? (
+                [...Array(4)].map((_, i) => (
+                  <div key={i} className="p-4 bg-secondary rounded-2xl">
+                    <Skeleton className="h-12 w-12 rounded-xl mb-3" />
+                    <Skeleton className="h-4 w-24 mb-2" />
+                    <Skeleton className="h-3 w-full" />
+                  </div>
+                ))
+              ) : (
+                contactCards.map((card, index) => (
+                  <div 
+                    key={card.title}
+                    className="group flex items-start gap-4 p-4 bg-secondary rounded-2xl hover:bg-card hover:shadow-soft transition-all duration-300 cursor-default"
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
+                      <card.icon className="w-6 h-6 text-primary group-hover:text-primary-foreground transition-colors" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-semibold text-foreground mb-1 flex items-center gap-2">
+                        {card.title}
+                        {card.action && (
+                          <a href={card.action} className="text-primary hover:text-primary/80">
+                            <ExternalLink className="w-3 h-3" />
+                          </a>
+                        )}
+                      </p>
+                      <p className="text-muted-foreground text-sm whitespace-pre-line">
+                        {card.content}
+                      </p>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
 
             <div className="flex flex-wrap gap-4">
               <Link to="/book-appointment">
-                <Button size="lg" className="cta-gradient border-0">
+                <Button size="lg" className="cta-gradient border-0 group">
                   Book Appointment
                 </Button>
               </Link>
@@ -101,7 +128,10 @@ const LocationSection = () => {
 
           {/* Map */}
           <div className="animate-slide-up" style={{ animationDelay: "0.2s" }}>
-            <div className="aspect-square lg:aspect-[4/3] rounded-3xl overflow-hidden shadow-medium border border-border/50">
+            <div className="aspect-square lg:aspect-[4/3] rounded-3xl overflow-hidden shadow-medium border border-border/50 relative group">
+              {!mapLoaded && (
+                <div className="absolute inset-0 bg-gradient-to-r from-muted via-muted/70 to-muted animate-shimmer" />
+              )}
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.9663095343008!2d-74.00425878428698!3d40.74076794379132!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259bf5c1654f3%3A0xc80f9cfce5383d5d!2sGoogle!5e0!3m2!1sen!2sus!4v1679589899925!5m2!1sen!2sus"
                 width="100%"
@@ -111,8 +141,12 @@ const LocationSection = () => {
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 title="Clinic Location"
-                className="grayscale hover:grayscale-0 transition-all duration-500"
+                className={`grayscale group-hover:grayscale-0 transition-all duration-500 ${mapLoaded ? 'opacity-100' : 'opacity-0'}`}
+                onLoad={() => setMapLoaded(true)}
               />
+              
+              {/* Overlay on hover */}
+              <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-foreground/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
           </div>
         </div>
