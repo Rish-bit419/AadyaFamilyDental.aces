@@ -1,40 +1,55 @@
-import { Award, Clock, Users, Star } from "lucide-react";
+import { Award, Clock, Users, Star, CheckCircle } from "lucide-react";
+import { useState } from "react";
 
 const features = [
   {
     icon: Award,
     title: "Experienced Team",
     description: "Our dentists have 15+ years of experience and ongoing training in the latest techniques.",
+    stat: "15+",
+    statLabel: "Years",
   },
   {
     icon: Clock,
     title: "Convenient Hours",
     description: "Flexible scheduling including evenings and weekends to fit your busy lifestyle.",
+    stat: "7",
+    statLabel: "Days/Week",
   },
   {
     icon: Users,
     title: "Family-Friendly",
     description: "We welcome patients of all ages, from toddlers to seniors, in a warm environment.",
+    stat: "10K+",
+    statLabel: "Patients",
   },
   {
     icon: Star,
     title: "Modern Technology",
     description: "State-of-the-art equipment for more accurate diagnoses and comfortable treatments.",
+    stat: "4.9",
+    statLabel: "Rating",
   },
 ];
 
 const WhyChooseUs = () => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+
   return (
-    <section className="section-padding bg-secondary">
+    <section className="section-padding bg-secondary overflow-hidden">
       <div className="container-custom">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Image Side */}
           <div className="relative animate-slide-up">
-            <div className="aspect-[4/3] rounded-3xl bg-card shadow-medium overflow-hidden">
+            <div className="aspect-[4/3] rounded-3xl bg-card shadow-medium overflow-hidden group">
+              {!imageLoaded && (
+                <div className="absolute inset-0 bg-gradient-to-r from-muted via-muted/70 to-muted animate-shimmer" />
+              )}
               <img
                 src="/clinic-interior.jpg"
                 alt="Modern dental clinic interior"
-                className="w-full h-full object-cover"
+                className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-105 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+                onLoad={() => setImageLoaded(true)}
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
                   target.style.display = 'none';
@@ -53,16 +68,25 @@ const WhyChooseUs = () => {
                 }}
               />
             </div>
+            
             {/* Stats Card */}
-            <div className="absolute -bottom-8 -right-8 bg-card rounded-2xl p-6 shadow-medium animate-slide-up" style={{ animationDelay: "0.3s" }}>
+            <div className="absolute -bottom-8 -right-8 bg-card rounded-2xl p-6 shadow-medium animate-slide-up hover:scale-105 transition-transform cursor-default" style={{ animationDelay: "0.3s" }}>
               <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-full bg-coral-light flex items-center justify-center">
+                <div className="w-14 h-14 rounded-full bg-coral-light flex items-center justify-center animate-pulse-soft">
                   <span className="text-2xl">😊</span>
                 </div>
                 <div>
                   <p className="text-3xl font-bold text-foreground">10K+</p>
                   <p className="text-sm text-muted-foreground">Happy Patients</p>
                 </div>
+              </div>
+            </div>
+
+            {/* Trust Badge */}
+            <div className="absolute -top-4 -left-4 bg-card rounded-xl p-4 shadow-medium animate-slide-up hover:scale-105 transition-transform cursor-default" style={{ animationDelay: "0.4s" }}>
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-6 h-6 text-green-500" />
+                <span className="font-semibold text-foreground text-sm">Certified Clinic</span>
               </div>
             </div>
           </div>
@@ -85,16 +109,21 @@ const WhyChooseUs = () => {
               {features.map((feature, index) => (
                 <div
                   key={feature.title}
-                  className="flex gap-4 animate-slide-up"
+                  className="group flex gap-4 animate-slide-up p-4 rounded-xl hover:bg-card hover:shadow-soft transition-all cursor-default"
                   style={{ animationDelay: `${(index + 1) * 0.1}s` }}
                 >
-                  <div className="w-12 h-12 rounded-xl bg-teal-light flex items-center justify-center flex-shrink-0">
-                    <feature.icon className="w-6 h-6 text-primary" />
+                  <div className="w-12 h-12 rounded-xl bg-teal-light flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
+                    <feature.icon className="w-6 h-6 text-primary group-hover:text-primary-foreground transition-colors" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground mb-1">
-                      {feature.title}
-                    </h3>
+                    <div className="flex items-baseline gap-2 mb-1">
+                      <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                        {feature.title}
+                      </h3>
+                      <span className="text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+                        {feature.stat} {feature.statLabel}
+                      </span>
+                    </div>
                     <p className="text-sm text-muted-foreground leading-relaxed">
                       {feature.description}
                     </p>

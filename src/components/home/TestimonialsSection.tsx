@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Star, Quote, ChevronLeft, ChevronRight, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { SkeletonTestimonialCard } from "@/components/ui/skeleton-cards";
 
 interface Testimonial {
   id: string;
@@ -45,11 +46,19 @@ const TestimonialsSection = () => {
 
   if (isLoading) {
     return (
-      <section className="section-padding bg-secondary">
+      <section className="section-padding bg-gradient-to-b from-secondary to-background">
         <div className="container-custom">
-          <div className="animate-pulse grid md:grid-cols-3 gap-8">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <span className="inline-block text-sm font-semibold text-primary uppercase tracking-wider mb-4">
+              Testimonials
+            </span>
+            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+              What Our Patients Say
+            </h2>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="h-64 bg-muted rounded-2xl" />
+              <SkeletonTestimonialCard key={i} />
             ))}
           </div>
         </div>
@@ -102,7 +111,7 @@ const TestimonialsSection = () => {
           </div>
 
           {/* Google Reviews Badge */}
-          <div className="flex items-center gap-4 bg-card rounded-2xl px-6 py-4 shadow-soft border border-border/50 animate-slide-up">
+          <div className="flex items-center gap-4 bg-card rounded-2xl px-6 py-4 shadow-soft border border-border/50 animate-slide-up hover:shadow-medium transition-shadow">
             <img 
               src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" 
               alt="Google" 
@@ -131,13 +140,17 @@ const TestimonialsSection = () => {
                   key={testimonial.id}
                   className="flex-shrink-0 w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
                 >
-                  <div className="bg-card rounded-3xl p-8 border border-border/50 shadow-soft h-full relative group hover:shadow-medium transition-shadow duration-300">
-                    <Quote className="absolute top-6 right-6 w-12 h-12 text-primary/10 group-hover:text-primary/20 transition-colors" />
+                  <div className="bg-card rounded-3xl p-8 border border-border/50 shadow-soft h-full relative group hover:shadow-medium hover:-translate-y-1 transition-all duration-300">
+                    <Quote className="absolute top-6 right-6 w-12 h-12 text-primary/10 group-hover:text-primary/20 group-hover:scale-110 transition-all duration-300" />
                     
                     {/* Rating */}
                     <div className="flex gap-1 mb-6">
                       {[...Array(testimonial.rating || 5)].map((_, i) => (
-                        <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                        <Star 
+                          key={i} 
+                          className="w-5 h-5 fill-yellow-400 text-yellow-400 hover:scale-125 transition-transform" 
+                          style={{ transitionDelay: `${i * 50}ms` }}
+                        />
                       ))}
                     </div>
 
@@ -152,10 +165,10 @@ const TestimonialsSection = () => {
                         <img
                           src={testimonial.patient_image_url}
                           alt={testimonial.patient_name}
-                          className="w-14 h-14 rounded-full object-cover border-2 border-primary/20"
+                          className="w-14 h-14 rounded-full object-cover border-2 border-primary/20 group-hover:border-primary/40 transition-colors"
                         />
                       ) : (
-                        <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
+                        <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                           <User className="w-7 h-7 text-primary" />
                         </div>
                       )}
@@ -179,7 +192,7 @@ const TestimonialsSection = () => {
                 variant="outline"
                 size="icon"
                 onClick={prevSlide}
-                className="rounded-full w-12 h-12"
+                className="rounded-full w-12 h-12 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors"
               >
                 <ChevronLeft className="w-5 h-5" />
               </Button>
@@ -187,7 +200,7 @@ const TestimonialsSection = () => {
                 variant="outline"
                 size="icon"
                 onClick={nextSlide}
-                className="rounded-full w-12 h-12"
+                className="rounded-full w-12 h-12 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors"
               >
                 <ChevronRight className="w-5 h-5" />
               </Button>
