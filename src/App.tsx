@@ -9,6 +9,8 @@ import Services from "./pages/Services";
 import ServiceDetail from "./pages/ServiceDetail";
 import Gallery from "./pages/Gallery";
 import Testimonials from "./pages/Testimonials";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import BookAppointment from "./pages/BookAppointment";
 import Contact from "./pages/Contact";
 import AdminLogin from "./pages/admin/AdminLogin";
@@ -19,6 +21,7 @@ import AdminServices from "./pages/admin/AdminServices";
 import AdminDoctors from "./pages/admin/AdminDoctors";
 import AdminGallery from "./pages/admin/AdminGallery";
 import AdminTestimonials from "./pages/admin/AdminTestimonials";
+import AdminBlog from "./pages/admin/AdminBlog";
 import AdminSettings from "./pages/admin/AdminSettings";
 import NotFound from "./pages/NotFound";
 
@@ -38,6 +41,8 @@ const App = () => (
           <Route path="/services/:id" element={<ServiceDetail />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/testimonials" element={<Testimonials />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/book-appointment" element={<BookAppointment />} />
           <Route path="/contact" element={<Contact />} />
           
@@ -50,6 +55,7 @@ const App = () => (
             <Route path="doctors" element={<AdminDoctors />} />
             <Route path="gallery" element={<AdminGallery />} />
             <Route path="testimonials" element={<AdminTestimonials />} />
+            <Route path="blog" element={<AdminBlog />} />
             <Route path="settings" element={<AdminSettings />} />
           </Route>
           
