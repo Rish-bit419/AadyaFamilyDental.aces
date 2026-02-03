@@ -13,7 +13,8 @@ import {
   Home,
   Users,
   Image,
-  MessageSquare
+  MessageSquare,
+  FileText
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -24,6 +25,7 @@ const navItems = [
   { label: "Doctors", icon: Users, href: "/admin/doctors" },
   { label: "Gallery", icon: Image, href: "/admin/gallery" },
   { label: "Testimonials", icon: MessageSquare, href: "/admin/testimonials" },
+  { label: "Blog", icon: FileText, href: "/admin/blog" },
   { label: "Settings", icon: Settings, href: "/admin/settings" },
 ];
 
