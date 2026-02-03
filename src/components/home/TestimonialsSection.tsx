@@ -1,98 +1,198 @@
-import { Star, Quote } from "lucide-react";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { Star, Quote, ChevronLeft, ChevronRight, User } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-const testimonials = [
-  {
-    name: "Sarah Johnson",
-    role: "Patient for 5 years",
-    content: "The best dental experience I've ever had! The staff is incredibly friendly, and Dr. Smith explained everything clearly. My teeth have never looked better.",
-    rating: 5,
-    avatar: "SJ",
-  },
-  {
-    name: "Michael Chen",
-    role: "New Patient",
-    content: "I was terrified of dentists until I came here. They made me feel so comfortable, and the procedure was completely painless. Highly recommend!",
-    rating: 5,
-    avatar: "MC",
-  },
-  {
-    name: "Emily Rodriguez",
-    role: "Patient for 3 years",
-    content: "Outstanding service from start to finish. The clinic is modern and clean, appointments are always on time, and the results speak for themselves.",
-    rating: 5,
-    avatar: "ER",
-  },
-];
+interface Testimonial {
+  id: string;
+  patient_name: string;
+  patient_image_url: string | null;
+  rating: number | null;
+  review_text: string;
+  treatment_type: string | null;
+}
 
 const TestimonialsSection = () => {
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      const { data, error } = await supabase
+        .from("testimonials")
+        .select("*")
+        .eq("is_active", true)
+        .order("is_featured", { ascending: false })
+        .limit(6);
+
+      if (!error && data) {
+        setTestimonials(data);
+      }
+      setIsLoading(false);
+    };
+
+    fetchTestimonials();
+  }, []);
+
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev + 1) % Math.max(1, testimonials.length - 2));
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev - 1 + Math.max(1, testimonials.length - 2)) % Math.max(1, testimonials.length - 2));
+  };
+
+  if (isLoading) {
+    return (
+      <section className="section-padding bg-secondary">
+        <div className="container-custom">
+          <div className="animate-pulse grid md:grid-cols-3 gap-8">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="h-64 bg-muted rounded-2xl" />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  const displayTestimonials = testimonials.length > 0 ? testimonials : [
+    {
+      id: "1",
+      patient_name: "Sarah Johnson",
+      patient_image_url: null,
+      rating: 5,
+      review_text: "Amazing experience! The team made me feel so comfortable during my dental implant procedure. The results exceeded my expectations.",
+      treatment_type: "Dental Implants",
+    },
+    {
+      id: "2",
+      patient_name: "Michael Chen",
+      patient_image_url: null,
+      rating: 5,
+      review_text: "I was terrified of dentists until I came here. They made me feel so comfortable, and the procedure was completely painless.",
+      treatment_type: "General Dentistry",
+    },
+    {
+      id: "3",
+      patient_name: "Emily Rodriguez",
+      patient_image_url: null,
+      rating: 5,
+      review_text: "Outstanding service from start to finish. The clinic is modern and clean, appointments are always on time.",
+      treatment_type: "Teeth Whitening",
+    },
+  ];
+
   return (
-    <section className="section-padding bg-background">
+    <section className="section-padding bg-gradient-to-b from-secondary to-background">
       <div className="container-custom">
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16 animate-slide-up">
-          <span className="inline-block text-sm font-semibold text-primary uppercase tracking-wider mb-4">
-            Testimonials
-          </span>
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            What Our Patients Say
-          </h2>
-          <p className="text-lg text-muted-foreground">
-            Don't just take our word for it. Here's what our happy patients have to say about their experience.
-          </p>
-        </div>
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-16">
+          <div className="max-w-2xl animate-slide-up">
+            <span className="inline-block text-sm font-semibold text-primary uppercase tracking-wider mb-4">
+              Testimonials
+            </span>
+            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+              What Our Patients Say
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Don't just take our word for it. See what our happy patients have to say.
+            </p>
+          </div>
 
-        {/* Google Reviews Badge */}
-        <div className="flex justify-center mb-12 animate-slide-up">
-          <div className="flex items-center gap-4 bg-card rounded-full px-6 py-3 shadow-soft border border-border/50">
+          {/* Google Reviews Badge */}
+          <div className="flex items-center gap-4 bg-card rounded-2xl px-6 py-4 shadow-soft border border-border/50 animate-slide-up">
             <img 
               src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" 
               alt="Google" 
-              className="h-6 object-contain"
+              className="h-8 object-contain"
             />
-            <div className="flex items-center gap-1">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-              ))}
-            </div>
-            <span className="font-semibold text-foreground">4.9</span>
-            <span className="text-muted-foreground text-sm">(500+ reviews)</span>
-          </div>
-        </div>
-
-        {/* Testimonials Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
-            <div
-              key={testimonial.name}
-              className="card-elevated card-hover rounded-2xl p-8 border border-border/50 relative animate-slide-up"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <Quote className="absolute top-6 right-6 w-10 h-10 text-primary/10" />
-              
-              {/* Rating */}
-              <div className="flex gap-1 mb-6">
-                {[...Array(testimonial.rating)].map((_, i) => (
+            <div>
+              <div className="flex items-center gap-1">
+                {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
                 ))}
               </div>
-
-              {/* Content */}
-              <p className="text-foreground leading-relaxed mb-6">
-                "{testimonial.content}"
-              </p>
-
-              {/* Author */}
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-semibold">
-                  {testimonial.avatar}
-                </div>
-                <div>
-                  <p className="font-semibold text-foreground">{testimonial.name}</p>
-                  <p className="text-sm text-muted-foreground">{testimonial.role}</p>
-                </div>
-              </div>
+              <p className="text-sm text-muted-foreground mt-1">4.9 (500+ reviews)</p>
             </div>
-          ))}
+          </div>
+        </div>
+
+        {/* Testimonials Slider */}
+        <div className="relative">
+          <div className="overflow-hidden">
+            <div 
+              className="flex transition-transform duration-500 ease-out gap-6"
+              style={{ transform: `translateX(-${currentIndex * (100 / 3 + 2)}%)` }}
+            >
+              {displayTestimonials.map((testimonial, index) => (
+                <div
+                  key={testimonial.id}
+                  className="flex-shrink-0 w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
+                >
+                  <div className="bg-card rounded-3xl p-8 border border-border/50 shadow-soft h-full relative group hover:shadow-medium transition-shadow duration-300">
+                    <Quote className="absolute top-6 right-6 w-12 h-12 text-primary/10 group-hover:text-primary/20 transition-colors" />
+                    
+                    {/* Rating */}
+                    <div className="flex gap-1 mb-6">
+                      {[...Array(testimonial.rating || 5)].map((_, i) => (
+                        <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                      ))}
+                    </div>
+
+                    {/* Content */}
+                    <p className="text-foreground leading-relaxed mb-6 line-clamp-4">
+                      "{testimonial.review_text}"
+                    </p>
+
+                    {/* Author */}
+                    <div className="flex items-center gap-4 mt-auto">
+                      {testimonial.patient_image_url ? (
+                        <img
+                          src={testimonial.patient_image_url}
+                          alt={testimonial.patient_name}
+                          className="w-14 h-14 rounded-full object-cover border-2 border-primary/20"
+                        />
+                      ) : (
+                        <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
+                          <User className="w-7 h-7 text-primary" />
+                        </div>
+                      )}
+                      <div>
+                        <p className="font-semibold text-foreground">{testimonial.patient_name}</p>
+                        {testimonial.treatment_type && (
+                          <p className="text-sm text-primary">{testimonial.treatment_type}</p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Navigation */}
+          {displayTestimonials.length > 3 && (
+            <div className="flex justify-center gap-4 mt-8">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={prevSlide}
+                className="rounded-full w-12 h-12"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={nextSlide}
+                className="rounded-full w-12 h-12"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </section>

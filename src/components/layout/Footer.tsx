@@ -1,96 +1,155 @@
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin, Clock, Facebook, Instagram, Twitter } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
 
 const Footer = () => {
   return (
     <footer className="bg-foreground text-primary-foreground">
-      <div className="container-custom section-padding">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      {/* Main Footer */}
+      <div className="container-custom section-padding pb-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-display font-bold text-xl">D</span>
+          <div className="space-y-6">
+            <Link to="/" className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center">
+                <span className="text-primary-foreground font-display font-bold text-2xl">D</span>
               </div>
-              <span className="font-display font-semibold text-xl">
-                DentalCare
-              </span>
-            </div>
-            <p className="text-primary-foreground/70 text-sm leading-relaxed">
-              Your trusted partner for comprehensive dental care. We combine modern technology with gentle care for beautiful, healthy smiles.
+              <div>
+                <span className="font-display font-bold text-xl text-primary-foreground">DentalCare</span>
+                <p className="text-xs text-primary-foreground/60">Premium Dental Clinic</p>
+              </div>
+            </Link>
+            <p className="text-primary-foreground/70 leading-relaxed">
+              Providing exceptional dental care with compassion and expertise for over 15 years. 
+              Your smile is our priority.
             </p>
-            <div className="flex items-center gap-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors">
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors">
-                <Instagram className="w-5 h-5" />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors">
-                <Twitter className="w-5 h-5" />
-              </a>
+            
+            {/* Social Links */}
+            <div className="flex gap-3">
+              {[
+                { icon: Facebook, href: "#" },
+                { icon: Instagram, href: "#" },
+                { icon: Twitter, href: "#" },
+                { icon: Linkedin, href: "#" },
+              ].map((social, index) => (
+                <a
+                  key={index}
+                  href={social.href}
+                  className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <social.icon className="w-5 h-5" />
+                </a>
+              ))}
             </div>
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-4">
-            <h4 className="font-display font-semibold text-lg">Quick Links</h4>
-            <nav className="flex flex-col gap-3">
-              <Link to="/" className="text-primary-foreground/70 hover:text-primary transition-colors text-sm">Home</Link>
-              <Link to="/about" className="text-primary-foreground/70 hover:text-primary transition-colors text-sm">About Us</Link>
-              <Link to="/services" className="text-primary-foreground/70 hover:text-primary transition-colors text-sm">Our Services</Link>
-              <Link to="/book-appointment" className="text-primary-foreground/70 hover:text-primary transition-colors text-sm">Book Appointment</Link>
-              <Link to="/contact" className="text-primary-foreground/70 hover:text-primary transition-colors text-sm">Contact</Link>
-            </nav>
+          <div>
+            <h4 className="font-display text-lg font-semibold mb-6">Quick Links</h4>
+            <ul className="space-y-3">
+              {[
+                { label: "Home", href: "/" },
+                { label: "About Us", href: "/about" },
+                { label: "Our Services", href: "/services" },
+                { label: "Before & After", href: "/gallery" },
+                { label: "Testimonials", href: "/testimonials" },
+                { label: "Book Appointment", href: "/book-appointment" },
+                { label: "Contact Us", href: "/contact" },
+              ].map((link) => (
+                <li key={link.href}>
+                  <Link
+                    to={link.href}
+                    className="text-primary-foreground/70 hover:text-primary transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Services */}
-          <div className="space-y-4">
-            <h4 className="font-display font-semibold text-lg">Services</h4>
-            <nav className="flex flex-col gap-3">
-              <span className="text-primary-foreground/70 text-sm">General Dentistry</span>
-              <span className="text-primary-foreground/70 text-sm">Teeth Whitening</span>
-              <span className="text-primary-foreground/70 text-sm">Dental Implants</span>
-              <span className="text-primary-foreground/70 text-sm">Orthodontics</span>
-              <span className="text-primary-foreground/70 text-sm">Cosmetic Dentistry</span>
-            </nav>
+          <div>
+            <h4 className="font-display text-lg font-semibold mb-6">Our Services</h4>
+            <ul className="space-y-3">
+              {[
+                "General Dentistry",
+                "Cosmetic Dentistry",
+                "Dental Implants",
+                "Orthodontics",
+                "Teeth Whitening",
+                "Root Canal Treatment",
+                "Pediatric Dentistry",
+              ].map((service) => (
+                <li key={service}>
+                  <Link
+                    to="/services"
+                    className="text-primary-foreground/70 hover:text-primary transition-colors"
+                  >
+                    {service}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Contact Info */}
-          <div className="space-y-4">
-            <h4 className="font-display font-semibold text-lg">Contact Us</h4>
-            <div className="flex flex-col gap-4">
-              <a href="tel:+1234567890" className="flex items-start gap-3 text-primary-foreground/70 hover:text-primary transition-colors text-sm">
-                <Phone className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                <span>(123) 456-7890</span>
-              </a>
-              <a href="mailto:info@dentalcare.com" className="flex items-start gap-3 text-primary-foreground/70 hover:text-primary transition-colors text-sm">
-                <Mail className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                <span>info@dentalcare.com</span>
-              </a>
-              <div className="flex items-start gap-3 text-primary-foreground/70 text-sm">
-                <MapPin className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                <span>123 Dental Street, Medical District, City 12345</span>
-              </div>
-              <div className="flex items-start gap-3 text-primary-foreground/70 text-sm">
-                <Clock className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                <div>
-                  <p>Mon - Fri: 9:00 AM - 6:00 PM</p>
-                  <p>Sat: 9:00 AM - 2:00 PM</p>
+          <div>
+            <h4 className="font-display text-lg font-semibold mb-6">Contact Us</h4>
+            <ul className="space-y-4">
+              <li className="flex items-start gap-3">
+                <MapPin className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                <span className="text-primary-foreground/70">
+                  123 Dental Street, Medical District,<br />City 12345
+                </span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Phone className="w-5 h-5 text-primary flex-shrink-0" />
+                <a
+                  href="tel:+1234567890"
+                  className="text-primary-foreground/70 hover:text-primary transition-colors"
+                >
+                  +1 (234) 567-890
+                </a>
+              </li>
+              <li className="flex items-center gap-3">
+                <Mail className="w-5 h-5 text-primary flex-shrink-0" />
+                <a
+                  href="mailto:info@dentalcare.com"
+                  className="text-primary-foreground/70 hover:text-primary transition-colors"
+                >
+                  info@dentalcare.com
+                </a>
+              </li>
+              <li className="flex items-start gap-3">
+                <Clock className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                <div className="text-primary-foreground/70">
+                  <p>Mon - Fri: 9:00 AM - 7:00 PM</p>
+                  <p>Sat: 9:00 AM - 5:00 PM</p>
+                  <p>Sun: Closed</p>
                 </div>
-              </div>
-            </div>
+              </li>
+            </ul>
           </div>
         </div>
+      </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-primary-foreground/10 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-primary-foreground/50 text-sm">
-            © 2024 DentalCare. All rights reserved.
-          </p>
-          <div className="flex gap-6">
-            <a href="#" className="text-primary-foreground/50 hover:text-primary transition-colors text-sm">Privacy Policy</a>
-            <a href="#" className="text-primary-foreground/50 hover:text-primary transition-colors text-sm">Terms of Service</a>
+      {/* Bottom Bar */}
+      <div className="border-t border-primary-foreground/10">
+        <div className="container-custom py-6 px-4 md:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-primary-foreground/60 text-sm text-center md:text-left">
+              © {new Date().getFullYear()} DentalCare. All rights reserved.
+            </p>
+            <div className="flex gap-6 text-sm">
+              <Link to="#" className="text-primary-foreground/60 hover:text-primary transition-colors">
+                Privacy Policy
+              </Link>
+              <Link to="#" className="text-primary-foreground/60 hover:text-primary transition-colors">
+                Terms of Service
+              </Link>
+            </div>
           </div>
         </div>
       </div>

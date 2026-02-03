@@ -1,28 +1,19 @@
+import { useEffect, useState } from "react";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Award, GraduationCap, Heart, Users, CheckCircle } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { Award, GraduationCap, Heart, Users, CheckCircle, Clock, User } from "lucide-react";
 
-const team = [
-  {
-    name: "Dr. James Smith",
-    role: "Lead Dentist & Founder",
-    experience: "20+ years experience",
-    avatar: "JS",
-  },
-  {
-    name: "Dr. Emily Chen",
-    role: "Orthodontist",
-    experience: "12+ years experience",
-    avatar: "EC",
-  },
-  {
-    name: "Dr. Michael Brown",
-    role: "Cosmetic Dentist",
-    experience: "15+ years experience",
-    avatar: "MB",
-  },
-];
+interface Doctor {
+  id: string;
+  name: string;
+  qualification: string;
+  specialization: string | null;
+  experience_years: number | null;
+  bio: string | null;
+  image_url: string | null;
+}
 
 const values = [
   {
@@ -48,41 +39,68 @@ const values = [
 ];
 
 const About = () => {
+  const [doctors, setDoctors] = useState<Doctor[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchDoctors = async () => {
+      const { data, error } = await supabase
+        .from("doctors")
+        .select("*")
+        .eq("is_active", true)
+        .order("display_order", { ascending: true });
+
+      if (!error && data) {
+        setDoctors(data);
+      }
+      setIsLoading(false);
+    };
+
+    fetchDoctors();
+  }, []);
+
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="section-padding bg-secondary">
+      <section className="section-padding bg-gradient-to-b from-secondary to-background">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center animate-slide-up">
             <span className="inline-block text-sm font-semibold text-primary uppercase tracking-wider mb-4">
-              About Us
+              About Our Clinic
             </span>
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
               Your Trusted Partner in Dental Health
             </h1>
             <p className="text-lg text-muted-foreground">
-              For over 15 years, DentalCare has been providing exceptional dental services to our community, helping thousands of patients achieve healthy, beautiful smiles.
+              For over 15 years, we've been providing exceptional dental services to our community, 
+              helping thousands of patients achieve healthy, beautiful smiles through advanced care and compassion.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Story Section */}
+      {/* Mission Section */}
       <section className="section-padding bg-background">
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-6 animate-slide-up">
               <span className="inline-block text-sm font-semibold text-primary uppercase tracking-wider">
-                Our Story
+                Our Mission
               </span>
               <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground">
-                A Legacy of Excellence in Dental Care
+                Committed to Excellence in Every Smile
               </h2>
               <p className="text-muted-foreground leading-relaxed">
-                Founded in 2009 by Dr. James Smith, DentalCare started with a simple mission: to provide compassionate, high-quality dental care in a comfortable environment. What began as a small practice has grown into a comprehensive dental center serving over 10,000 patients.
+                Our mission is to provide the highest quality dental care in a comfortable, 
+                welcoming environment. We believe everyone deserves access to excellent 
+                dental health, and we're dedicated to making that a reality through 
+                cutting-edge technology and compassionate care.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                Our commitment to excellence, combined with investment in cutting-edge technology and continuous education, has made us a trusted name in dental care. We believe that everyone deserves a healthy smile, and we work tirelessly to make that a reality.
+                Founded with a vision to transform dental care, our clinic has grown into 
+                a comprehensive dental center serving over 10,000 patients. We invest 
+                continuously in the latest technology and training to ensure you receive 
+                the best possible care.
               </p>
               <ul className="space-y-3">
                 {[
@@ -100,13 +118,41 @@ const About = () => {
             </div>
 
             <div className="relative animate-slide-up" style={{ animationDelay: "0.2s" }}>
-              <div className="aspect-[4/3] rounded-3xl bg-teal-light flex items-center justify-center overflow-hidden">
-                <div className="text-center p-8">
-                  <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-primary/20 flex items-center justify-center">
-                    <Award className="w-10 h-10 text-primary" />
+              <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-medium">
+                <img
+                  src="/clinic-interior.jpg"
+                  alt="Our modern dental clinic"
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                    target.parentElement!.innerHTML = `
+                      <div class="w-full h-full bg-gradient-to-br from-teal-light to-secondary flex items-center justify-center">
+                        <div class="text-center p-8">
+                          <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-primary/20 flex items-center justify-center">
+                            <svg class="w-10 h-10 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                            </svg>
+                          </div>
+                          <p class="text-foreground font-display text-xl font-semibold">Our Modern Facility</p>
+                        </div>
+                      </div>
+                    `;
+                  }}
+                />
+              </div>
+              
+              {/* Stats Card */}
+              <div className="absolute -bottom-8 -right-8 bg-card rounded-2xl p-6 shadow-medium border border-border/50">
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="text-center">
+                    <p className="font-display text-3xl font-bold text-primary">15+</p>
+                    <p className="text-sm text-muted-foreground">Years Experience</p>
                   </div>
-                  <p className="text-foreground font-display text-xl font-semibold">15+ Years of Excellence</p>
-                  <p className="text-muted-foreground mt-2">Serving our community since 2009</p>
+                  <div className="text-center">
+                    <p className="font-display text-3xl font-bold text-primary">10k+</p>
+                    <p className="text-sm text-muted-foreground">Happy Patients</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -130,10 +176,10 @@ const About = () => {
             {values.map((value, index) => (
               <div
                 key={value.title}
-                className="text-center animate-slide-up"
+                className="bg-card rounded-2xl p-8 text-center border border-border/50 shadow-soft hover:shadow-medium transition-all duration-300 animate-slide-up"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="w-16 h-16 rounded-2xl bg-teal-light flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
                   <value.icon className="w-8 h-8 text-primary" />
                 </div>
                 <h3 className="font-display text-xl font-semibold text-foreground mb-2">
@@ -148,7 +194,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* Team Section */}
+      {/* Doctors Section */}
       <section className="section-padding bg-background">
         <div className="container-custom">
           <div className="text-center max-w-2xl mx-auto mb-16 animate-slide-up">
@@ -156,30 +202,104 @@ const About = () => {
               Our Team
             </span>
             <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Meet Our Experts
+              Meet Our Expert Doctors
             </h2>
             <p className="text-muted-foreground">
               Our team of experienced professionals is dedicated to providing you with the best possible care.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            {team.map((member, index) => (
-              <div
-                key={member.name}
-                className="card-elevated card-hover rounded-2xl p-8 text-center border border-border/50 animate-slide-up"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="w-24 h-24 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-2xl font-bold mx-auto mb-4">
-                  {member.avatar}
+          {isLoading ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="h-[420px] bg-muted rounded-3xl animate-pulse" />
+              ))}
+            </div>
+          ) : doctors.length === 0 ? (
+            <div className="text-center py-12">
+              <User className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+              <p className="text-muted-foreground">Doctor profiles coming soon</p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {doctors.map((doctor, index) => (
+                <div
+                  key={doctor.id}
+                  className="group bg-card rounded-3xl overflow-hidden border border-border/50 shadow-soft hover:shadow-medium transition-all duration-300 animate-slide-up"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  {/* Image */}
+                  <div className="aspect-[4/3] bg-gradient-to-br from-teal-light to-secondary relative overflow-hidden">
+                    {doctor.image_url ? (
+                      <img
+                        src={doctor.image_url}
+                        alt={doctor.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <div className="w-24 h-24 rounded-full bg-primary/20 flex items-center justify-center">
+                          <User className="w-12 h-12 text-primary" />
+                        </div>
+                      </div>
+                    )}
+                    
+                    {doctor.experience_years && (
+                      <div className="absolute top-4 right-4 bg-card/90 backdrop-blur-sm rounded-full px-3 py-1.5 flex items-center gap-1.5 shadow-md">
+                        <Clock className="w-4 h-4 text-primary" />
+                        <span className="text-sm font-semibold text-foreground">
+                          {doctor.experience_years}+ Years
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-6">
+                    <h3 className="font-display text-xl font-bold text-foreground mb-1">
+                      {doctor.name}
+                    </h3>
+                    <p className="text-primary font-medium text-sm mb-2">
+                      {doctor.specialization}
+                    </p>
+                    <p className="text-muted-foreground text-sm mb-4">
+                      {doctor.qualification}
+                    </p>
+                    {doctor.bio && (
+                      <p className="text-sm text-muted-foreground line-clamp-3">
+                        {doctor.bio}
+                      </p>
+                    )}
+                  </div>
                 </div>
-                <h3 className="font-display text-xl font-semibold text-foreground mb-1">
-                  {member.name}
-                </h3>
-                <p className="text-primary font-medium mb-2">{member.role}</p>
-                <p className="text-sm text-muted-foreground">{member.experience}</p>
-              </div>
-            ))}
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Philosophy Section */}
+      <section className="section-padding bg-secondary">
+        <div className="container-custom">
+          <div className="max-w-4xl mx-auto text-center animate-slide-up">
+            <span className="inline-block text-sm font-semibold text-primary uppercase tracking-wider mb-4">
+              Our Philosophy
+            </span>
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-6">
+              Patient Care Is Our Priority
+            </h2>
+            <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+              We believe that dental care should be accessible, comfortable, and personalized. 
+              Every patient who walks through our doors is treated like family. We take the time 
+              to listen to your concerns, explain treatment options clearly, and create a 
+              customized plan that fits your needs and budget.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              From routine check-ups to complex procedures, we're committed to making your 
+              experience as pleasant as possible. Our modern facility is designed with your 
+              comfort in mind, featuring relaxing amenities and the latest technology to 
+              ensure efficient, effective treatment.
+            </p>
           </div>
         </div>
       </section>

@@ -67,6 +67,48 @@ export type Database = {
           },
         ]
       }
+      before_after_images: {
+        Row: {
+          after_image_url: string
+          before_image_url: string
+          created_at: string
+          description: string | null
+          display_order: number | null
+          id: string
+          is_active: boolean | null
+          is_featured: boolean | null
+          title: string
+          treatment_type: string | null
+          updated_at: string
+        }
+        Insert: {
+          after_image_url: string
+          before_image_url: string
+          created_at?: string
+          description?: string | null
+          display_order?: number | null
+          id?: string
+          is_active?: boolean | null
+          is_featured?: boolean | null
+          title: string
+          treatment_type?: string | null
+          updated_at?: string
+        }
+        Update: {
+          after_image_url?: string
+          before_image_url?: string
+          created_at?: string
+          description?: string | null
+          display_order?: number | null
+          id?: string
+          is_active?: boolean | null
+          is_featured?: boolean | null
+          title?: string
+          treatment_type?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       clinic_settings: {
         Row: {
           id: string
@@ -85,6 +127,48 @@ export type Database = {
           key?: string
           updated_at?: string
           value?: string | null
+        }
+        Relationships: []
+      }
+      doctors: {
+        Row: {
+          bio: string | null
+          created_at: string
+          display_order: number | null
+          experience_years: number | null
+          id: string
+          image_url: string | null
+          is_active: boolean | null
+          name: string
+          qualification: string
+          specialization: string | null
+          updated_at: string
+        }
+        Insert: {
+          bio?: string | null
+          created_at?: string
+          display_order?: number | null
+          experience_years?: number | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          name: string
+          qualification: string
+          specialization?: string | null
+          updated_at?: string
+        }
+        Update: {
+          bio?: string | null
+          created_at?: string
+          display_order?: number | null
+          experience_years?: number | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          name?: string
+          qualification?: string
+          specialization?: string | null
+          updated_at?: string
         }
         Relationships: []
       }
@@ -150,6 +234,45 @@ export type Database = {
           is_active?: boolean | null
           name?: string
           price?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      testimonials: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean | null
+          is_featured: boolean | null
+          patient_image_url: string | null
+          patient_name: string
+          rating: number | null
+          review_text: string
+          treatment_type: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          is_featured?: boolean | null
+          patient_image_url?: string | null
+          patient_name: string
+          rating?: number | null
+          review_text: string
+          treatment_type?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          is_featured?: boolean | null
+          patient_image_url?: string | null
+          patient_name?: string
+          rating?: number | null
+          review_text?: string
+          treatment_type?: string | null
           updated_at?: string
         }
         Relationships: []
