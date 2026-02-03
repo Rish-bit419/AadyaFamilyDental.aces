@@ -10,7 +10,10 @@ import {
   Menu, 
   X,
   Stethoscope,
-  Home
+  Home,
+  Users,
+  Image,
+  MessageSquare
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -18,6 +21,9 @@ const navItems = [
   { label: "Dashboard", icon: LayoutDashboard, href: "/admin/dashboard" },
   { label: "Appointments", icon: Calendar, href: "/admin/appointments" },
   { label: "Services", icon: Stethoscope, href: "/admin/services" },
+  { label: "Doctors", icon: Users, href: "/admin/doctors" },
+  { label: "Gallery", icon: Image, href: "/admin/gallery" },
+  { label: "Testimonials", icon: MessageSquare, href: "/admin/testimonials" },
   { label: "Settings", icon: Settings, href: "/admin/settings" },
 ];
 

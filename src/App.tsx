@@ -6,6 +6,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Services from "./pages/Services";
+import ServiceDetail from "./pages/ServiceDetail";
+import Gallery from "./pages/Gallery";
+import Testimonials from "./pages/Testimonials";
 import BookAppointment from "./pages/BookAppointment";
 import Contact from "./pages/Contact";
 import AdminLogin from "./pages/admin/AdminLogin";
@@ -13,6 +16,9 @@ import AdminLayout from "./components/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminAppointments from "./pages/admin/AdminAppointments";
 import AdminServices from "./pages/admin/AdminServices";
+import AdminDoctors from "./pages/admin/AdminDoctors";
+import AdminGallery from "./pages/admin/AdminGallery";
+import AdminTestimonials from "./pages/admin/AdminTestimonials";
 import AdminSettings from "./pages/admin/AdminSettings";
 import NotFound from "./pages/NotFound";
 
@@ -29,6 +35,9 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/services/:id" element={<ServiceDetail />} />
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/testimonials" element={<Testimonials />} />
           <Route path="/book-appointment" element={<BookAppointment />} />
           <Route path="/contact" element={<Contact />} />
           
@@ -38,6 +47,9 @@ const App = () => (
             <Route path="dashboard" element={<AdminDashboard />} />
             <Route path="appointments" element={<AdminAppointments />} />
             <Route path="services" element={<AdminServices />} />
+            <Route path="doctors" element={<AdminDoctors />} />
+            <Route path="gallery" element={<AdminGallery />} />
+            <Route path="testimonials" element={<AdminTestimonials />} />
             <Route path="settings" element={<AdminSettings />} />
           </Route>
           

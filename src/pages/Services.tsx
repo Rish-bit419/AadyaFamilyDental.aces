@@ -1,64 +1,52 @@
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { Sparkles, Shield, Heart, Smile, Stethoscope, Zap, Baby, Scissors } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { ArrowRight, Clock, Sparkles } from "lucide-react";
+import * as LucideIcons from "lucide-react";
 
-const services = [
-  {
-    icon: Shield,
-    title: "General Dentistry",
-    description: "Comprehensive exams, professional cleanings, and preventive care to maintain optimal oral health. We catch problems early to save you time and money.",
-    features: ["Dental Exams", "Professional Cleanings", "X-Rays", "Fluoride Treatment", "Sealants"],
-  },
-  {
-    icon: Sparkles,
-    title: "Teeth Whitening",
-    description: "Achieve a brighter, more radiant smile with our professional whitening treatments. Safe, effective, and long-lasting results.",
-    features: ["In-Office Whitening", "Take-Home Kits", "Touch-Up Treatments", "Sensitivity-Free Options"],
-  },
-  {
-    icon: Heart,
-    title: "Dental Implants",
-    description: "Permanent tooth replacement solutions that look, feel, and function like natural teeth. Restore your smile and confidence.",
-    features: ["Single Tooth Implants", "Full Arch Restoration", "Implant-Supported Dentures", "Bone Grafting"],
-  },
-  {
-    icon: Smile,
-    title: "Orthodontics",
-    description: "Straighten your teeth and improve your bite with modern orthodontic solutions. Options for all ages and lifestyles.",
-    features: ["Traditional Braces", "Clear Aligners", "Invisalign", "Retainers", "Early Intervention"],
-  },
-  {
-    icon: Stethoscope,
-    title: "Root Canal Therapy",
-    description: "Gentle and effective treatment to save damaged teeth and relieve pain. Our modern techniques ensure comfort throughout.",
-    features: ["Pain Relief", "Tooth Preservation", "Infection Treatment", "Crown Placement"],
-  },
-  {
-    icon: Zap,
-    title: "Cosmetic Dentistry",
-    description: "Transform your smile with our range of cosmetic procedures. From subtle enhancements to complete smile makeovers.",
-    features: ["Porcelain Veneers", "Dental Bonding", "Smile Makeovers", "Gum Contouring"],
-  },
-  {
-    icon: Baby,
-    title: "Pediatric Dentistry",
-    description: "Specialized dental care for children in a fun, friendly environment. Building healthy habits that last a lifetime.",
-    features: ["Child-Friendly Exams", "Cavity Prevention", "Fluoride Treatments", "Dental Education"],
-  },
-  {
-    icon: Scissors,
-    title: "Oral Surgery",
-    description: "Expert surgical procedures performed with precision and care. From wisdom teeth to complex extractions.",
-    features: ["Tooth Extractions", "Wisdom Teeth Removal", "Bone Grafting", "Sedation Options"],
-  },
-];
+interface Service {
+  id: string;
+  name: string;
+  description: string | null;
+  features: string[] | null;
+  duration_minutes: number | null;
+  price: number | null;
+  icon: string | null;
+}
 
 const Services = () => {
+  const [services, setServices] = useState<Service[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      const { data, error } = await supabase
+        .from("services")
+        .select("*")
+        .eq("is_active", true)
+        .order("name", { ascending: true });
+
+      if (!error && data) {
+        setServices(data);
+      }
+      setIsLoading(false);
+    };
+
+    fetchServices();
+  }, []);
+
+  const getIcon = (iconName: string | null) => {
+    if (!iconName) return Sparkles;
+    const Icon = (LucideIcons as any)[iconName];
+    return Icon || Sparkles;
+  };
+
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="section-padding bg-secondary">
+      <section className="section-padding bg-gradient-to-b from-secondary to-background">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center animate-slide-up">
             <span className="inline-block text-sm font-semibold text-primary uppercase tracking-wider mb-4">
@@ -68,57 +56,95 @@ const Services = () => {
               Comprehensive Dental Care for Your Whole Family
             </h1>
             <p className="text-lg text-muted-foreground">
-              From routine check-ups to advanced treatments, we offer a full spectrum of dental services using the latest technology and techniques.
+              From routine check-ups to advanced treatments, we offer a full spectrum of 
+              dental services using the latest technology and techniques.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Services List */}
+      {/* Services Grid */}
       <section className="section-padding bg-background">
         <div className="container-custom">
-          <div className="grid gap-12">
-            {services.map((service, index) => (
-              <div
-                key={service.title}
-                className={`grid lg:grid-cols-2 gap-8 items-center animate-slide-up ${
-                  index % 2 === 1 ? "lg:direction-rtl" : ""
-                }`}
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className={`space-y-6 ${index % 2 === 1 ? "lg:order-2" : ""}`}>
-                  <div className="w-16 h-16 rounded-2xl bg-teal-light flex items-center justify-center">
-                    <service.icon className="w-8 h-8 text-primary" />
-                  </div>
-                  <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground">
-                    {service.title}
-                  </h2>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {service.description}
-                  </p>
-                  <ul className="grid grid-cols-2 gap-3">
-                    {service.features.map((feature) => (
-                      <li key={feature} className="flex items-center gap-2 text-sm text-foreground">
-                        <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                  <Link to="/book-appointment">
-                    <Button variant="default" size="lg">
-                      Book This Service
-                    </Button>
-                  </Link>
-                </div>
+          {isLoading ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <div key={i} className="h-72 bg-muted rounded-2xl animate-pulse" />
+              ))}
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {services.map((service, index) => {
+                const IconComponent = getIcon(service.icon);
+                return (
+                  <Link
+                    key={service.id}
+                    to={`/services/${service.id}`}
+                    className="group bg-card rounded-2xl overflow-hidden border border-border/50 shadow-soft hover:shadow-medium transition-all duration-300 animate-slide-up"
+                    style={{ animationDelay: `${index * 0.05}s` }}
+                  >
+                    {/* Icon Header */}
+                    <div className="p-6 pb-0">
+                      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-teal-light to-secondary flex items-center justify-center group-hover:from-primary/20 group-hover:to-primary/10 transition-colors duration-300">
+                        <IconComponent className="w-8 h-8 text-primary" />
+                      </div>
+                    </div>
 
-                <div className={`${index % 2 === 1 ? "lg:order-1" : ""}`}>
-                  <div className="aspect-[4/3] rounded-2xl bg-gradient-to-br from-teal-light to-secondary flex items-center justify-center">
-                    <service.icon className="w-20 h-20 text-primary/30" />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+                    {/* Content */}
+                    <div className="p-6">
+                      <h3 className="font-display text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+                        {service.name}
+                      </h3>
+                      
+                      <p className="text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-3">
+                        {service.description}
+                      </p>
+
+                      {/* Meta Info */}
+                      <div className="flex items-center justify-between mb-4">
+                        {service.duration_minutes && (
+                          <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                            <Clock className="w-4 h-4" />
+                            <span>{service.duration_minutes} min</span>
+                          </div>
+                        )}
+                        {service.price && (
+                          <span className="text-sm font-semibold text-primary">
+                            From ${service.price}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Features Preview */}
+                      {service.features && service.features.length > 0 && (
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {service.features.slice(0, 3).map((feature, i) => (
+                            <span
+                              key={i}
+                              className="text-xs bg-secondary text-muted-foreground px-2 py-1 rounded-full"
+                            >
+                              {feature}
+                            </span>
+                          ))}
+                          {service.features.length > 3 && (
+                            <span className="text-xs text-primary font-medium">
+                              +{service.features.length - 3} more
+                            </span>
+                          )}
+                        </div>
+                      )}
+
+                      {/* CTA */}
+                      <div className="flex items-center gap-2 text-primary font-medium text-sm group-hover:gap-3 transition-all">
+                        <span>Learn More</span>
+                        <ArrowRight className="w-4 h-4" />
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
         </div>
       </section>
 
