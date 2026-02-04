@@ -24,6 +24,9 @@ interface Doctor {
   image_url: string | null;
   display_order: number | null;
   is_active: boolean | null;
+  education: string[] | null;
+  awards: string[] | null;
+  gallery_images: string[] | null;
 }
 
 const AdminDoctors = () => {
@@ -41,6 +44,9 @@ const AdminDoctors = () => {
     image_url: "",
     display_order: "0",
     is_active: true,
+    education: "",
+    awards: "",
+    gallery_images: "",
   });
 
   useEffect(() => {
@@ -73,6 +79,9 @@ const AdminDoctors = () => {
         image_url: doctor.image_url || "",
         display_order: doctor.display_order?.toString() || "0",
         is_active: doctor.is_active ?? true,
+        education: doctor.education?.join("\n") || "",
+        awards: doctor.awards?.join("\n") || "",
+        gallery_images: doctor.gallery_images?.join("\n") || "",
       });
     } else {
       setEditingDoctor(null);
@@ -85,9 +94,16 @@ const AdminDoctors = () => {
         image_url: "",
         display_order: "0",
         is_active: true,
+        education: "",
+        awards: "",
+        gallery_images: "",
       });
     }
     setIsDialogOpen(true);
+  };
+
+  const parseMultilineToArray = (text: string): string[] => {
+    return text.split("\n").map(s => s.trim()).filter(s => s.length > 0);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -102,6 +118,9 @@ const AdminDoctors = () => {
       image_url: formData.image_url || null,
       display_order: parseInt(formData.display_order) || 0,
       is_active: formData.is_active,
+      education: parseMultilineToArray(formData.education),
+      awards: parseMultilineToArray(formData.awards),
+      gallery_images: parseMultilineToArray(formData.gallery_images),
     };
 
     let error;
@@ -256,7 +275,7 @@ const AdminDoctors = () => {
 
       {/* Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-lg">
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>{editingDoctor ? "Edit Doctor" : "Add Doctor"}</DialogTitle>
           </DialogHeader>
@@ -324,6 +343,36 @@ const AdminDoctors = () => {
                   value={formData.bio}
                   onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
                   rows={3}
+                />
+              </div>
+              <div className="col-span-2">
+                <Label htmlFor="education">Education (one per line)</Label>
+                <Textarea
+                  id="education"
+                  value={formData.education}
+                  onChange={(e) => setFormData({ ...formData, education: e.target.value })}
+                  rows={3}
+                  placeholder="BDS - Delhi University, 2005&#10;MDS - AIIMS Delhi, 2008"
+                />
+              </div>
+              <div className="col-span-2">
+                <Label htmlFor="awards">Awards & Achievements (one per line)</Label>
+                <Textarea
+                  id="awards"
+                  value={formData.awards}
+                  onChange={(e) => setFormData({ ...formData, awards: e.target.value })}
+                  rows={3}
+                  placeholder="Best Dentist Award 2020&#10;Excellence in Implantology"
+                />
+              </div>
+              <div className="col-span-2">
+                <Label htmlFor="gallery">Gallery Images (one URL per line)</Label>
+                <Textarea
+                  id="gallery"
+                  value={formData.gallery_images}
+                  onChange={(e) => setFormData({ ...formData, gallery_images: e.target.value })}
+                  rows={3}
+                  placeholder="https://example.com/image1.jpg&#10;https://example.com/image2.jpg"
                 />
               </div>
               <div className="col-span-2 flex items-center gap-2">

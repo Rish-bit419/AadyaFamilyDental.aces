@@ -177,10 +177,13 @@ export type Database = {
       }
       doctors: {
         Row: {
+          awards: string[] | null
           bio: string | null
           created_at: string
           display_order: number | null
+          education: string[] | null
           experience_years: number | null
+          gallery_images: string[] | null
           id: string
           image_url: string | null
           is_active: boolean | null
@@ -190,10 +193,13 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          awards?: string[] | null
           bio?: string | null
           created_at?: string
           display_order?: number | null
+          education?: string[] | null
           experience_years?: number | null
+          gallery_images?: string[] | null
           id?: string
           image_url?: string | null
           is_active?: boolean | null
@@ -203,10 +209,13 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          awards?: string[] | null
           bio?: string | null
           created_at?: string
           display_order?: number | null
+          education?: string[] | null
           experience_years?: number | null
+          gallery_images?: string[] | null
           id?: string
           image_url?: string | null
           is_active?: boolean | null

@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
-import { Award, Clock, ArrowRight, User } from "lucide-react";
+import { Clock, ArrowRight, User } from "lucide-react";
 import { SkeletonDoctorCard } from "@/components/ui/skeleton-cards";
+import DoctorDetailModal from "./DoctorDetailModal";
 
 interface Doctor {
   id: string;
@@ -13,11 +14,16 @@ interface Doctor {
   experience_years: number | null;
   bio: string | null;
   image_url: string | null;
+  education: string[] | null;
+  awards: string[] | null;
+  gallery_images: string[] | null;
 }
 
 const DoctorsPreview = () => {
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchDoctors = async () => {
@@ -36,6 +42,11 @@ const DoctorsPreview = () => {
 
     fetchDoctors();
   }, []);
+
+  const handleDoctorClick = (doctor: Doctor) => {
+    setSelectedDoctor(doctor);
+    setIsModalOpen(true);
+  };
 
   if (isLoading) {
     return (
@@ -83,8 +94,9 @@ const DoctorsPreview = () => {
           {doctors.map((doctor, index) => (
             <div
               key={doctor.id}
-              className="group bg-card rounded-3xl overflow-hidden border border-border/50 shadow-soft hover:shadow-medium transition-all duration-300 animate-slide-up interactive-card"
+              className="group bg-card rounded-3xl overflow-hidden border border-border/50 shadow-soft hover:shadow-medium transition-all duration-300 animate-slide-up interactive-card cursor-pointer"
               style={{ animationDelay: `${index * 0.1}s` }}
+              onClick={() => handleDoctorClick(doctor)}
             >
               {/* Image */}
               <div className="aspect-[4/3] bg-gradient-to-br from-teal-light to-secondary relative overflow-hidden">
@@ -146,6 +158,13 @@ const DoctorsPreview = () => {
             </Button>
           </Link>
         </div>
+
+        {/* Doctor Detail Modal */}
+        <DoctorDetailModal
+          doctor={selectedDoctor}
+          open={isModalOpen}
+          onOpenChange={setIsModalOpen}
+        />
       </div>
     </section>
   );
