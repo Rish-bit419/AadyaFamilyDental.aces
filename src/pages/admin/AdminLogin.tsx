@@ -164,10 +164,9 @@ const AdminLogin = () => {
       }
 
       if (data.user) {
-        // Add admin role for this user
-        const { error: roleError } = await supabase.from("user_roles").insert({
-          user_id: data.user.id,
-          role: "admin",
+        // Add admin role for this user using RPC function (bypasses RLS)
+        const { error: roleError } = await supabase.rpc("assign_admin_role", {
+          _user_id: data.user.id,
         });
 
         if (roleError) {
@@ -176,7 +175,7 @@ const AdminLogin = () => {
 
         toast({
           title: "Account created!",
-          description: "Please check your email to verify your account, then sign in.",
+          description: "Your admin account is ready. You can now sign in.",
         });
         setIsSignup(false);
         setFormData({ email: "", password: "", confirmPassword: "", signupCode: "" });
