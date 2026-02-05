@@ -1,7 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Phone, Menu, X, Calendar, MessageCircle } from "lucide-react";
+import { Phone, Menu, X, Calendar, MessageCircle, User } from "lucide-react";
 import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -15,6 +16,7 @@ const navLinks = [
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -23,6 +25,18 @@ const Navbar = () => {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
+      setIsLoggedIn(!!session?.user);
+    });
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setIsLoggedIn(!!session?.user);
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   useEffect(() => {
@@ -70,6 +84,12 @@ const Navbar = () => {
 
             {/* Desktop CTAs */}
             <div className="hidden lg:flex items-center gap-3">
+              <Link to={isLoggedIn ? "/patient/dashboard" : "/patient/auth"}>
+                <Button variant="ghost" size="sm" className="gap-2">
+                  <User className="w-4 h-4" />
+                  <span className="hidden xl:inline">{isLoggedIn ? "My Portal" : "Patient Login"}</span>
+                </Button>
+              </Link>
               <a href="tel:+1234567890">
                 <Button variant="ghost" size="sm" className="gap-2">
                   <Phone className="w-4 h-4" />
@@ -125,6 +145,12 @@ const Navbar = () => {
                   Call Us Now
                 </Button>
               </a>
+              <Link to={isLoggedIn ? "/patient/dashboard" : "/patient/auth"} className="w-full">
+                <Button variant="secondary" className="w-full gap-2">
+                  <User className="w-4 h-4" />
+                  {isLoggedIn ? "My Portal" : "Patient Login"}
+                </Button>
+              </Link>
               <Link to="/book-appointment" className="w-full">
                 <Button className="w-full gap-2 cta-gradient border-0">
                   <Calendar className="w-4 h-4" />

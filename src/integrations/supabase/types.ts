@@ -175,6 +175,39 @@ export type Database = {
         }
         Relationships: []
       }
+      cost_estimates: {
+        Row: {
+          created_at: string
+          id: string
+          notes: string | null
+          patient_email: string | null
+          patient_name: string | null
+          patient_phone: string | null
+          selected_services: Json
+          total_estimate: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          patient_email?: string | null
+          patient_name?: string | null
+          patient_phone?: string | null
+          selected_services: Json
+          total_estimate: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          patient_email?: string | null
+          patient_name?: string | null
+          patient_phone?: string | null
+          selected_services?: Json
+          total_estimate?: number
+        }
+        Relationships: []
+      }
       doctors: {
         Row: {
           awards: string[] | null
@@ -222,6 +255,81 @@ export type Database = {
           name?: string
           qualification?: string
           specialization?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      faqs: {
+        Row: {
+          answer: string
+          category: string | null
+          created_at: string
+          display_order: number | null
+          id: string
+          is_active: boolean | null
+          question: string
+          updated_at: string
+        }
+        Insert: {
+          answer: string
+          category?: string | null
+          created_at?: string
+          display_order?: number | null
+          id?: string
+          is_active?: boolean | null
+          question: string
+          updated_at?: string
+        }
+        Update: {
+          answer?: string
+          category?: string | null
+          created_at?: string
+          display_order?: number | null
+          id?: string
+          is_active?: boolean | null
+          question?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      patient_reviews: {
+        Row: {
+          created_at: string
+          id: string
+          is_approved: boolean | null
+          is_featured: boolean | null
+          patient_email: string | null
+          patient_name: string
+          patient_phone: string | null
+          rating: number
+          review_text: string
+          treatment_type: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_approved?: boolean | null
+          is_featured?: boolean | null
+          patient_email?: string | null
+          patient_name: string
+          patient_phone?: string | null
+          rating?: number
+          review_text: string
+          treatment_type?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_approved?: boolean | null
+          is_featured?: boolean | null
+          patient_email?: string | null
+          patient_name?: string
+          patient_phone?: string | null
+          rating?: number
+          review_text?: string
+          treatment_type?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -346,6 +454,51 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
+        }
+        Relationships: []
+      }
+      virtual_consultations: {
+        Row: {
+          concern_description: string | null
+          consultation_type: string
+          created_at: string
+          id: string
+          meeting_link: string | null
+          patient_email: string
+          patient_name: string
+          patient_phone: string
+          preferred_date: string
+          preferred_time: string
+          status: string | null
+          updated_at: string
+        }
+        Insert: {
+          concern_description?: string | null
+          consultation_type?: string
+          created_at?: string
+          id?: string
+          meeting_link?: string | null
+          patient_email: string
+          patient_name: string
+          patient_phone: string
+          preferred_date: string
+          preferred_time: string
+          status?: string | null
+          updated_at?: string
+        }
+        Update: {
+          concern_description?: string | null
+          consultation_type?: string
+          created_at?: string
+          id?: string
+          meeting_link?: string | null
+          patient_email?: string
+          patient_name?: string
+          patient_phone?: string
+          preferred_date?: string
+          preferred_time?: string
+          status?: string | null
+          updated_at?: string
         }
         Relationships: []
       }
