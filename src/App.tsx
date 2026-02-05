@@ -13,6 +13,12 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import BookAppointment from "./pages/BookAppointment";
 import Contact from "./pages/Contact";
+import PatientAuth from "./pages/PatientAuth";
+import PatientDashboard from "./pages/PatientDashboard";
+import CostCalculator from "./pages/CostCalculator";
+import VirtualConsultation from "./pages/VirtualConsultation";
+import SmileSimulator from "./pages/SmileSimulator";
+import SubmitReview from "./pages/SubmitReview";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminLayout from "./components/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -45,6 +51,16 @@ const App = () => (
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/book-appointment" element={<BookAppointment />} />
           <Route path="/contact" element={<Contact />} />
+          
+          {/* Patient Portal */}
+          <Route path="/patient/auth" element={<PatientAuth />} />
+          <Route path="/patient/dashboard" element={<PatientDashboard />} />
+          
+          {/* Interactive Tools */}
+          <Route path="/cost-calculator" element={<CostCalculator />} />
+          <Route path="/virtual-consultation" element={<VirtualConsultation />} />
+          <Route path="/smile-simulator" element={<SmileSimulator />} />
+          <Route path="/submit-review" element={<SubmitReview />} />
           
           {/* Admin Routes */}
           <Route path="/admin/login" element={<AdminLogin />} />
