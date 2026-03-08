@@ -15,9 +15,7 @@ import BookAppointment from "./pages/BookAppointment";
 import Contact from "./pages/Contact";
 import PatientAuth from "./pages/PatientAuth";
 import PatientDashboard from "./pages/PatientDashboard";
-import CostCalculator from "./pages/CostCalculator";
 import VirtualConsultation from "./pages/VirtualConsultation";
-import SmileSimulator from "./pages/SmileSimulator";
 import SubmitReview from "./pages/SubmitReview";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminLayout from "./components/admin/AdminLayout";
@@ -57,9 +55,7 @@ const App = () => (
           <Route path="/patient/dashboard" element={<PatientDashboard />} />
           
           {/* Interactive Tools */}
-          <Route path="/cost-calculator" element={<CostCalculator />} />
           <Route path="/virtual-consultation" element={<VirtualConsultation />} />
-          <Route path="/smile-simulator" element={<SmileSimulator />} />
           <Route path="/submit-review" element={<SubmitReview />} />
           
           {/* Admin Routes */}

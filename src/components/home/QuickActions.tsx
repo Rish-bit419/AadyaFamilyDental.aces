@@ -1,13 +1,11 @@
  import { Link } from "react-router-dom";
- import { Video, Calculator, Smile, Star, Calendar } from "lucide-react";
- 
- const actions = [
-   { icon: Calendar, label: "Book Appointment", href: "/book-appointment", color: "from-primary to-teal-dark" },
-   { icon: Video, label: "Virtual Consultation", href: "/virtual-consultation", color: "from-accent to-coral" },
-   { icon: Calculator, label: "Cost Calculator", href: "/cost-calculator", color: "from-teal-dark to-primary" },
-   { icon: Smile, label: "Smile Simulator", href: "/smile-simulator", color: "from-coral to-accent" },
-   { icon: Star, label: "Leave Review", href: "/submit-review", color: "from-yellow-400 to-yellow-600" },
- ];
+import { Video, Star, Calendar } from "lucide-react";
+
+const actions = [
+  { icon: Calendar, label: "Book Appointment", href: "/book-appointment", color: "from-primary to-teal-dark" },
+  { icon: Video, label: "Virtual Consultation", href: "/virtual-consultation", color: "from-accent to-coral" },
+  { icon: Star, label: "Leave Review", href: "/submit-review", color: "from-yellow-400 to-yellow-600" },
+];
  
  const QuickActions = () => {
    return (
