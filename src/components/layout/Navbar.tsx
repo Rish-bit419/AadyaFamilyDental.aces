@@ -152,6 +152,14 @@ const Navbar = () => {
             </div>
             
             <div className="flex flex-col gap-3 mt-6 pt-6 border-t border-border">
+              <Button
+                variant="outline"
+                className="w-full gap-2"
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              >
+                {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                {theme === "dark" ? "Light Mode" : "Dark Mode"}
+              </Button>
               <a href="tel:+919876543210" className="w-full">
                 <Button variant="outline" className="w-full gap-2">
                   <Phone className="w-4 h-4" />
