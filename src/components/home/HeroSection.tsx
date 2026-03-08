@@ -6,13 +6,10 @@ import { Phone, Calendar, Award, Sparkles, CheckCircle, Star, Users, Clock } fro
 const HeroSection = () => {
   return (
     <section className="relative bg-gradient-to-br from-primary via-teal-dark to-primary overflow-hidden min-h-screen">
-      {/* Animated Background Elements */}
+      {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary-foreground/10 via-transparent to-transparent" />
-        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-primary-foreground/5 rounded-full blur-3xl animate-pulse-soft" />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-foreground/5 rounded-full blur-2xl animate-float" />
-        <div className="absolute top-1/2 right-1/4 w-72 h-72 bg-primary-foreground/3 rounded-full blur-xl animate-pulse-soft" style={{ animationDelay: "1s" }} />
-        <div className="absolute bottom-1/4 left-1/3 w-48 h-48 bg-accent/10 rounded-full blur-xl animate-float" style={{ animationDelay: "2s" }} />
+        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-primary-foreground/5 rounded-full blur-3xl" />
       </div>
 
       <div className="container-custom relative z-10">
