@@ -172,9 +172,9 @@
                        <Label htmlFor="fullName">Full Name</Label>
                        <div className="relative">
                          <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                         <Input
-                           id="fullName"
-                           placeholder="John Doe"
+                          <Input
+                            id="fullName"
+                            placeholder="Rahul Sharma"
                            className={`pl-10 ${errors.fullName ? "border-destructive" : ""}`}
                            value={formData.fullName}
                            onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}

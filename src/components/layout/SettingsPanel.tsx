@@ -24,16 +24,28 @@ const SettingsPanel = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
+  const loadUserData = async (userId: string, fallbackName: string) => {
+    // Try to get name from profiles table first
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("full_name")
+      .eq("id", userId)
+      .single();
+    setUserName(profile?.full_name || fallbackName);
+
+    const { data } = await supabase.rpc("has_role", {
+      _user_id: userId,
+      _role: "admin",
+    });
+    setIsAdmin(!!data);
+  };
+
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_, session) => {
       setIsLoggedIn(!!session?.user);
       if (session?.user) {
-        setUserName(session.user.user_metadata?.full_name || session.user.email || "Patient");
-        const { data } = await supabase.rpc("has_role", {
-          _user_id: session.user.id,
-          _role: "admin",
-        });
-        setIsAdmin(!!data);
+        const fallback = session.user.user_metadata?.full_name || session.user.email || "Patient";
+        await loadUserData(session.user.id, fallback);
       } else {
         setUserName(null);
         setIsAdmin(false);
@@ -43,12 +55,8 @@ const SettingsPanel = () => {
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       setIsLoggedIn(!!session?.user);
       if (session?.user) {
-        setUserName(session.user.user_metadata?.full_name || session.user.email || "Patient");
-        const { data } = await supabase.rpc("has_role", {
-          _user_id: session.user.id,
-          _role: "admin",
-        });
-        setIsAdmin(!!data);
+        const fallback = session.user.user_metadata?.full_name || session.user.email || "Patient";
+        await loadUserData(session.user.id, fallback);
       }
     });
 
