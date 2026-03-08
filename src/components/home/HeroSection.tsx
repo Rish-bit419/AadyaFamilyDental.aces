@@ -70,7 +70,7 @@ const HeroSection = () => {
 
       {/* Content */}
       <div className="container-custom relative z-10">
-        <div className="min-h-screen flex items-center py-24 lg:py-32 px-4 md:px-8">
+        <div className="min-h-screen flex items-center py-24 lg:py-32 px-4 md:px-8 -mt-16 md:-mt-24">
           <div className="max-w-2xl space-y-6 lg:space-y-8">
             {/* Badge */}
             <div className="inline-flex items-center gap-2 bg-primary-foreground/15 backdrop-blur-md rounded-full px-5 py-2.5 border border-primary-foreground/20">
