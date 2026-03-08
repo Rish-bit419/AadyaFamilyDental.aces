@@ -86,7 +86,7 @@ const HeroSection = () => {
               <div className="absolute -bottom-4 -left-4 lg:-bottom-6 lg:-left-6 glass-effect rounded-2xl p-4 lg:p-5 shadow-xl border border-border/50 animate-slide-up hover:scale-105 transition-transform cursor-default z-10" style={{ animationDelay: "0.5s" }}>
                 <div className="flex items-center gap-3 lg:gap-4">
                   <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-xl bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center shadow-lg animate-pulse-soft">
-                    <Star className="w-6 h-6 lg:w-7 lg:h-7 text-white fill-white" />
+                    <Star className="w-6 h-6 lg:w-7 lg:h-7 text-primary-foreground fill-primary-foreground" />
                   </div>
                   <div>
                     <p className="font-bold text-foreground text-lg lg:text-xl">4.9/5 Rating</p>
