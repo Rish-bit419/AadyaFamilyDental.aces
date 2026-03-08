@@ -55,9 +55,7 @@ const App = () => (
           <Route path="/patient/dashboard" element={<PatientDashboard />} />
           
           {/* Interactive Tools */}
-          <Route path="/cost-calculator" element={<CostCalculator />} />
           <Route path="/virtual-consultation" element={<VirtualConsultation />} />
-          <Route path="/smile-simulator" element={<SmileSimulator />} />
           <Route path="/submit-review" element={<SubmitReview />} />
           
           {/* Admin Routes */}
