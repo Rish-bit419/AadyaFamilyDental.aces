@@ -6,6 +6,15 @@ import DoctorDetailModal from "./DoctorDetailModal";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import doctorSarah from "@/assets/doctor-sarah.jpg";
+import doctorMichael from "@/assets/doctor-michael.jpg";
+import doctorEmily from "@/assets/doctor-emily.jpg";
+
+const localDoctorImages: Record<string, string> = {
+  "doctor-sarah": doctorSarah,
+  "doctor-michael": doctorMichael,
+  "doctor-emily": doctorEmily,
+};
 
 interface Doctor {
   id: string;
@@ -80,15 +89,19 @@ const DoctorsPreview = () => {
               onClick={() => handleDoctorClick(doctor)}
             >
               <div className="aspect-[4/3] bg-gradient-to-br from-teal-light to-secondary relative overflow-hidden">
-                {doctor.image_url ? (
-                  <img src={doctor.image_url} alt={doctor.name} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <div className="w-24 h-24 rounded-full bg-primary/20 flex items-center justify-center">
-                      <User className="w-12 h-12 text-primary" />
+                {(() => {
+                  const localKey = Object.keys(localDoctorImages).find(k => doctor.image_url?.includes(k) || doctor.name.toLowerCase().includes(k.replace("doctor-", "")));
+                  const imgSrc = localKey ? localDoctorImages[localKey] : doctor.image_url;
+                  return imgSrc ? (
+                    <img src={imgSrc} alt={doctor.name} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <div className="w-24 h-24 rounded-full bg-primary/20 flex items-center justify-center">
+                        <User className="w-12 h-12 text-primary" />
+                      </div>
                     </div>
-                  </div>
-                )}
+                  );
+                })()}
                 {doctor.experience_years && (
                   <div className="absolute top-4 right-4 bg-card/90 backdrop-blur-sm rounded-full px-3 py-1.5 flex items-center gap-1.5 shadow-md">
                     <Clock className="w-4 h-4 text-primary" />

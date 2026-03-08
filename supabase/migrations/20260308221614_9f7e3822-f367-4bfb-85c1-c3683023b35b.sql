@@ -1,0 +1,3 @@
+UPDATE public.doctors SET image_url = 'https://zbjowhimsjqdespvfifp.supabase.co/storage/v1/object/public/clinic-images/doctors%2Fdoctor-sarah.jpg' WHERE id = '6f5e71f2-4aa9-4a2b-a0b9-9b1c30c25983';
+UPDATE public.doctors SET image_url = 'https://zbjowhimsjqdespvfifp.supabase.co/storage/v1/object/public/clinic-images/doctors%2Fdoctor-michael.jpg' WHERE id = '7e81483e-2b58-4b7b-a226-cf0b52ec2864';
+UPDATE public.doctors SET image_url = 'https://zbjowhimsjqdespvfifp.supabase.co/storage/v1/object/public/clinic-images/doctors%2Fdoctor-emily.jpg' WHERE id = '201733da-3fca-4c14-a5b2-374b0b1d7533';
