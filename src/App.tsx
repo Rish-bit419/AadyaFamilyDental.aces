@@ -27,6 +27,7 @@ import AdminGallery from "./pages/admin/AdminGallery";
 import AdminTestimonials from "./pages/admin/AdminTestimonials";
 import AdminBlog from "./pages/admin/AdminBlog";
 import AdminSettings from "./pages/admin/AdminSettings";
+import AdminLocations from "./pages/admin/AdminLocations";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
