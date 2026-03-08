@@ -114,7 +114,7 @@ const LocationSection = () => {
                 </Button>
               </Link>
               <a
-                href={`https://wa.me/${(settings.whatsapp || "1234567890").replace(/\D/g, "")}`}
+                href={`https://wa.me/91${(settings.whatsapp || "9876543210").replace(/\D/g, "")}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
