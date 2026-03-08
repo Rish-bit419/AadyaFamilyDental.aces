@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Phone, Menu, X, Calendar, User } from "lucide-react";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import SettingsPanel from "./SettingsPanel";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -54,16 +55,19 @@ const Navbar = () => {
       >
         <div className="container-custom">
           <div className="flex items-center justify-between h-20 px-4 md:px-8">
-            {/* Logo */}
-            <Link to="/" className="flex items-center gap-3 group">
-              <div className="w-11 h-11 rounded-xl bg-primary flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
-                <span className="text-primary-foreground font-display font-bold text-xl">D</span>
-              </div>
-              <div>
-                <span className="font-display font-bold text-xl text-foreground">DentalCare</span>
-                <p className="text-xs text-muted-foreground -mt-0.5">Premium Dental Clinic</p>
-              </div>
-            </Link>
+            {/* Settings Gear + Logo */}
+            <div className="flex items-center gap-2">
+              <SettingsPanel />
+              <Link to="/" className="flex items-center gap-3 group">
+                <div className="w-11 h-11 rounded-xl bg-primary flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
+                  <span className="text-primary-foreground font-display font-bold text-xl">D</span>
+                </div>
+                <div>
+                  <span className="font-display font-bold text-xl text-foreground">DentalCare</span>
+                  <p className="text-xs text-muted-foreground -mt-0.5">Premium Dental Clinic</p>
+                </div>
+              </Link>
+            </div>
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center gap-1">
