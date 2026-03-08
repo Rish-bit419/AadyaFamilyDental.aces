@@ -141,7 +141,7 @@ const Navbar = () => {
             </div>
             
             <div className="flex flex-col gap-3 mt-6 pt-6 border-t border-border">
-              <a href="tel:+1234567890" className="w-full">
+              <a href="tel:+919876543210" className="w-full">
                 <Button variant="outline" className="w-full gap-2">
                   <Phone className="w-4 h-4" />
                   Call Us Now

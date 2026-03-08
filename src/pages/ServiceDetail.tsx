@@ -135,7 +135,7 @@ const ServiceDetail = () => {
                     Book This Treatment
                   </Button>
                 </Link>
-                <a href="tel:+1234567890">
+                <a href="tel:+919876543210">
                   <Button variant="outline" size="lg">
                     <Phone className="w-5 h-5 mr-2" />
                     Call to Inquire

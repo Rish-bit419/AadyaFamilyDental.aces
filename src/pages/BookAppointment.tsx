@@ -296,7 +296,7 @@ const BookAppointment = () => {
                   <MessageCircle className="w-5 h-5 mr-2" />
                   {isLoading ? "Submitting..." : "Book via WhatsApp"}
                 </Button>
-                <a href="tel:+1234567890" className="flex-1">
+                <a href="tel:+919876543210" className="flex-1">
                   <Button type="button" variant="outline" size="xl" className="w-full">
                     <Phone className="w-5 h-5 mr-2" />
                     Call to Book

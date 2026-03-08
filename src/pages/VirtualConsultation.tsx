@@ -200,10 +200,10 @@
                        <PhoneIcon className="w-4 h-4 text-muted-foreground" />
                        Phone Number *
                      </Label>
-                     <Input
-                       id="phone"
-                       type="tel"
-                       placeholder="(123) 456-7890"
+                      <Input
+                        id="phone"
+                        type="tel"
+                        placeholder="+91 98765 43210"
                        value={formData.phone}
                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                        className={errors.phone ? "border-destructive" : ""}
