@@ -1,17 +1,18 @@
  import { Link } from "react-router-dom";
-import { Video, Star, Calendar } from "lucide-react";
+import { Video, Star, Calendar, Stethoscope } from "lucide-react";
 
 const actions = [
   { icon: Calendar, label: "Book Appointment", href: "/book-appointment", color: "from-primary to-teal-dark" },
   { icon: Video, label: "Virtual Consultation", href: "/virtual-consultation", color: "from-accent to-coral" },
+  { icon: Stethoscope, label: "Our Services", href: "/services", color: "from-teal-dark to-primary" },
   { icon: Star, label: "Leave Review", href: "/submit-review", color: "from-yellow-400 to-yellow-600" },
 ];
- 
- const QuickActions = () => {
-   return (
-     <section className="py-8 -mt-8 relative z-20">
-       <div className="container-custom px-4">
-         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+
+const QuickActions = () => {
+  return (
+    <section className="py-8 -mt-8 relative z-20">
+      <div className="container-custom px-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
            {actions.map((action, index) => (
              <Link
                key={index}

@@ -59,7 +59,7 @@ const Navbar = () => {
               <div className="w-11 h-11 rounded-xl bg-primary flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
                 <span className="text-primary-foreground font-display font-bold text-xl">D</span>
               </div>
-              <div className="hidden sm:block">
+              <div>
                 <span className="font-display font-bold text-xl text-foreground">DentalCare</span>
                 <p className="text-xs text-muted-foreground -mt-0.5">Premium Dental Clinic</p>
               </div>
