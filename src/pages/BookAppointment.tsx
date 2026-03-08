@@ -93,15 +93,6 @@ const BookAppointment = () => {
       if (error) throw error;
 
       setIsSubmitted(true);
-      
-      // Create WhatsApp message
-      const whatsappMessage = encodeURIComponent(
-        `Hello! I'd like to book an appointment.\n\nName: ${formData.name}\nPhone: ${formData.phone}\nService: ${formData.service}\nDate: ${formData.date}\nTime: ${formData.time}\n${formData.message ? `Message: ${formData.message}` : ""}`
-      );
-      
-      setTimeout(() => {
-        window.open(`https://wa.me/919876543210?text=${whatsappMessage}`, "_blank");
-      }, 2000);
     } catch (error) {
       toast({
         title: "Error",
@@ -126,7 +117,7 @@ const BookAppointment = () => {
                 Appointment Request Sent!
               </h1>
               <p className="text-muted-foreground mb-6">
-                Thank you for booking with us. We're redirecting you to WhatsApp to confirm your appointment details. Our team will get back to you within 24 hours.
+                Thank you for booking with us. Our team will get back to you within 24 hours to confirm your appointment.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button variant="default" onClick={() => setIsSubmitted(false)}>
