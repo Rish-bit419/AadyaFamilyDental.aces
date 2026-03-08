@@ -1,7 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Phone, Menu, X, Calendar, User } from "lucide-react";
+import { Phone, Menu, X, Calendar, User, Moon, Sun } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
 import { supabase } from "@/integrations/supabase/client";
 import SettingsPanel from "./SettingsPanel";
 
@@ -19,6 +20,7 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const location = useLocation();
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -88,6 +90,13 @@ const Navbar = () => {
 
             {/* Desktop CTAs */}
             <div className="hidden lg:flex items-center gap-3">
+              <button
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="p-2 rounded-lg text-foreground/80 hover:text-primary hover:bg-primary/5 transition-colors"
+                aria-label="Toggle theme"
+              >
+                {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              </button>
               <Link to={isLoggedIn ? "/patient/dashboard" : "/patient/auth"}>
                 <Button variant="ghost" size="sm" className="gap-2">
                   <User className="w-4 h-4" />
@@ -143,6 +152,14 @@ const Navbar = () => {
             </div>
             
             <div className="flex flex-col gap-3 mt-6 pt-6 border-t border-border">
+              <Button
+                variant="outline"
+                className="w-full gap-2"
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              >
+                {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                {theme === "dark" ? "Light Mode" : "Dark Mode"}
+              </Button>
               <a href="tel:+919876543210" className="w-full">
                 <Button variant="outline" className="w-full gap-2">
                   <Phone className="w-4 h-4" />
