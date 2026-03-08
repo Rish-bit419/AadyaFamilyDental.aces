@@ -6,6 +6,15 @@ import DoctorDetailModal from "./DoctorDetailModal";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import doctorSarah from "@/assets/doctor-sarah.jpg";
+import doctorMichael from "@/assets/doctor-michael.jpg";
+import doctorEmily from "@/assets/doctor-emily.jpg";
+
+const localDoctorImages: Record<string, string> = {
+  "doctor-sarah": doctorSarah,
+  "doctor-michael": doctorMichael,
+  "doctor-emily": doctorEmily,
+};
 
 interface Doctor {
   id: string;
