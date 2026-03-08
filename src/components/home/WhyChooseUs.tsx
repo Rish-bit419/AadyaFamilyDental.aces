@@ -10,10 +10,10 @@ const features = [
   },
   {
     icon: Clock,
-    stat: "7",
+    stat: "6",
     statLabel: "Days/Week",
-    title: "Always Open",
-    description: "Evenings and weekends available to fit your schedule.",
+    title: "Mon – Sat",
+    description: "Open 6 days a week with flexible morning & evening slots.",
   },
   {
     icon: Users,
