@@ -96,8 +96,6 @@ const Navbar = () => {
                   <span className="hidden xl:inline">+91 98765 43210</span>
                 </Button>
               </a>
-                </Button>
-              </a>
               <Link to="/book-appointment">
                 <Button size="sm" className="gap-2 cta-gradient border-0">
                   <Calendar className="w-4 h-4" />
