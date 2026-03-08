@@ -184,10 +184,10 @@
                        <Mail className="w-4 h-4 text-muted-foreground" />
                        Email Address *
                      </Label>
-                     <Input
-                       id="email"
-                       type="email"
-                       placeholder="john@example.com"
+                      <Input
+                        id="email"
+                        type="email"
+                        placeholder="rahul@example.com"
                        value={formData.email}
                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                        className={errors.email ? "border-destructive" : ""}
