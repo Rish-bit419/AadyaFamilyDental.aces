@@ -48,6 +48,7 @@ const WhyChooseUs = () => {
               <img
                 src="/clinic-interior.jpg"
                 alt="Modern dental clinic interior"
+                loading="lazy"
                 className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-105 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
                 onLoad={() => setImageLoaded(true)}
                 onError={(e) => {
