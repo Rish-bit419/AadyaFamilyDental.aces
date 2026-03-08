@@ -29,26 +29,26 @@ const LocationSection = () => {
     {
       icon: MapPin,
       title: "Our Address",
-      content: settings.address || "123 Dental Street, Medical District, City 12345",
+      content: settings.address || "#42, 1st Floor, MG Road, Bangalore, Karnataka 560001",
       action: null,
     },
     {
       icon: Clock,
       title: "Working Hours",
-      content: "Mon - Fri: 9:00 AM - 7:00 PM\nSat: 9:00 AM - 5:00 PM\nSun: Closed",
+      content: "Mon - Sat: 9:00 AM - 8:00 PM\nSun: 10:00 AM - 2:00 PM",
       action: null,
     },
     {
       icon: Phone,
       title: "Phone",
-      content: settings.phone || "+1 (234) 567-890",
-      action: `tel:${settings.phone || "+1234567890"}`,
+      content: settings.phone || "+91 98765 43210",
+      action: `tel:${settings.phone || "+919876543210"}`,
     },
     {
       icon: Mail,
       title: "Email",
-      content: settings.email || "info@dentalcare.com",
-      action: `mailto:${settings.email || "info@dentalcare.com"}`,
+      content: settings.email || "info@dentalcare.in",
+      action: `mailto:${settings.email || "info@dentalcare.in"}`,
     },
   ];
 
