@@ -1,74 +1,86 @@
-import { Award, Clock, Users, Star } from "lucide-react";
+import { LayoutGrid, MonitorSmartphone, Award, ShieldCheck } from "lucide-react";
+import dentistImage from "@/assets/dentist-treating.jpg";
 
 const features = [
   {
+    icon: LayoutGrid,
+    title: "Expert Care Team",
+    description: "Highly qualified dentists with years of experience in all dental specialties",
+  },
+  {
+    icon: MonitorSmartphone,
+    title: "Advanced Technology",
+    description: "Latest equipment including digital X-rays, laser dentistry, and modern sterilization",
+  },
+  {
     icon: Award,
-    stat: "15+",
-    statLabel: "Years",
-    title: "Experienced Team",
-    description: "Ongoing training in the latest dental techniques and technologies.",
+    title: "Premium Experience",
+    description: "Comfortable clinic environment designed to make your visit stress-free and pleasant",
   },
   {
-    icon: Clock,
-    stat: "6",
-    statLabel: "Days/Week",
-    title: "Mon – Sat",
-    description: "Open 6 days a week with flexible morning & evening slots.",
-  },
-  {
-    icon: Users,
-    stat: "10K+",
-    statLabel: "Patients",
-    title: "Family-Friendly",
-    description: "Caring for every age group — toddlers to seniors.",
-  },
-  {
-    icon: Star,
-    stat: "4.9",
-    statLabel: "Rating",
-    title: "Top Rated",
-    description: "Trusted by thousands with near-perfect reviews.",
+    icon: ShieldCheck,
+    title: "Safe & Hygienic",
+    description: "Strict sterilization protocols and infection control standards for your safety",
   },
 ];
 
 const WhyChooseUs = () => {
   return (
-    <section className="py-20 md:py-28 bg-secondary">
+    <section className="py-20 md:py-28 bg-background">
       <div className="container-custom">
-        {/* Header */}
-        <div className="text-center mb-14">
-          <span className="text-sm font-semibold text-primary uppercase tracking-[0.15em]">
-            Why Choose Us
-          </span>
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mt-3">
-            Your Smile, Our Priority
-          </h2>
-        </div>
-
-        {/* Feature strip */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-          {features.map((feature) => (
-            <div
-              key={feature.title}
-              className="group text-center p-6 md:p-8 rounded-2xl bg-card border border-border hover:border-primary/40 hover:shadow-glow transition-all duration-300"
-            >
-              {/* Big stat */}
-              <p className="text-4xl md:text-5xl font-bold text-primary mb-1 group-hover:scale-110 transition-transform duration-300 inline-block">
-                {feature.stat}
-              </p>
-              <p className="text-xs text-muted-foreground uppercase tracking-wider mb-5">
-                {feature.statLabel}
-              </p>
-
-              {/* Icon */}
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary transition-colors duration-300">
-                <feature.icon className="w-5 h-5 text-primary group-hover:text-primary-foreground transition-colors duration-300" />
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Left - Image with badge */}
+          <div className="relative">
+            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-8 lg:hidden">
+              Why Choose Aadya Dental?
+            </h2>
+            <div className="relative">
+              <img
+                src={dentistImage}
+                alt="Dentist treating a patient at Aadya Dental"
+                className="w-full max-w-lg rounded-2xl object-cover aspect-[4/5] shadow-medium"
+              />
+              {/* Floating badge */}
+              <div className="absolute top-6 right-0 lg:-right-8 bg-primary text-primary-foreground rounded-2xl px-6 py-5 shadow-lg max-w-[220px]">
+                <p className="text-lg font-semibold leading-snug">
+                  Bengaluru's trusted dental care partner
+                </p>
               </div>
-
-              <h3 className="font-semibold text-foreground mb-2">{feature.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
             </div>
-          ))}
+          </div>
+
+          {/* Right - Features timeline */}
+          <div>
+            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-12 hidden lg:block">
+              Why Choose Aadya Dental?
+            </h2>
+
+            <div className="relative">
+              {/* Vertical line */}
+              <div className="absolute left-6 top-0 bottom-0 w-px bg-border" />
+
+              <div className="space-y-10">
+                {features.map((feature, index) => (
+                  <div key={feature.title} className="flex items-start gap-6 relative animate-slide-up" style={{ animationDelay: `${index * 0.1}s` }}>
+                    {/* Icon circle */}
+                    <div className="relative z-10 w-12 h-12 rounded-full bg-card border-2 border-border flex items-center justify-center flex-shrink-0 shadow-soft">
+                      <feature.icon className="w-5 h-5 text-primary" />
+                    </div>
+
+                    {/* Text */}
+                    <div className="pt-1">
+                      <h3 className="font-display text-lg font-bold text-foreground mb-1">
+                        {feature.title}
+                      </h3>
+                      <p className="text-muted-foreground leading-relaxed">
+                        {feature.description}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
