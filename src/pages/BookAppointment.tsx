@@ -132,7 +132,7 @@ const BookAppointment = () => {
                 <Button variant="default" onClick={() => setIsSubmitted(false)}>
                   Book Another Appointment
                 </Button>
-                <a href="tel:+1234567890">
+                <a href="tel:+919876543210">
                   <Button variant="outline">
                     <Phone className="w-4 h-4 mr-2" />
                     Call Us Instead
