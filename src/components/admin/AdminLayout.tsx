@@ -14,7 +14,8 @@ import {
   Users,
   Image,
   MessageSquare,
-  FileText
+  FileText,
+  MapPin
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
