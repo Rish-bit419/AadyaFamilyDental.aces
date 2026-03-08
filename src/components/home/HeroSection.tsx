@@ -1,62 +1,140 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Phone, Calendar, Award, Sparkles, CheckCircle, Star, Users, Clock } from "lucide-react";
+import { Phone, Calendar, Award, CheckCircle, Star, Users, Clock, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useEffect, useCallback } from "react";
+import heroSlide1 from "@/assets/hero-slide-1.jpg";
+import heroSlide2 from "@/assets/hero-slide-2.jpg";
+import heroSlide3 from "@/assets/hero-slide-3.jpg";
 
+const slides = [
+  {
+    image: heroSlide1,
+    title: "Transform Your",
+    highlight: "Smile Today",
+    description: "Experience world-class dental treatments with our team of specialists. We combine cutting-edge technology with compassionate care.",
+  },
+  {
+    image: heroSlide2,
+    title: "Family Dental",
+    highlight: "Care Experts",
+    description: "From kids to grandparents — comprehensive dental care for every member of your family under one roof.",
+  },
+  {
+    image: heroSlide3,
+    title: "Advanced",
+    highlight: "Treatments",
+    description: "State-of-the-art technology meets personalized care. Painless procedures with lasting results you'll love.",
+  },
+];
 
 const HeroSection = () => {
-  return (
-    <section className="relative bg-gradient-to-br from-primary via-teal-dark to-primary overflow-hidden min-h-screen">
-      {/* Background Elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary-foreground/10 via-transparent to-transparent" />
-        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-primary-foreground/5 rounded-full blur-3xl" />
-      </div>
+  const [current, setCurrent] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
+  const goTo = useCallback((index: number) => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrent(index);
+    setTimeout(() => setIsTransitioning(false), 700);
+  }, [isTransitioning]);
+
+  const next = useCallback(() => goTo((current + 1) % slides.length), [current, goTo]);
+  const prev = useCallback(() => goTo((current - 1 + slides.length) % slides.length), [current, goTo]);
+
+  useEffect(() => {
+    const timer = setInterval(next, 5000);
+    return () => clearInterval(timer);
+  }, [next]);
+
+  return (
+    <section className="relative min-h-screen overflow-hidden">
+      {/* Slideshow Background */}
+      {slides.map((slide, i) => (
+        <div
+          key={i}
+          className="absolute inset-0 transition-opacity duration-700 ease-in-out"
+          style={{ opacity: current === i ? 1 : 0, zIndex: current === i ? 1 : 0 }}
+        >
+          <img
+            src={slide.image}
+            alt={`${slide.title} ${slide.highlight}`}
+            className="w-full h-full object-cover"
+            fetchPriority={i === 0 ? "high" : "low"}
+            loading={i === 0 ? "eager" : "lazy"}
+          />
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/50 to-transparent" />
+          <div className="absolute inset-0 bg-primary/30 mix-blend-multiply" />
+        </div>
+      ))}
+
+      {/* Content */}
       <div className="container-custom relative z-10">
-        <div className="min-h-screen flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-16 py-24 lg:py-32 px-4 md:px-8">
-          {/* Content */}
-          <div className="flex-1 text-center lg:text-left space-y-6 lg:space-y-8 animate-slide-up">
-            <div className="inline-flex items-center gap-2 bg-primary-foreground/15 backdrop-blur-sm rounded-full px-5 py-2.5 border border-primary-foreground/20 hover:bg-primary-foreground/20 transition-colors cursor-default">
-              <Sparkles className="w-4 h-4 text-primary-foreground animate-pulse-soft" />
+        <div className="min-h-screen flex items-center py-24 lg:py-32 px-4 md:px-8">
+          <div className="max-w-2xl space-y-6 lg:space-y-8">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 bg-primary-foreground/15 backdrop-blur-md rounded-full px-5 py-2.5 border border-primary-foreground/20">
+              <Star className="w-4 h-4 text-accent fill-accent" />
               <span className="text-sm font-semibold text-primary-foreground">Premium Dental Care</span>
             </div>
 
-            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-primary-foreground leading-[1.1]">
-              Transform Your
-              <span className="block bg-gradient-to-r from-primary-foreground via-primary-foreground/90 to-primary-foreground bg-clip-text mt-2">
-                Smile Today
-              </span>
-            </h1>
-
-            <p className="text-base md:text-lg lg:text-xl text-primary-foreground/85 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-              Experience world-class dental treatments with our team of specialists. 
-              We combine cutting-edge technology with compassionate care.
-            </p>
-
-            {/* Trust Points */}
-            <div className="flex flex-wrap gap-4 items-center justify-center lg:justify-start text-primary-foreground/80">
-              <div className="flex items-center gap-2 group cursor-default bg-primary-foreground/10 rounded-full px-4 py-2 hover:bg-primary-foreground/15 transition-colors">
-                <CheckCircle className="w-4 h-4 group-hover:scale-110 transition-transform text-primary-foreground" />
-                <span className="text-sm font-medium">15+ Years</span>
-              </div>
-              <div className="flex items-center gap-2 group cursor-default bg-primary-foreground/10 rounded-full px-4 py-2 hover:bg-primary-foreground/15 transition-colors">
-                <Users className="w-4 h-4 group-hover:scale-110 transition-transform text-primary-foreground" />
-                <span className="text-sm font-medium">10,000+ Patients</span>
-              </div>
-              <div className="flex items-center gap-2 group cursor-default bg-primary-foreground/10 rounded-full px-4 py-2 hover:bg-primary-foreground/15 transition-colors">
-                <Star className="w-4 h-4 group-hover:scale-110 transition-transform text-primary-foreground" />
-                <span className="text-sm font-medium">4.9★ Rating</span>
-              </div>
+            {/* Title with slide transition */}
+            <div className="relative h-[160px] md:h-[180px] lg:h-[200px]">
+              {slides.map((slide, i) => (
+                <h1
+                  key={i}
+                  className="absolute inset-0 font-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-primary-foreground leading-[1.1] transition-all duration-700"
+                  style={{
+                    opacity: current === i ? 1 : 0,
+                    transform: current === i ? "translateY(0)" : "translateY(20px)",
+                  }}
+                >
+                  {slide.title}
+                  <span className="block mt-2 text-accent">{slide.highlight}</span>
+                </h1>
+              ))}
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
+            {/* Description with slide transition */}
+            <div className="relative h-[72px] md:h-[56px]">
+              {slides.map((slide, i) => (
+                <p
+                  key={i}
+                  className="absolute inset-0 text-base md:text-lg text-primary-foreground/85 leading-relaxed transition-all duration-700 delay-100"
+                  style={{
+                    opacity: current === i ? 1 : 0,
+                    transform: current === i ? "translateY(0)" : "translateY(10px)",
+                  }}
+                >
+                  {slide.description}
+                </p>
+              ))}
+            </div>
+
+            {/* Trust Points */}
+            <div className="flex flex-wrap gap-3 items-center">
+              {[
+                { icon: CheckCircle, text: "15+ Years" },
+                { icon: Users, text: "10,000+ Patients" },
+                { icon: Star, text: "4.9★ Rating" },
+                { icon: Clock, text: "Same Day Appointments" },
+              ].map(({ icon: Icon, text }) => (
+                <div key={text} className="flex items-center gap-2 bg-primary-foreground/10 backdrop-blur-sm rounded-full px-4 py-2 border border-primary-foreground/10">
+                  <Icon className="w-3.5 h-3.5 text-accent" />
+                  <span className="text-xs md:text-sm font-medium text-primary-foreground">{text}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 pt-2">
               <Link to="/book-appointment">
-                <Button variant="hero" size="xl" className="w-full sm:w-auto group shadow-lg hover:shadow-xl transition-all">
+                <Button variant="cta" size="xl" className="w-full sm:w-auto group">
                   <Calendar className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
                   Book Appointment
                 </Button>
               </Link>
-              <a href="tel:+919876543210">
+              <a href="tel:+916366360115">
                 <Button variant="hero-outline" size="xl" className="w-full sm:w-auto group">
                   <Phone className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
                   Call Now
@@ -64,71 +142,71 @@ const HeroSection = () => {
               </a>
             </div>
           </div>
+        </div>
+      </div>
 
-          {/* Hero Visual */}
-          <div className="flex-1 relative animate-fade-in w-full max-w-2xl" style={{ animationDelay: "0.3s" }}>
-            <div className="relative">
-              {/* Main Image Container */}
-              <div className="relative rounded-[2rem] lg:rounded-[3rem] overflow-hidden shadow-2xl border-4 border-primary-foreground/20 group">
-                <div className="aspect-[4/3] lg:aspect-[16/10]">
-                  <img 
-                    src="/hero-dental.jpg"
-                    alt="Happy patient with beautiful smile at our modern dental clinic"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    fetchPriority="high"
-                  />
-                </div>
-                {/* Overlay gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/30 via-transparent to-transparent" />
-              </div>
+      {/* Slide Navigation */}
+      <div className="absolute bottom-8 left-0 right-0 z-10 flex items-center justify-center gap-6">
+        <button
+          onClick={prev}
+          className="w-10 h-10 rounded-full bg-primary-foreground/20 backdrop-blur-sm border border-primary-foreground/20 flex items-center justify-center text-primary-foreground hover:bg-primary-foreground/30 transition-colors"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="w-5 h-5" />
+        </button>
 
-              {/* Floating Stats Card - Bottom Left */}
-              <div className="absolute -bottom-4 -left-4 lg:-bottom-6 lg:-left-6 glass-effect rounded-2xl p-4 lg:p-5 shadow-xl border border-border/50 animate-slide-up hover:scale-105 transition-transform cursor-default z-10" style={{ animationDelay: "0.5s" }}>
-                <div className="flex items-center gap-3 lg:gap-4">
-                  <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-xl bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center shadow-lg animate-pulse-soft">
-                    <Star className="w-6 h-6 lg:w-7 lg:h-7 text-primary-foreground fill-primary-foreground" />
-                  </div>
-                  <div>
-                    <p className="font-bold text-foreground text-lg lg:text-xl">4.9/5 Rating</p>
-                    <p className="text-xs lg:text-sm text-muted-foreground">500+ Google Reviews</p>
-                  </div>
-                </div>
-              </div>
+        <div className="flex items-center gap-2">
+          {slides.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => goTo(i)}
+              className={`h-2 rounded-full transition-all duration-500 ${
+                current === i ? "w-8 bg-accent" : "w-2 bg-primary-foreground/40 hover:bg-primary-foreground/60"
+              }`}
+              aria-label={`Go to slide ${i + 1}`}
+            />
+          ))}
+        </div>
 
-              {/* Floating Badge - Top Right */}
-              <div className="absolute -top-4 -right-4 lg:-top-6 lg:-right-6 glass-effect rounded-2xl p-3 lg:p-4 shadow-xl border border-border/50 animate-slide-up hover:scale-105 transition-transform cursor-default z-10" style={{ animationDelay: "0.6s" }}>
-                <div className="flex items-center gap-2 lg:gap-3">
-                  <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-primary flex items-center justify-center">
-                    <Award className="w-5 h-5 lg:w-6 lg:h-6 text-primary-foreground" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-foreground text-sm lg:text-base">Award Winning</p>
-                    <p className="text-xs text-muted-foreground">Dental Clinic</p>
-                  </div>
-                </div>
-              </div>
+        <button
+          onClick={next}
+          className="w-10 h-10 rounded-full bg-primary-foreground/20 backdrop-blur-sm border border-primary-foreground/20 flex items-center justify-center text-primary-foreground hover:bg-primary-foreground/30 transition-colors"
+          aria-label="Next slide"
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
+      </div>
 
-              {/* New Floating Badge - Center Right */}
-              <div className="absolute top-1/2 -right-2 lg:-right-8 -translate-y-1/2 glass-effect rounded-xl p-3 shadow-lg border border-border/50 animate-slide-up transition-transform cursor-default z-10 hidden md:block" style={{ animationDelay: "0.7s" }}>
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center">
-                    <Clock className="w-4 h-4 text-accent-foreground" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-foreground text-xs">Same Day</p>
-                    <p className="text-[10px] text-muted-foreground">Appointments</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+      {/* Floating Card - Rating */}
+      <div className="absolute bottom-24 right-8 lg:right-16 z-10 glass-effect rounded-2xl p-4 shadow-xl border border-border/50 animate-slide-up hidden md:block" style={{ animationDelay: "0.5s" }}>
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center shadow-lg">
+            <Star className="w-6 h-6 text-accent-foreground fill-accent-foreground" />
+          </div>
+          <div>
+            <p className="font-bold text-foreground text-lg">4.9/5 Rating</p>
+            <p className="text-xs text-muted-foreground">500+ Google Reviews</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Floating Card - Award */}
+      <div className="absolute top-28 right-8 lg:right-16 z-10 glass-effect rounded-2xl p-3 shadow-xl border border-border/50 animate-slide-up hidden lg:block" style={{ animationDelay: "0.7s" }}>
+        <div className="flex items-center gap-2">
+          <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
+            <Award className="w-5 h-5 text-primary-foreground" />
+          </div>
+          <div>
+            <p className="font-semibold text-foreground text-sm">Award Winning</p>
+            <p className="text-xs text-muted-foreground">Dental Clinic</p>
           </div>
         </div>
       </div>
 
       {/* Bottom Wave */}
-      <div className="absolute bottom-0 left-0 right-0">
-        <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
-          <path d="M0 120L48 110C96 100 192 80 288 70C384 60 480 60 576 65C672 70 768 80 864 85C960 90 1056 90 1152 85C1248 80 1344 70 1392 65L1440 60V120H1392C1344 120 1248 120 1152 120C1056 120 960 120 864 120C768 120 672 120 576 120C480 120 384 120 288 120C192 120 96 120 48 120H0Z" fill="hsl(var(--background))"/>
+      <div className="absolute bottom-0 left-0 right-0 z-10">
+        <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
+          <path d="M0 80L48 73C96 67 192 53 288 47C384 40 480 40 576 43C672 47 768 53 864 57C960 60 1056 60 1152 57C1248 53 1344 47 1392 43L1440 40V80H0Z" fill="hsl(var(--background))" />
         </svg>
       </div>
     </section>
