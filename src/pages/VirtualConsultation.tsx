@@ -93,9 +93,9 @@
    };
  
    const benefits = [
-     { icon: Video, title: "HD Video Call", desc: "Crystal clear video consultations" },
-     { icon: Clock, title: "15-30 Minutes", desc: "Comprehensive discussion time" },
-     { icon: Shield, title: "HIPAA Compliant", desc: "Secure & private consultations" },
+    { icon: Video, title: "HD Video Call", desc: "Crystal clear video consultations" },
+    { icon: Clock, title: "15-30 Minutes", desc: "Comprehensive discussion time" },
+    { icon: Shield, title: "Secure & Private", desc: "Confidential consultations" },
    ];
  
    if (isSubmitted) {
