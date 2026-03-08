@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Phone, Calendar, Award, Sparkles, CheckCircle, Star, Users, Clock } from "lucide-react";
-import heroImage from "@/assets/hero-dental.jpg";
+
 
 const HeroSection = () => {
   return (
