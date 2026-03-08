@@ -32,7 +32,7 @@ const CTASection = () => {
                 Book Appointment
               </Button>
             </Link>
-            <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer">
+            <a href="https://wa.me/916366360115" target="_blank" rel="noopener noreferrer">
               <Button variant="hero-outline" size="xl" className="w-full sm:w-auto group">
                 <MessageCircle className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
                 WhatsApp Us
