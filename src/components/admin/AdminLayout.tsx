@@ -27,6 +27,7 @@ const navItems = [
   { label: "Gallery", icon: Image, href: "/admin/gallery" },
   { label: "Testimonials", icon: MessageSquare, href: "/admin/testimonials" },
   { label: "Blog", icon: FileText, href: "/admin/blog" },
+  { label: "Locations", icon: MapPin, href: "/admin/locations" },
   { label: "Settings", icon: Settings, href: "/admin/settings" },
 ];
 
