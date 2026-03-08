@@ -90,10 +90,12 @@ const Navbar = () => {
                   <span className="hidden xl:inline">{isLoggedIn ? "My Portal" : "Patient Login"}</span>
                 </Button>
               </Link>
-              <a href="tel:+1234567890">
+              <a href="tel:+919876543210">
                 <Button variant="ghost" size="sm" className="gap-2">
                   <Phone className="w-4 h-4" />
-                  <span className="hidden xl:inline">+1 234 567 890</span>
+                  <span className="hidden xl:inline">+91 98765 43210</span>
+                </Button>
+              </a>
                 </Button>
               </a>
               <Link to="/book-appointment">
