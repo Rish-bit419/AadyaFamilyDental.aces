@@ -291,17 +291,11 @@ const BookAppointment = () => {
               </div>
 
               {/* Submit */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button type="submit" variant="cta" size="xl" className="flex-1" disabled={isLoading}>
-                  <MessageCircle className="w-5 h-5 mr-2" />
-                  {isLoading ? "Submitting..." : "Book via WhatsApp"}
+              <div>
+                <Button type="submit" variant="cta" size="xl" className="w-full" disabled={isLoading}>
+                  <Calendar className="w-5 h-5 mr-2" />
+                  {isLoading ? "Submitting..." : "Book Now"}
                 </Button>
-                <a href="tel:+919876543210" className="flex-1">
-                  <Button type="button" variant="outline" size="xl" className="w-full">
-                    <Phone className="w-5 h-5 mr-2" />
-                    Call to Book
-                  </Button>
-                </a>
               </div>
 
               <p className="text-sm text-muted-foreground text-center">
