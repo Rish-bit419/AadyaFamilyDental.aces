@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Phone, Menu, X, Calendar, User } from "lucide-react";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import SettingsPanel from "./SettingsPanel";
 
 const navLinks = [
   { label: "Home", href: "/" },
