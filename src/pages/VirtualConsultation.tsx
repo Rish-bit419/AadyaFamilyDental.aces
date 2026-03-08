@@ -169,10 +169,10 @@
                        <User className="w-4 h-4 text-muted-foreground" />
                        Full Name *
                      </Label>
-                     <Input
-                       id="name"
-                       placeholder="John Doe"
-                       value={formData.name}
+                      <Input
+                        id="name"
+                        placeholder="Rahul Sharma"
+                        value={formData.name}
                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                        className={errors.name ? "border-destructive" : ""}
                      />
