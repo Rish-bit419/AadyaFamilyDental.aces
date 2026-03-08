@@ -93,15 +93,6 @@ const BookAppointment = () => {
       if (error) throw error;
 
       setIsSubmitted(true);
-      
-      // Create WhatsApp message
-      const whatsappMessage = encodeURIComponent(
-        `Hello! I'd like to book an appointment.\n\nName: ${formData.name}\nPhone: ${formData.phone}\nService: ${formData.service}\nDate: ${formData.date}\nTime: ${formData.time}\n${formData.message ? `Message: ${formData.message}` : ""}`
-      );
-      
-      setTimeout(() => {
-        window.open(`https://wa.me/919876543210?text=${whatsappMessage}`, "_blank");
-      }, 2000);
     } catch (error) {
       toast({
         title: "Error",
