@@ -1,4 +1,4 @@
-import { Award, Clock, Users, Star, CheckCircle } from "lucide-react";
+import { Award, Clock, Users, Star, CheckCircle, Sparkles } from "lucide-react";
 import { useState } from "react";
 
 const features = [
@@ -8,6 +8,7 @@ const features = [
     description: "Our dentists have 15+ years of experience and ongoing training in the latest techniques.",
     stat: "15+",
     statLabel: "Years",
+    gradient: "from-primary/20 to-primary/5",
   },
   {
     icon: Clock,
@@ -15,6 +16,7 @@ const features = [
     description: "Flexible scheduling including evenings and weekends to fit your busy lifestyle.",
     stat: "7",
     statLabel: "Days/Week",
+    gradient: "from-accent/20 to-accent/5",
   },
   {
     icon: Users,
@@ -22,6 +24,7 @@ const features = [
     description: "We welcome patients of all ages, from toddlers to seniors, in a warm environment.",
     stat: "10K+",
     statLabel: "Patients",
+    gradient: "from-coral/20 to-coral/5",
   },
   {
     icon: Star,
@@ -29,6 +32,7 @@ const features = [
     description: "State-of-the-art equipment for more accurate diagnoses and comfortable treatments.",
     stat: "4.9",
     statLabel: "Rating",
+    gradient: "from-primary/20 to-primary/5",
   },
 ];
 
@@ -36,102 +40,105 @@ const WhyChooseUs = () => {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
-    <section className="section-padding bg-secondary overflow-hidden">
-      <div className="container-custom">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Image Side */}
-          <div className="relative animate-slide-up">
-            <div className="aspect-[4/3] rounded-3xl bg-card shadow-medium overflow-hidden group">
-              {!imageLoaded && (
-                <div className="absolute inset-0 bg-gradient-to-r from-muted via-muted/70 to-muted animate-shimmer" />
-              )}
-              <img
-                src="/clinic-interior.jpg"
-                alt="Modern dental clinic interior"
-                loading="lazy"
-                className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-105 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-                onLoad={() => setImageLoaded(true)}
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                  target.parentElement!.innerHTML = `
-                    <div class="w-full h-full flex items-center justify-center bg-teal-light">
-                      <div class="text-center p-8">
-                        <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-primary/20 flex items-center justify-center">
-                          <svg class="w-10 h-10 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                          </svg>
-                        </div>
-                        <p class="text-foreground font-medium">Modern Clinic Facility</p>
-                      </div>
-                    </div>
-                  `;
-                }}
-              />
-            </div>
-            
-            {/* Stats Card */}
-            <div className="absolute -bottom-8 -right-8 bg-card rounded-2xl p-6 shadow-medium animate-slide-up hover:scale-105 transition-transform cursor-default" style={{ animationDelay: "0.3s" }}>
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-full bg-coral-light flex items-center justify-center animate-pulse-soft">
-                  <span className="text-2xl">😊</span>
-                </div>
-                <div>
-                  <p className="text-3xl font-bold text-foreground">10K+</p>
-                  <p className="text-sm text-muted-foreground">Happy Patients</p>
+    <section className="py-20 md:py-28 bg-background overflow-hidden relative">
+      {/* Subtle background pattern */}
+      <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(hsl(var(--primary)) 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+
+      <div className="container-custom relative">
+        {/* Section Header - Centered */}
+        <div className="text-center max-w-2xl mx-auto mb-16 animate-slide-up">
+          <div className="inline-flex items-center gap-2 bg-primary/10 rounded-full px-4 py-1.5 mb-5">
+            <Sparkles className="w-4 h-4 text-primary" />
+            <span className="text-sm font-semibold text-primary uppercase tracking-wider">Why Choose Us</span>
+          </div>
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-5">
+            Excellence in Every <span className="text-primary">Smile</span>
+          </h2>
+          <p className="text-lg text-muted-foreground leading-relaxed">
+            We're committed to providing exceptional dental care that exceeds your expectations.
+          </p>
+        </div>
+
+        <div className="grid lg:grid-cols-5 gap-10 items-center">
+          {/* Image Side - 2 cols */}
+          <div className="lg:col-span-2 relative animate-slide-up">
+            <div className="relative">
+              {/* Decorative ring */}
+              <div className="absolute -inset-3 rounded-[2rem] border-2 border-dashed border-primary/20 -rotate-2" />
+              
+              <div className="aspect-[3/4] rounded-3xl bg-card shadow-medium overflow-hidden group relative">
+                {!imageLoaded && (
+                  <div className="absolute inset-0 bg-gradient-to-br from-muted via-muted/70 to-muted animate-pulse" />
+                )}
+                <img
+                  src="/clinic-interior.jpg"
+                  alt="Modern dental clinic interior"
+                  loading="lazy"
+                  className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-105 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+                  onLoad={() => setImageLoaded(true)}
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                  }}
+                />
+                {/* Gradient overlay at bottom */}
+                <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-foreground/60 to-transparent" />
+              </div>
+
+              {/* Stats Card */}
+              <div className="absolute -bottom-6 -right-4 lg:-right-8 bg-card rounded-2xl p-5 shadow-medium border border-border/50 animate-slide-up" style={{ animationDelay: "0.3s" }}>
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-full bg-accent flex items-center justify-center">
+                    <span className="text-xl">😊</span>
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold text-foreground">10K+</p>
+                    <p className="text-xs text-muted-foreground">Happy Patients</p>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Trust Badge */}
-            <div className="absolute -top-4 -left-4 bg-card rounded-xl p-4 shadow-medium animate-slide-up hover:scale-105 transition-transform cursor-default" style={{ animationDelay: "0.4s" }}>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-6 h-6 text-green-500" />
-                <span className="font-semibold text-foreground text-sm">Certified Clinic</span>
+              {/* Trust Badge */}
+              <div className="absolute -top-4 -left-2 lg:-left-6 bg-card rounded-xl px-4 py-3 shadow-medium border border-border/50 animate-slide-up" style={{ animationDelay: "0.4s" }}>
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5 text-green-500" />
+                  <span className="font-semibold text-foreground text-sm">Certified Clinic</span>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Content Side */}
-          <div className="space-y-8">
-            <div className="animate-slide-up">
-              <span className="inline-block text-sm font-semibold text-primary uppercase tracking-wider mb-4">
-                Why Choose Us
-              </span>
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-6">
-                Excellence in Every Smile
-              </h2>
-              <p className="text-lg text-muted-foreground">
-                We're committed to providing exceptional dental care that exceeds your expectations. Here's what sets us apart.
-              </p>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6">
-              {features.map((feature, index) => (
-                <div
-                  key={feature.title}
-                  className="group flex gap-4 animate-slide-up p-4 rounded-xl hover:bg-card hover:shadow-soft transition-all cursor-default"
-                  style={{ animationDelay: `${(index + 1) * 0.1}s` }}
-                >
-                  <div className="w-12 h-12 rounded-xl bg-teal-light flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
-                    <feature.icon className="w-6 h-6 text-primary group-hover:text-primary-foreground transition-colors" />
-                  </div>
-                  <div>
-                    <div className="flex items-baseline gap-2 mb-1">
-                      <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">
-                        {feature.title}
-                      </h3>
-                      <span className="text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
-                        {feature.stat} {feature.statLabel}
-                      </span>
+          {/* Features Grid - 3 cols */}
+          <div className="lg:col-span-3 grid sm:grid-cols-2 gap-5">
+            {features.map((feature, index) => (
+              <div
+                key={feature.title}
+                className="group relative bg-card rounded-2xl p-6 border border-border/50 shadow-soft hover:shadow-medium transition-all duration-300 hover:-translate-y-1 animate-slide-up"
+                style={{ animationDelay: `${(index + 1) * 0.12}s` }}
+              >
+                {/* Background gradient on hover */}
+                <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+                
+                <div className="relative">
+                  {/* Icon + Stat row */}
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
+                      <feature.icon className="w-6 h-6 text-primary group-hover:text-primary-foreground transition-colors" />
                     </div>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {feature.description}
-                    </p>
+                    <span className="text-xs font-bold text-primary bg-primary/10 px-3 py-1 rounded-full border border-primary/20">
+                      {feature.stat} {feature.statLabel}
+                    </span>
                   </div>
+
+                  <h3 className="font-semibold text-foreground text-lg mb-2 group-hover:text-primary transition-colors">
+                    {feature.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {feature.description}
+                  </p>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
