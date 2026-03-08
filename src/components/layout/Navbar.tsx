@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Phone, Menu, X, Calendar, MessageCircle, User } from "lucide-react";
+import { Phone, Menu, X, Calendar, User } from "lucide-react";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -161,20 +161,6 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
-
-      {/* Floating WhatsApp Button */}
-      <a
-        href="https://wa.me/1234567890"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-40 w-14 h-14 bg-green-500 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 group"
-        aria-label="Chat on WhatsApp"
-      >
-        <MessageCircle className="w-7 h-7 text-white" />
-        <span className="absolute right-full mr-3 bg-card rounded-lg px-3 py-2 text-sm font-medium text-foreground shadow-medium opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-          Chat with us
-        </span>
-      </a>
 
       {/* Floating Book Button (Mobile) */}
       <Link
