@@ -292,6 +292,51 @@ export type Database = {
         }
         Relationships: []
       }
+      locations: {
+        Row: {
+          address: string
+          created_at: string
+          display_order: number | null
+          email: string | null
+          id: string
+          is_active: boolean | null
+          map_embed_url: string | null
+          name: string
+          phone: string | null
+          updated_at: string
+          whatsapp: string | null
+          working_hours: string | null
+        }
+        Insert: {
+          address: string
+          created_at?: string
+          display_order?: number | null
+          email?: string | null
+          id?: string
+          is_active?: boolean | null
+          map_embed_url?: string | null
+          name: string
+          phone?: string | null
+          updated_at?: string
+          whatsapp?: string | null
+          working_hours?: string | null
+        }
+        Update: {
+          address?: string
+          created_at?: string
+          display_order?: number | null
+          email?: string | null
+          id?: string
+          is_active?: boolean | null
+          map_embed_url?: string | null
+          name?: string
+          phone?: string | null
+          updated_at?: string
+          whatsapp?: string | null
+          working_hours?: string | null
+        }
+        Relationships: []
+      }
       patient_reviews: {
         Row: {
           created_at: string
