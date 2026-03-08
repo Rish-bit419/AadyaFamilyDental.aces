@@ -138,7 +138,7 @@ const Footer = () => {
         <div className="container-custom py-6 px-4 md:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-primary-foreground/60 text-sm text-center md:text-left">
-              © {new Date().getFullYear()} DentalCare. All rights reserved.
+              © {new Date().getFullYear()} Aadya Dental & Aesthetics. All rights reserved.
             </p>
             <div className="flex gap-6 text-sm">
               <Link to="#" className="text-primary-foreground/60 hover:text-primary transition-colors">

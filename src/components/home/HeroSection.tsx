@@ -98,7 +98,7 @@ const HeroSection = () => {
               {/* Floating Badge - Top Right */}
               <div className="absolute -top-4 -right-4 lg:-top-6 lg:-right-6 glass-effect rounded-2xl p-3 lg:p-4 shadow-xl border border-border/50 animate-slide-up hover:scale-105 transition-transform cursor-default z-10" style={{ animationDelay: "0.6s" }}>
                 <div className="flex items-center gap-2 lg:gap-3">
-                  <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-primary flex items-center justify-center animate-float">
+                  <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-primary flex items-center justify-center">
                     <Award className="w-5 h-5 lg:w-6 lg:h-6 text-primary-foreground" />
                   </div>
                   <div>

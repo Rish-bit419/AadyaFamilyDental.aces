@@ -42,13 +42,13 @@ const CTASection = () => {
 
           {/* Contact Options */}
           <div className="flex flex-wrap justify-center gap-8">
-            <a href="tel:+1234567890" className="flex items-center gap-3 text-primary-foreground/80 hover:text-primary-foreground transition-colors group">
+            <a href="tel:+916366360115" className="flex items-center gap-3 text-primary-foreground/80 hover:text-primary-foreground transition-colors group">
               <Phone className="w-5 h-5 group-hover:scale-110 transition-transform" />
-              <span className="font-medium">(123) 456-7890</span>
+              <span className="font-medium">063663 60115</span>
             </a>
             <span className="text-primary-foreground/50 hidden sm:inline">•</span>
             <span className="text-primary-foreground/80">
-              Mon - Fri: 9AM - 6PM | Sat: 9AM - 2PM
+              Mon - Sat: 10 AM - 8 PM
             </span>
           </div>
         </div>
