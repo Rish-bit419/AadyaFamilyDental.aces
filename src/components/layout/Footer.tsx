@@ -101,32 +101,31 @@ const Footer = () => {
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                 <span className="text-primary-foreground/70">
-                  #42, 1st Floor, MG Road,<br />Bangalore, Karnataka 560001
+                  1st Floor, 66/2, Nallurahalli Main Rd,<br />above Paper & Pie Cafe, Bangalore
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-primary flex-shrink-0" />
                 <a
-                  href="tel:+919876543210"
+                  href="tel:+916366360115"
                   className="text-primary-foreground/70 hover:text-primary transition-colors"
                 >
-                  +91 98765 43210
+                  063663 60115
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-primary flex-shrink-0" />
                 <a
-                  href="mailto:info@dentalcare.in"
+                  href="mailto:info@aadyadental.in"
                   className="text-primary-foreground/70 hover:text-primary transition-colors"
                 >
-                  info@dentalcare.in
+                  info@aadyadental.in
                 </a>
               </li>
               <li className="flex items-start gap-3">
                 <Clock className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                 <div className="text-primary-foreground/70">
-                  <p>Mon - Sat: 9:00 AM - 8:00 PM</p>
-                  <p>Sun: 10:00 AM - 2:00 PM</p>
+                  <p>Mon - Sat: 10:00 AM - 8:00 PM</p>
                 </div>
               </li>
             </ul>
