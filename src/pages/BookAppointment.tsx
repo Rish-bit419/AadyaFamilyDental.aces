@@ -179,10 +179,10 @@ const BookAppointment = () => {
                 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="name">Full Name *</Label>
+                     <Label htmlFor="name">Full Name *</Label>
                     <Input
                       id="name"
-                      placeholder="John Doe"
+                      placeholder="Rahul Sharma"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       className={errors.name ? "border-destructive" : ""}
@@ -194,7 +194,7 @@ const BookAppointment = () => {
                     <Input
                       id="phone"
                       type="tel"
-                      placeholder="(123) 456-7890"
+                      placeholder="+91 98765 43210"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       className={errors.phone ? "border-destructive" : ""}
