@@ -81,13 +81,12 @@ const AdminLogin = () => {
         return;
       }
 
-      if (data.user) {
-        const { data: roleData, error: roleError } = await supabase
-          .from("user_roles")
-          .select("role")
-          .eq("user_id", data.user.id)
-          .eq("role", "admin")
-          .maybeSingle();
+      if (data.session) {
+        // Use has_role RPC to bypass RLS issues during login
+        const { data: hasAdmin, error: roleError } = await supabase.rpc("has_role", {
+          _user_id: data.user!.id,
+          _role: "admin" as const,
+        });
 
         if (roleError || !roleData) {
           await supabase.auth.signOut();
