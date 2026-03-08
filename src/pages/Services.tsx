@@ -110,7 +110,7 @@ const Services = () => {
                         )}
                         {service.price && (
                           <span className="text-sm font-semibold text-primary">
-                            From ${service.price}
+                            From ₹{service.price}
                           </span>
                         )}
                       </div>

@@ -93,9 +93,9 @@
    };
  
    const benefits = [
-     { icon: Video, title: "HD Video Call", desc: "Crystal clear video consultations" },
-     { icon: Clock, title: "15-30 Minutes", desc: "Comprehensive discussion time" },
-     { icon: Shield, title: "HIPAA Compliant", desc: "Secure & private consultations" },
+    { icon: Video, title: "HD Video Call", desc: "Crystal clear video consultations" },
+    { icon: Clock, title: "15-30 Minutes", desc: "Comprehensive discussion time" },
+    { icon: Shield, title: "Secure & Private", desc: "Confidential consultations" },
    ];
  
    if (isSubmitted) {
@@ -169,10 +169,10 @@
                        <User className="w-4 h-4 text-muted-foreground" />
                        Full Name *
                      </Label>
-                     <Input
-                       id="name"
-                       placeholder="John Doe"
-                       value={formData.name}
+                      <Input
+                        id="name"
+                        placeholder="Rahul Sharma"
+                        value={formData.name}
                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                        className={errors.name ? "border-destructive" : ""}
                      />
@@ -184,10 +184,10 @@
                        <Mail className="w-4 h-4 text-muted-foreground" />
                        Email Address *
                      </Label>
-                     <Input
-                       id="email"
-                       type="email"
-                       placeholder="john@example.com"
+                      <Input
+                        id="email"
+                        type="email"
+                        placeholder="rahul@example.com"
                        value={formData.email}
                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                        className={errors.email ? "border-destructive" : ""}
@@ -200,10 +200,10 @@
                        <PhoneIcon className="w-4 h-4 text-muted-foreground" />
                        Phone Number *
                      </Label>
-                     <Input
-                       id="phone"
-                       type="tel"
-                       placeholder="(123) 456-7890"
+                      <Input
+                        id="phone"
+                        type="tel"
+                        placeholder="+91 98765 43210"
                        value={formData.phone}
                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                        className={errors.phone ? "border-destructive" : ""}

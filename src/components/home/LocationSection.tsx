@@ -29,26 +29,26 @@ const LocationSection = () => {
     {
       icon: MapPin,
       title: "Our Address",
-      content: settings.address || "123 Dental Street, Medical District, City 12345",
+      content: settings.address || "#42, 1st Floor, MG Road, Bangalore, Karnataka 560001",
       action: null,
     },
     {
       icon: Clock,
       title: "Working Hours",
-      content: "Mon - Fri: 9:00 AM - 7:00 PM\nSat: 9:00 AM - 5:00 PM\nSun: Closed",
+      content: "Mon - Sat: 9:00 AM - 8:00 PM\nSun: 10:00 AM - 2:00 PM",
       action: null,
     },
     {
       icon: Phone,
       title: "Phone",
-      content: settings.phone || "+1 (234) 567-890",
-      action: `tel:${settings.phone || "+1234567890"}`,
+      content: settings.phone || "+91 98765 43210",
+      action: `tel:${settings.phone || "+919876543210"}`,
     },
     {
       icon: Mail,
       title: "Email",
-      content: settings.email || "info@dentalcare.com",
-      action: `mailto:${settings.email || "info@dentalcare.com"}`,
+      content: settings.email || "info@dentalcare.in",
+      action: `mailto:${settings.email || "info@dentalcare.in"}`,
     },
   ];
 
@@ -114,7 +114,7 @@ const LocationSection = () => {
                 </Button>
               </Link>
               <a
-                href={`https://wa.me/${(settings.whatsapp || "1234567890").replace(/\D/g, "")}`}
+                href={`https://wa.me/91${(settings.whatsapp || "9876543210").replace(/\D/g, "")}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -133,7 +133,7 @@ const LocationSection = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-muted via-muted/70 to-muted animate-shimmer" />
               )}
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.9663095343008!2d-74.00425878428698!3d40.74076794379132!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259bf5c1654f3%3A0xc80f9cfce5383d5d!2sGoogle!5e0!3m2!1sen!2sus!4v1679589899925!5m2!1sen!2sus"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.985595932468!2d77.60649661482202!3d12.975540990849224!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0xf8dfc3e8517e4fe0!2sMG%20Road%2C%20Bengaluru!5e0!3m2!1sen!2sin!4v1679589899925!5m2!1sen!2sin"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}

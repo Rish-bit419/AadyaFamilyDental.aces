@@ -99,9 +99,8 @@ const BookAppointment = () => {
         `Hello! I'd like to book an appointment.\n\nName: ${formData.name}\nPhone: ${formData.phone}\nService: ${formData.service}\nDate: ${formData.date}\nTime: ${formData.time}\n${formData.message ? `Message: ${formData.message}` : ""}`
       );
       
-      // Open WhatsApp after a short delay
       setTimeout(() => {
-        window.open(`https://wa.me/1234567890?text=${whatsappMessage}`, "_blank");
+        window.open(`https://wa.me/919876543210?text=${whatsappMessage}`, "_blank");
       }, 2000);
     } catch (error) {
       toast({
@@ -133,7 +132,7 @@ const BookAppointment = () => {
                 <Button variant="default" onClick={() => setIsSubmitted(false)}>
                   Book Another Appointment
                 </Button>
-                <a href="tel:+1234567890">
+                <a href="tel:+919876543210">
                   <Button variant="outline">
                     <Phone className="w-4 h-4 mr-2" />
                     Call Us Instead
@@ -180,10 +179,10 @@ const BookAppointment = () => {
                 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="name">Full Name *</Label>
+                     <Label htmlFor="name">Full Name *</Label>
                     <Input
                       id="name"
-                      placeholder="John Doe"
+                      placeholder="Rahul Sharma"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       className={errors.name ? "border-destructive" : ""}
@@ -195,7 +194,7 @@ const BookAppointment = () => {
                     <Input
                       id="phone"
                       type="tel"
-                      placeholder="(123) 456-7890"
+                      placeholder="+91 98765 43210"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       className={errors.phone ? "border-destructive" : ""}
@@ -209,7 +208,7 @@ const BookAppointment = () => {
                   <Input
                     id="email"
                     type="email"
-                    placeholder="john@example.com"
+                    placeholder="rahul@example.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     className={errors.email ? "border-destructive" : ""}
@@ -297,7 +296,7 @@ const BookAppointment = () => {
                   <MessageCircle className="w-5 h-5 mr-2" />
                   {isLoading ? "Submitting..." : "Book via WhatsApp"}
                 </Button>
-                <a href="tel:+1234567890" className="flex-1">
+                <a href="tel:+919876543210" className="flex-1">
                   <Button type="button" variant="outline" size="xl" className="w-full">
                     <Phone className="w-5 h-5 mr-2" />
                     Call to Book

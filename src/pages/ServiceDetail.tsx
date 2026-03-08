@@ -123,7 +123,7 @@ const ServiceDetail = () => {
                 )}
                 {service.price && (
                   <div className="flex items-center gap-2 bg-card px-4 py-2 rounded-full border border-border/50">
-                    <span className="text-sm font-medium">From ${service.price}</span>
+                    <span className="text-sm font-medium">From ₹{service.price}</span>
                   </div>
                 )}
               </div>
@@ -135,7 +135,7 @@ const ServiceDetail = () => {
                     Book This Treatment
                   </Button>
                 </Link>
-                <a href="tel:+1234567890">
+                <a href="tel:+919876543210">
                   <Button variant="outline" size="lg">
                     <Phone className="w-5 h-5 mr-2" />
                     Call to Inquire
