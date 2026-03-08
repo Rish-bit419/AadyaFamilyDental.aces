@@ -99,9 +99,8 @@ const BookAppointment = () => {
         `Hello! I'd like to book an appointment.\n\nName: ${formData.name}\nPhone: ${formData.phone}\nService: ${formData.service}\nDate: ${formData.date}\nTime: ${formData.time}\n${formData.message ? `Message: ${formData.message}` : ""}`
       );
       
-      // Open WhatsApp after a short delay
       setTimeout(() => {
-        window.open(`https://wa.me/1234567890?text=${whatsappMessage}`, "_blank");
+        window.open(`https://wa.me/919876543210?text=${whatsappMessage}`, "_blank");
       }, 2000);
     } catch (error) {
       toast({
