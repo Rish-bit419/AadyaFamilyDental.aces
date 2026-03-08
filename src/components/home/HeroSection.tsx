@@ -1,18 +1,15 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Phone, Calendar, Award, Sparkles, CheckCircle, Star, Users, Clock } from "lucide-react";
-import heroImage from "@/assets/hero-dental.jpg";
+
 
 const HeroSection = () => {
   return (
     <section className="relative bg-gradient-to-br from-primary via-teal-dark to-primary overflow-hidden min-h-screen">
-      {/* Animated Background Elements */}
+      {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary-foreground/10 via-transparent to-transparent" />
-        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-primary-foreground/5 rounded-full blur-3xl animate-pulse-soft" />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-foreground/5 rounded-full blur-2xl animate-float" />
-        <div className="absolute top-1/2 right-1/4 w-72 h-72 bg-primary-foreground/3 rounded-full blur-xl animate-pulse-soft" style={{ animationDelay: "1s" }} />
-        <div className="absolute bottom-1/4 left-1/3 w-48 h-48 bg-accent/10 rounded-full blur-xl animate-float" style={{ animationDelay: "2s" }} />
+        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-primary-foreground/5 rounded-full blur-3xl" />
       </div>
 
       <div className="container-custom relative z-10">
@@ -75,9 +72,10 @@ const HeroSection = () => {
               <div className="relative rounded-[2rem] lg:rounded-[3rem] overflow-hidden shadow-2xl border-4 border-primary-foreground/20 group">
                 <div className="aspect-[4/3] lg:aspect-[16/10]">
                   <img 
-                    src={heroImage}
+                    src="/hero-dental.jpg"
                     alt="Happy patient with beautiful smile at our modern dental clinic"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    fetchPriority="high"
                   />
                 </div>
                 {/* Overlay gradient */}
@@ -88,7 +86,7 @@ const HeroSection = () => {
               <div className="absolute -bottom-4 -left-4 lg:-bottom-6 lg:-left-6 glass-effect rounded-2xl p-4 lg:p-5 shadow-xl border border-border/50 animate-slide-up hover:scale-105 transition-transform cursor-default z-10" style={{ animationDelay: "0.5s" }}>
                 <div className="flex items-center gap-3 lg:gap-4">
                   <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-xl bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center shadow-lg animate-pulse-soft">
-                    <Star className="w-6 h-6 lg:w-7 lg:h-7 text-white fill-white" />
+                    <Star className="w-6 h-6 lg:w-7 lg:h-7 text-primary-foreground fill-primary-foreground" />
                   </div>
                   <div>
                     <p className="font-bold text-foreground text-lg lg:text-xl">4.9/5 Rating</p>
@@ -100,7 +98,7 @@ const HeroSection = () => {
               {/* Floating Badge - Top Right */}
               <div className="absolute -top-4 -right-4 lg:-top-6 lg:-right-6 glass-effect rounded-2xl p-3 lg:p-4 shadow-xl border border-border/50 animate-slide-up hover:scale-105 transition-transform cursor-default z-10" style={{ animationDelay: "0.6s" }}>
                 <div className="flex items-center gap-2 lg:gap-3">
-                  <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-primary flex items-center justify-center animate-float">
+                  <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-primary flex items-center justify-center">
                     <Award className="w-5 h-5 lg:w-6 lg:h-6 text-primary-foreground" />
                   </div>
                   <div>
@@ -111,7 +109,7 @@ const HeroSection = () => {
               </div>
 
               {/* New Floating Badge - Center Right */}
-              <div className="absolute top-1/2 -right-2 lg:-right-8 -translate-y-1/2 glass-effect rounded-xl p-3 shadow-lg border border-border/50 animate-slide-up hover:scale-105 transition-transform cursor-default z-10 hidden md:block" style={{ animationDelay: "0.7s" }}>
+              <div className="absolute top-1/2 -right-2 lg:-right-8 -translate-y-1/2 glass-effect rounded-xl p-3 shadow-lg border border-border/50 animate-slide-up transition-transform cursor-default z-10 hidden md:block" style={{ animationDelay: "0.7s" }}>
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center">
                     <Clock className="w-4 h-4 text-accent-foreground" />

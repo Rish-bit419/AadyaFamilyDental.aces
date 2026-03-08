@@ -7,9 +7,8 @@ const CTASection = () => {
     <section className="section-padding hero-gradient relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-10 left-20 w-64 h-64 bg-primary-foreground rounded-full blur-3xl animate-pulse-soft" />
-        <div className="absolute bottom-10 right-20 w-80 h-80 bg-primary-foreground rounded-full blur-3xl animate-pulse-soft" style={{ animationDelay: "1s" }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary-foreground rounded-full blur-3xl animate-float" />
+        <div className="absolute top-10 left-20 w-64 h-64 bg-primary-foreground rounded-full blur-3xl" />
+        <div className="absolute bottom-10 right-20 w-80 h-80 bg-primary-foreground rounded-full blur-3xl" />
       </div>
 
       <div className="container-custom relative">
@@ -33,7 +32,7 @@ const CTASection = () => {
                 Book Appointment
               </Button>
             </Link>
-            <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer">
+            <a href="https://wa.me/916366360115" target="_blank" rel="noopener noreferrer">
               <Button variant="hero-outline" size="xl" className="w-full sm:w-auto group">
                 <MessageCircle className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
                 WhatsApp Us
@@ -43,13 +42,13 @@ const CTASection = () => {
 
           {/* Contact Options */}
           <div className="flex flex-wrap justify-center gap-8">
-            <a href="tel:+1234567890" className="flex items-center gap-3 text-primary-foreground/80 hover:text-primary-foreground transition-colors group">
+            <a href="tel:+916366360115" className="flex items-center gap-3 text-primary-foreground/80 hover:text-primary-foreground transition-colors group">
               <Phone className="w-5 h-5 group-hover:scale-110 transition-transform" />
-              <span className="font-medium">(123) 456-7890</span>
+              <span className="font-medium">063663 60115</span>
             </a>
             <span className="text-primary-foreground/50 hidden sm:inline">•</span>
             <span className="text-primary-foreground/80">
-              Mon - Fri: 9AM - 6PM | Sat: 9AM - 2PM
+              Mon - Sat: 10 AM - 8 PM
             </span>
           </div>
         </div>
