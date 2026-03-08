@@ -109,7 +109,7 @@ const HeroSection = () => {
               </div>
 
               {/* New Floating Badge - Center Right */}
-              <div className="absolute top-1/2 -right-2 lg:-right-8 -translate-y-1/2 glass-effect rounded-xl p-3 shadow-lg border border-border/50 animate-slide-up hover:scale-105 transition-transform cursor-default z-10 hidden md:block" style={{ animationDelay: "0.7s" }}>
+              <div className="absolute top-1/2 -right-2 lg:-right-8 -translate-y-1/2 glass-effect rounded-xl p-3 shadow-lg border border-border/50 animate-slide-up transition-transform cursor-default z-10 hidden md:block" style={{ animationDelay: "0.7s" }}>
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center">
                     <Clock className="w-4 h-4 text-accent-foreground" />
