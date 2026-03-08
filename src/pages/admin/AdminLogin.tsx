@@ -88,7 +88,7 @@ const AdminLogin = () => {
           _role: "admin" as const,
         });
 
-        if (roleError || !roleData) {
+        if (roleError || !hasAdmin) {
           await supabase.auth.signOut();
           toast({
             title: "Access denied",
