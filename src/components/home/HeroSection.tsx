@@ -6,15 +6,6 @@ import heroImage from "@/assets/hero-dental.jpg";
 const HeroSection = () => {
   return (
     <section className="relative bg-gradient-to-br from-primary via-teal-dark to-primary overflow-hidden min-h-screen">
-      {/* Admin Link - Top Right */}
-      <Link 
-        to="/admin/login" 
-        className="fixed top-24 right-4 z-50 p-2.5 rounded-xl bg-background/90 backdrop-blur-sm border border-border shadow-medium text-muted-foreground hover:text-primary hover:bg-background transition-all duration-300 group"
-        title="Admin Panel"
-      >
-        <Settings className="w-5 h-5 group-hover:rotate-90 transition-transform duration-500" />
-      </Link>
-
       {/* Animated Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary-foreground/10 via-transparent to-transparent" />
