@@ -72,9 +72,10 @@ const HeroSection = () => {
               <div className="relative rounded-[2rem] lg:rounded-[3rem] overflow-hidden shadow-2xl border-4 border-primary-foreground/20 group">
                 <div className="aspect-[4/3] lg:aspect-[16/10]">
                   <img 
-                    src={heroImage}
+                    src="/hero-dental.jpg"
                     alt="Happy patient with beautiful smile at our modern dental clinic"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    fetchPriority="high"
                   />
                 </div>
                 {/* Overlay gradient */}
