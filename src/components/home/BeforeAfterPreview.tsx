@@ -140,6 +140,7 @@ const BeforeAfterPreview = () => {
                 <img
                   src={image.after_image_url}
                   alt={`${image.title} - After`}
+                  loading="lazy"
                   className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 ${hoveredImage === image.id ? 'scale-105' : ''}`}
                 />
                 
