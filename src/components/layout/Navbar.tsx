@@ -1,7 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Phone, Menu, X, Calendar, User } from "lucide-react";
+import { Phone, Menu, X, Calendar, User, Moon, Sun } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
 import { supabase } from "@/integrations/supabase/client";
 import SettingsPanel from "./SettingsPanel";
 
