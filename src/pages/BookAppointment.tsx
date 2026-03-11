@@ -45,9 +45,11 @@ const timeSlots = [
 ];
 
 const BookAppointment = () => {
+  const navigate = useNavigate();
   const { toast } = useToast();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showSignupBanner, setShowSignupBanner] = useState(true);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
