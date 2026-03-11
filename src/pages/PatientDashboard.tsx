@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { 
-  Calendar, Clock, User, LogOut, Heart, Star, 
+  Calendar, Clock, User, LogOut, Heart, Star, X,
   Video, Calculator, Smile, MessageSquare, ArrowRight, CheckCircle, UserCog
 } from "lucide-react";
 import { User as UserType } from "@supabase/supabase-js";
