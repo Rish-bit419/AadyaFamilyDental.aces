@@ -1,11 +1,12 @@
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calendar, User, MessageCircle, CheckCircle, Phone } from "lucide-react";
+import { Calendar, User, MessageCircle, CheckCircle, Phone, UserPlus, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
@@ -44,9 +45,11 @@ const timeSlots = [
 ];
 
 const BookAppointment = () => {
+  const navigate = useNavigate();
   const { toast } = useToast();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showSignupBanner, setShowSignupBanner] = useState(true);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -156,6 +159,34 @@ const BookAppointment = () => {
           </div>
         </div>
       </section>
+
+      {/* Sign Up Banner */}
+      {showSignupBanner && (
+        <div className="bg-primary/10 border-b border-primary/20">
+          <div className="container-custom py-3 flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <UserPlus className="w-5 h-5 text-primary shrink-0" />
+              <p className="text-sm text-foreground">
+                <span className="font-medium">Want to track your appointments?</span>{" "}
+                Sign up as a patient to store your data and view appointment status.
+              </p>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <Link to="/patient/auth">
+                <Button size="sm" variant="default" className="gap-1">
+                  <UserPlus className="w-3 h-3" /> Sign Up
+                </Button>
+              </Link>
+              <button
+                onClick={() => setShowSignupBanner(false)}
+                className="p-1 rounded-md hover:bg-muted transition-colors"
+              >
+                <X className="w-4 h-4 text-muted-foreground" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Booking Form */}
       <section className="section-padding bg-background">
@@ -282,9 +313,18 @@ const BookAppointment = () => {
                 </div>
               </div>
 
-              {/* Submit */}
-              <div>
-                <Button type="submit" variant="cta" size="xl" className="w-full" disabled={isLoading}>
+              {/* Submit & Cancel */}
+              <div className="flex gap-3">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="xl"
+                  className="flex-1"
+                  onClick={() => navigate(-1)}
+                >
+                  Cancel
+                </Button>
+                <Button type="submit" variant="cta" size="xl" className="flex-[2]" disabled={isLoading}>
                   <Calendar className="w-5 h-5 mr-2" />
                   {isLoading ? "Submitting..." : "Book Now"}
                 </Button>
