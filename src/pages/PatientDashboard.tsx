@@ -203,23 +203,48 @@ const PatientDashboard = () => {
                   {appointments.length > 0 ? (
                     <div className="space-y-3">
                       {appointments.map((apt) => (
-                        <div key={apt.id} className="flex items-center gap-4 p-4 bg-secondary rounded-xl">
-                          <div className="w-12 h-12 rounded-xl bg-teal-light flex items-center justify-center">
-                            <Clock className="w-6 h-6 text-primary" />
+                        <div key={apt.id} className="space-y-2">
+                          <div className="flex items-center gap-4 p-4 bg-secondary rounded-xl">
+                            <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                              apt.status === "cancelled" ? "bg-destructive/10" : "bg-teal-light"
+                            }`}>
+                              {apt.status === "cancelled" ? (
+                                <X className="w-6 h-6 text-destructive" />
+                              ) : (
+                                <Clock className="w-6 h-6 text-primary" />
+                              )}
+                            </div>
+                            <div className="flex-1">
+                              <h4 className="font-medium text-foreground">{apt.service_name}</h4>
+                              <p className="text-sm text-muted-foreground">
+                                {new Date(apt.preferred_date).toLocaleDateString()} at {apt.preferred_time}
+                              </p>
+                            </div>
+                            <span className={`text-xs px-3 py-1 rounded-full font-medium ${
+                              apt.status === "confirmed" ? "bg-green-100 text-green-700" :
+                              apt.status === "completed" ? "bg-blue-100 text-blue-700" :
+                              apt.status === "pending" ? "bg-yellow-100 text-yellow-700" :
+                              apt.status === "cancelled" ? "bg-red-100 text-red-700" :
+                              "bg-muted text-muted-foreground"
+                            }`}>
+                              {apt.status}
+                            </span>
                           </div>
-                          <div className="flex-1">
-                            <h4 className="font-medium text-foreground">{apt.service_name}</h4>
-                            <p className="text-sm text-muted-foreground">
-                              {apt.preferred_date} at {apt.preferred_time}
-                            </p>
-                          </div>
-                          <span className={`text-xs px-3 py-1 rounded-full font-medium ${
-                            apt.status === "confirmed" ? "bg-green-100 text-green-700" :
-                            apt.status === "pending" ? "bg-yellow-100 text-yellow-700" :
-                            "bg-muted text-muted-foreground"
-                          }`}>
-                            {apt.status}
-                          </span>
+                          {apt.status === "cancelled" && (
+                            <div className="ml-4 p-3 bg-destructive/5 border border-destructive/20 rounded-lg flex items-start gap-2">
+                              <MessageSquare className="w-4 h-4 text-destructive shrink-0 mt-0.5" />
+                              <div>
+                                <p className="text-sm text-destructive font-medium">
+                                  Sorry, the doctor was not reachable. Please book another appointment.
+                                </p>
+                                <Link to="/book-appointment">
+                                  <Button size="sm" variant="outline" className="mt-2 text-xs gap-1">
+                                    Book Again <ArrowRight className="w-3 h-3" />
+                                  </Button>
+                                </Link>
+                              </div>
+                            </div>
+                          )}
                         </div>
                       ))}
                     </div>
