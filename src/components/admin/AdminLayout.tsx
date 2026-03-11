@@ -36,49 +36,78 @@ const AdminLayout = () => {
   const location = useLocation();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(true);
+  const [authReady, setAuthReady] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
-    const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (!session) {
-        navigate("/admin/login");
+    let isMounted = true;
+
+    const applySession = (session: { user: any } | null) => {
+      if (!isMounted) return;
+      setUser(session?.user ?? null);
+      setAuthReady(true);
+    };
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      applySession(session as { user: any } | null);
+    });
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      applySession(session as { user: any } | null);
+    });
+
+    return () => {
+      isMounted = false;
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!authReady) return;
+
+    const verifyAdminAccess = async () => {
+      if (!user) {
+        setIsLoading(false);
+        navigate("/admin/login", { replace: true });
         return;
       }
 
-      // Check admin role using RPC to bypass RLS
-      const { data: hasAdmin } = await supabase.rpc("has_role", {
-        _user_id: session.user.id,
+      setIsLoading(true);
+
+      const { data: hasAdmin, error } = await supabase.rpc("has_role", {
+        _user_id: user.id,
         _role: "admin" as const,
       });
 
+      if (error) {
+        setIsLoading(false);
+        toast({
+          title: "Could not verify access",
+          description: "Please try signing in again.",
+          variant: "destructive",
+        });
+        navigate("/admin/login", { replace: true });
+        return;
+      }
+
       if (!hasAdmin) {
         await supabase.auth.signOut();
+        setIsLoading(false);
         toast({
           title: "Access denied",
           description: "You don't have admin privileges.",
           variant: "destructive",
         });
-        navigate("/admin/login");
+        navigate("/admin/login", { replace: true });
         return;
       }
 
-      setUser(session.user);
       setIsLoading(false);
     };
 
-    checkAuth();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === "SIGNED_OUT") {
-        navigate("/admin/login");
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }, [navigate, toast]);
+    void verifyAdminAccess();
+  }, [authReady, user?.id, navigate, toast]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -86,10 +115,10 @@ const AdminLayout = () => {
       title: "Logged out",
       description: "You've been signed out successfully.",
     });
-    navigate("/admin/login");
+    navigate("/admin/login", { replace: true });
   };
 
-  if (isLoading) {
+  if (!authReady || isLoading) {
     return (
       <div className="min-h-screen bg-secondary flex items-center justify-center">
         <div className="animate-pulse text-center">
