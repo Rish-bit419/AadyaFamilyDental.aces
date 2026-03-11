@@ -23,12 +23,11 @@ const signupSchema = z.object({
   path: ["confirmPassword"],
 });
 
-const VALID_SIGNUP_CODE = "Rishi@123";
-
 const AdminLogin = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const [isCheckingSession, setIsCheckingSession] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
   const [formData, setFormData] = useState({
@@ -38,6 +37,46 @@ const AdminLogin = () => {
     signupCode: "",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const verifyExistingSession = async (session: { user: { id: string } } | null) => {
+      if (!isMounted) return;
+
+      if (!session?.user) {
+        setIsCheckingSession(false);
+        return;
+      }
+
+      const { data: hasAdmin, error } = await supabase.rpc("has_role", {
+        _user_id: session.user.id,
+        _role: "admin" as const,
+      });
+
+      if (!isMounted) return;
+
+      if (!error && hasAdmin) {
+        navigate("/admin/dashboard", { replace: true });
+        return;
+      }
+
+      setIsCheckingSession(false);
+    };
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      void verifyExistingSession(session as { user: { id: string } } | null);
+    });
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      void verifyExistingSession(session as { user: { id: string } } | null);
+    });
+
+    return () => {
+      isMounted = false;
+      subscription.unsubscribe();
+    };
+  }, [navigate]);
 
   const handleLogin = async () => {
     const result = loginSchema.safeParse(formData);
@@ -65,12 +104,6 @@ const AdminLogin = () => {
             description: "Invalid email or password. Please try again.",
             variant: "destructive",
           });
-        } else if (error.message.includes("Email not confirmed")) {
-          toast({
-            title: "Email not verified",
-            description: "Please check your email and verify your account first.",
-            variant: "destructive",
-          });
         } else {
           toast({
             title: "Login failed",
@@ -82,29 +115,13 @@ const AdminLogin = () => {
       }
 
       if (data.session) {
-        // Use has_role RPC to bypass RLS issues during login
-        const { data: hasAdmin, error: roleError } = await supabase.rpc("has_role", {
-          _user_id: data.user!.id,
-          _role: "admin" as const,
-        });
-
-        if (roleError || !hasAdmin) {
-          await supabase.auth.signOut();
-          toast({
-            title: "Access denied",
-            description: "You don't have admin privileges. Contact the administrator.",
-            variant: "destructive",
-          });
-          return;
-        }
-
         toast({
           title: "Welcome back!",
-          description: "You've successfully logged in.",
+          description: "Signed in successfully.",
         });
-        navigate("/admin/dashboard");
+        navigate("/admin/dashboard", { replace: true });
       }
-    } catch (error) {
+    } catch {
       toast({
         title: "Error",
         description: "An unexpected error occurred. Please try again.",
@@ -126,23 +143,24 @@ const AdminLogin = () => {
       return;
     }
 
-    // Validate signup code
-    if (formData.signupCode !== VALID_SIGNUP_CODE) {
-      setErrors({ signupCode: "Invalid signup code. Please contact the administrator." });
-      return;
-    }
-
     setIsLoading(true);
 
     try {
-      const redirectUrl = `${window.location.origin}/admin/login`;
-      
+      const { data: validationRows, error: validationError } = await supabase.rpc("validate_admin_signup", {
+        _signup_code: formData.signupCode,
+      });
+
+      const validation = validationRows?.[0];
+
+      if (validationError || !validation?.is_valid) {
+        const message = validationError?.message || validation?.message || "Invalid signup code.";
+        setErrors({ signupCode: message });
+        return;
+      }
+
       const { data, error } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
-        options: {
-          emailRedirectTo: redirectUrl,
-        },
       });
 
       if (error) {
@@ -162,24 +180,41 @@ const AdminLogin = () => {
         return;
       }
 
-      if (data.user) {
-        // Add admin role for this user using RPC function (bypasses RLS)
-        const { error: roleError } = await supabase.rpc("assign_admin_role", {
-          _user_id: data.user.id,
-        });
-
-        if (roleError) {
-          console.error("Failed to assign admin role:", roleError);
-        }
-
-        toast({
-          title: "Account created!",
-          description: "Your admin account is ready. You can now sign in.",
-        });
-        setIsSignup(false);
-        setFormData({ email: "", password: "", confirmPassword: "", signupCode: "" });
+      if (!data.user) {
+        throw new Error("Could not create account.");
       }
-    } catch (error) {
+
+      if (!data.session) {
+        const { error: signInError } = await supabase.auth.signInWithPassword({
+          email: formData.email,
+          password: formData.password,
+        });
+
+        if (signInError) throw signInError;
+      }
+
+      const { error: roleError } = await supabase.rpc("assign_admin_role", {
+        _user_id: data.user.id,
+        _signup_code: formData.signupCode,
+      });
+
+      if (roleError) {
+        await supabase.auth.signOut();
+        toast({
+          title: "Signup failed",
+          description: roleError.message,
+          variant: "destructive",
+        });
+        return;
+      }
+
+      toast({
+        title: "Account created!",
+        description: "Your admin access is active. You are now signed in.",
+      });
+
+      navigate("/admin/dashboard", { replace: true });
+    } catch {
       toast({
         title: "Error",
         description: "An unexpected error occurred. Please try again.",
