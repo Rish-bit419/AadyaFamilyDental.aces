@@ -313,9 +313,18 @@ const BookAppointment = () => {
                 </div>
               </div>
 
-              {/* Submit */}
-              <div>
-                <Button type="submit" variant="cta" size="xl" className="w-full" disabled={isLoading}>
+              {/* Submit & Cancel */}
+              <div className="flex gap-3">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="xl"
+                  className="flex-1"
+                  onClick={() => navigate(-1)}
+                >
+                  Cancel
+                </Button>
+                <Button type="submit" variant="cta" size="xl" className="flex-[2]" disabled={isLoading}>
                   <Calendar className="w-5 h-5 mr-2" />
                   {isLoading ? "Submitting..." : "Book Now"}
                 </Button>
