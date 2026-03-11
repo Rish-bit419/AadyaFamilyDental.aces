@@ -236,6 +236,14 @@ const AdminLogin = () => {
     }
   };
 
+  if (isCheckingSession) {
+    return (
+      <div className="min-h-screen bg-secondary flex items-center justify-center">
+        <p className="text-muted-foreground animate-pulse">Checking session...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-secondary via-background to-teal-light/20 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
