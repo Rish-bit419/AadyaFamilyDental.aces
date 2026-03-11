@@ -75,6 +75,21 @@ const PatientDashboard = () => {
     if (user) loadProfile(user.id);
   };
 
+  const fetchAppointments = async (email: string) => {
+    const { data } = await supabase
+      .from("appointments")
+      .select("id, service_name, preferred_date, preferred_time, status")
+      .eq("patient_email", email)
+      .order("preferred_date", { ascending: false });
+    if (data) setAppointments(data);
+  };
+
+  useEffect(() => {
+    if (user?.email) {
+      fetchAppointments(user.email);
+    }
+  }, [user]);
+
   const displayName = profileName || user?.user_metadata?.full_name || "Patient";
 
   const quickActions = [
