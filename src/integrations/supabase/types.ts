@@ -552,13 +552,24 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      assign_admin_role: { Args: { _user_id: string }; Returns: undefined }
+      assign_admin_role: {
+        Args: { _signup_code: string; _user_id: string }
+        Returns: undefined
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
         Returns: boolean
+      }
+      validate_admin_signup: {
+        Args: { _signup_code: string }
+        Returns: {
+          available_slots: number
+          is_valid: boolean
+          message: string
+        }[]
       }
     }
     Enums: {
