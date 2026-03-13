@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Calendar, Users, Clock, CheckCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
+import { Calendar, Users, Clock, CheckCircle, Check, X, Trash2 } from "lucide-react";
 
 interface StatsData {
   totalAppointments: number;
@@ -20,6 +22,7 @@ interface Appointment {
 }
 
 const AdminDashboard = () => {
+  const { toast } = useToast();
   const [stats, setStats] = useState<StatsData>({
     totalAppointments: 0,
     pendingAppointments: 0,
@@ -67,31 +70,34 @@ const AdminDashboard = () => {
     }
   };
 
+  const updateStatus = async (id: string, status: "pending" | "confirmed" | "cancelled" | "completed") => {
+    try {
+      const { error } = await supabase.from("appointments").update({ status }).eq("id", id);
+      if (error) throw error;
+      fetchData();
+      toast({ title: "Updated", description: `Appointment marked as ${status}` });
+    } catch {
+      toast({ title: "Error", description: "Failed to update", variant: "destructive" });
+    }
+  };
+
+  const deleteAppointment = async (id: string) => {
+    if (!confirm("Delete this appointment permanently?")) return;
+    try {
+      const { error } = await supabase.from("appointments").delete().eq("id", id);
+      if (error) throw error;
+      fetchData();
+      toast({ title: "Deleted", description: "Appointment deleted" });
+    } catch {
+      toast({ title: "Error", description: "Failed to delete", variant: "destructive" });
+    }
+  };
+
   const statCards = [
-    {
-      label: "Total Appointments",
-      value: stats.totalAppointments,
-      icon: Calendar,
-      color: "bg-primary",
-    },
-    {
-      label: "Pending",
-      value: stats.pendingAppointments,
-      icon: Clock,
-      color: "bg-amber-500",
-    },
-    {
-      label: "Today's Confirmed",
-      value: stats.confirmedToday,
-      icon: Users,
-      color: "bg-blue-500",
-    },
-    {
-      label: "Completed (Month)",
-      value: stats.completedThisMonth,
-      icon: CheckCircle,
-      color: "bg-green-500",
-    },
+    { label: "Total Appointments", value: stats.totalAppointments, icon: Calendar, color: "bg-primary" },
+    { label: "Pending", value: stats.pendingAppointments, icon: Clock, color: "bg-amber-500" },
+    { label: "Today's Confirmed", value: stats.confirmedToday, icon: Users, color: "bg-blue-500" },
+    { label: "Completed (Month)", value: stats.completedThisMonth, icon: CheckCircle, color: "bg-green-500" },
   ];
 
   const getStatusBadge = (status: string) => {
@@ -127,10 +133,7 @@ const AdminDashboard = () => {
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {statCards.map((stat) => (
-          <div
-            key={stat.label}
-            className="bg-card rounded-2xl p-6 border border-border/50 shadow-soft"
-          >
+          <div key={stat.label} className="bg-card rounded-2xl p-6 border border-border/50 shadow-soft">
             <div className="flex items-center justify-between mb-4">
               <div className={`w-12 h-12 rounded-xl ${stat.color} flex items-center justify-center`}>
                 <stat.icon className="w-6 h-6 text-primary-foreground" />
@@ -145,11 +148,9 @@ const AdminDashboard = () => {
       {/* Recent Appointments */}
       <div className="bg-card rounded-2xl border border-border/50 shadow-soft overflow-hidden">
         <div className="p-6 border-b border-border">
-          <h2 className="font-display text-xl font-semibold text-foreground">
-            Recent Appointments
-          </h2>
+          <h2 className="font-display text-xl font-semibold text-foreground">Recent Appointments</h2>
         </div>
-        
+
         {recentAppointments.length === 0 ? (
           <div className="p-12 text-center">
             <Calendar className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
@@ -158,7 +159,7 @@ const AdminDashboard = () => {
         ) : (
           <div className="divide-y divide-border">
             {recentAppointments.map((appointment) => (
-              <div key={appointment.id} className="p-4 hover:bg-muted/50 transition-colors">
+              <div key={appointment.id} className="p-4 hover:bg-muted/50 transition-colors space-y-3">
                 <div className="flex items-center justify-between gap-4 flex-wrap">
                   <div>
                     <p className="font-semibold text-foreground">{appointment.patient_name}</p>
@@ -173,6 +174,27 @@ const AdminDashboard = () => {
                   <span className={`px-3 py-1 rounded-full text-xs font-medium capitalize ${getStatusBadge(appointment.status)}`}>
                     {appointment.status}
                   </span>
+                </div>
+                {/* Action Buttons */}
+                <div className="flex items-center gap-2 flex-wrap">
+                  {appointment.status === "pending" && (
+                    <>
+                      <Button size="sm" onClick={() => updateStatus(appointment.id, "confirmed")}>
+                        <Check className="w-3.5 h-3.5 mr-1" /> Confirm
+                      </Button>
+                      <Button size="sm" variant="outline" onClick={() => updateStatus(appointment.id, "cancelled")}>
+                        <X className="w-3.5 h-3.5 mr-1" /> Cancel
+                      </Button>
+                    </>
+                  )}
+                  {appointment.status === "confirmed" && (
+                    <Button size="sm" onClick={() => updateStatus(appointment.id, "completed")}>
+                      <CheckCircle className="w-3.5 h-3.5 mr-1" /> Complete
+                    </Button>
+                  )}
+                  <Button size="sm" variant="ghost" className="text-destructive hover:bg-destructive/10" onClick={() => deleteAppointment(appointment.id)}>
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </Button>
                 </div>
               </div>
             ))}
