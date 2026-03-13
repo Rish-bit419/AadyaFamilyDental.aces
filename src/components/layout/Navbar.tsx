@@ -183,16 +183,7 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Floating Book Button (Mobile) */}
-      <Link
-        to="/book-appointment"
-        className="fixed bottom-6 left-6 z-40 lg:hidden"
-      >
-        <Button size="lg" className="cta-gradient border-0 shadow-lg gap-2">
-          <Calendar className="w-5 h-5" />
-          Book Now
-        </Button>
-      </Link>
+
     </>
   );
 };
