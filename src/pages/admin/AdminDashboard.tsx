@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Calendar, Users, Clock, CheckCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
+import { Calendar, Users, Clock, CheckCircle, Check, X, Trash2 } from "lucide-react";
 
 interface StatsData {
   totalAppointments: number;
