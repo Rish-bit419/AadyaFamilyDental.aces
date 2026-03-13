@@ -22,6 +22,7 @@ interface Appointment {
 }
 
 const AdminDashboard = () => {
+  const { toast } = useToast();
   const [stats, setStats] = useState<StatsData>({
     totalAppointments: 0,
     pendingAppointments: 0,
