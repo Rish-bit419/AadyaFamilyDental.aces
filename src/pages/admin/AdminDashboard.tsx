@@ -70,7 +70,7 @@ const AdminDashboard = () => {
     }
   };
 
-  const updateStatus = async (id: string, status: string) => {
+  const updateStatus = async (id: string, status: "pending" | "confirmed" | "cancelled" | "completed") => {
     try {
       const { error } = await supabase.from("appointments").update({ status }).eq("id", id);
       if (error) throw error;
