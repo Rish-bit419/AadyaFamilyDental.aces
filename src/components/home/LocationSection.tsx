@@ -67,7 +67,7 @@ const LocationSection = () => {
           </div>
         )}
 
-        {isLoading ? (
+        {isLoading && !isError ? (
           <div className="grid lg:grid-cols-2 gap-12">
             <div className="grid sm:grid-cols-2 gap-4">
               {[...Array(4)].map((_, i) => (

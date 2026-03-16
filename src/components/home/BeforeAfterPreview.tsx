@@ -43,7 +43,7 @@ const BeforeAfterPreview = () => {
     setActiveSliders((prev) => ({ ...prev, [id]: value }));
   };
 
-  if (isLoading) {
+  if (isLoading && !isError) {
     return (
       <section className="section-padding bg-background">
         <div className="container-custom">

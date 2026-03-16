@@ -44,7 +44,7 @@ const FAQSection = () => {
     );
   }
 
-  if (faqs.length === 0) return null;
+  if (isError || faqs.length === 0) return null;
 
   return (
     <section className="section-padding bg-secondary">

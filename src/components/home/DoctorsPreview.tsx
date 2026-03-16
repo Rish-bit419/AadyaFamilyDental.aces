@@ -69,7 +69,7 @@ const DoctorsPreview = () => {
     );
   }
 
-  if (doctors.length === 0) return null;
+  if (isError || doctors.length === 0) return null;
 
   return (
     <section className="section-padding bg-secondary">

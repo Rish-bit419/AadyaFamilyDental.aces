@@ -43,7 +43,7 @@ const TestimonialsSection = () => {
   const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % Math.max(1, displayTestimonials.length - 2));
   const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + Math.max(1, displayTestimonials.length - 2)) % Math.max(1, displayTestimonials.length - 2));
 
-  if (isLoading) {
+  if (isLoading && !isError) {
     return (
       <section className="section-padding bg-gradient-to-b from-secondary to-background">
         <div className="container-custom">
