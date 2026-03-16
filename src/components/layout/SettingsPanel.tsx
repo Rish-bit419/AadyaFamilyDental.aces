@@ -1,9 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuthReady } from "@/hooks/use-auth-ready";
 import {
   Home, Info, Briefcase, Image, BookOpen, Calendar,
-  Phone, LayoutDashboard, Shield, Settings, X, User
+  Phone, LayoutDashboard, Shield, Settings, User
 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
@@ -18,59 +19,55 @@ const menuItems = [
 ];
 
 const SettingsPanel = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { user, isReady, isAuthenticated } = useAuthReady();
   const [isAdmin, setIsAdmin] = useState(false);
   const [userName, setUserName] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
-  const loadUserData = async (userId: string, fallbackName: string) => {
-    // Try to get name from profiles table first
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("full_name")
-      .eq("id", userId)
-      .single();
-    setUserName(profile?.full_name || fallbackName);
-
-    const { data } = await supabase.rpc("has_role", {
-      _user_id: userId,
-      _role: "admin",
-    });
-    setIsAdmin(!!data);
-  };
-
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_, session) => {
-      setIsLoggedIn(!!session?.user);
-      if (session?.user) {
-        const fallback = session.user.user_metadata?.full_name || session.user.email || "Patient";
-        await loadUserData(session.user.id, fallback);
-      } else {
+    let isMounted = true;
+
+    const loadUserData = async () => {
+      if (!isReady) return;
+
+      if (!user) {
+        if (!isMounted) return;
         setUserName(null);
         setIsAdmin(false);
+        return;
       }
-    });
 
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
-      setIsLoggedIn(!!session?.user);
-      if (session?.user) {
-        const fallback = session.user.user_metadata?.full_name || session.user.email || "Patient";
-        await loadUserData(session.user.id, fallback);
-      }
-    });
+      const fallback = user.user_metadata?.full_name || user.email || "Patient";
 
-    return () => subscription.unsubscribe();
-  }, []);
+      const [{ data: profile }, { data: hasAdmin }] = await Promise.all([
+        supabase.from("profiles").select("full_name").eq("id", user.id).maybeSingle(),
+        supabase.rpc("has_role", {
+          _user_id: user.id,
+          _role: "admin",
+        }),
+      ]);
+
+      if (!isMounted) return;
+      setUserName(profile?.full_name || fallback);
+      setIsAdmin(!!hasAdmin);
+    };
+
+    void loadUserData();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [isReady, user]);
 
   const handlePatientDashboard = () => {
     setOpen(false);
-    navigate(isLoggedIn ? "/patient/dashboard" : "/patient/auth");
+    navigate(isAuthenticated ? "/patient/dashboard" : "/patient/auth");
   };
 
   const handleAdmin = () => {
     setOpen(false);
-    navigate(isLoggedIn && isAdmin ? "/admin/dashboard" : "/admin/login");
+    navigate(isAuthenticated && isAdmin ? "/admin/dashboard" : "/admin/login");
   };
 
   return (
@@ -92,10 +89,10 @@ const SettingsPanel = () => {
               </div>
               <div>
                 <p className="text-sm font-semibold text-foreground">
-                  {isLoggedIn ? `Welcome, ${userName}` : "Guest User"}
+                  {isAuthenticated ? `Welcome, ${userName || "Patient"}` : "Guest User"}
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  {isLoggedIn ? "Logged in" : "Sign in for full access"}
+                  {isAuthenticated ? "Logged in" : "Sign in for full access"}
                 </p>
               </div>
             </div>

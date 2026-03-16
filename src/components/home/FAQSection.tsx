@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { HelpCircle, MessageCircle } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
+import { withTimeout } from "@/lib/with-timeout";
 
 interface FAQ {
   id: string;
@@ -12,23 +13,38 @@ interface FAQ {
   category: string | null;
 }
 
+const fallbackFaqs: FAQ[] = [
+  { id: "faq-1", question: "Do you offer same-day appointments?", answer: "Yes, we try to accommodate urgent dental issues and same-day visits whenever possible.", category: "Appointments" },
+  { id: "faq-2", question: "Is teeth whitening safe?", answer: "Professional whitening is safe when done under dental supervision and customized for your smile.", category: "Cosmetic" },
+  { id: "faq-3", question: "How often should I get a dental checkup?", answer: "Most patients should visit every 6 months, though your dentist may recommend a different schedule.", category: "General" },
+  { id: "faq-4", question: "Do you provide implant consultations?", answer: "Yes, we offer implant evaluations and personalized treatment planning for missing teeth.", category: "Implants" },
+];
+
 const FAQSection = () => {
-  const { data: faqs = [], isLoading, isError } = useQuery({
+  const { data: faqs = fallbackFaqs, isLoading } = useQuery({
     queryKey: ["faqs-preview"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("faqs")
-        .select("*")
-        .eq("is_active", true)
-        .order("display_order", { ascending: true })
-        .limit(6);
-      if (error) throw error;
-      return (data || []) as FAQ[];
+      try {
+        const { data, error } = await withTimeout(
+          supabase
+            .from("faqs")
+            .select("*")
+            .eq("is_active", true)
+            .order("display_order", { ascending: true })
+            .limit(6),
+          4000,
+          "FAQ request timed out"
+        );
+
+        if (error || !data?.length) return fallbackFaqs;
+        return data as FAQ[];
+      } catch {
+        return fallbackFaqs;
+      }
     },
-    staleTime: 5 * 60 * 1000,
   });
 
-  if (isLoading && !isError) {
+  if (isLoading) {
     return (
       <section className="section-padding bg-secondary">
         <div className="container-custom">
@@ -43,8 +59,6 @@ const FAQSection = () => {
       </section>
     );
   }
-
-  if (isError || faqs.length === 0) return null;
 
   return (
     <section className="section-padding bg-secondary">

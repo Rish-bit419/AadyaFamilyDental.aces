@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { SkeletonTestimonialCard } from "@/components/ui/skeleton-cards";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { withTimeout } from "@/lib/with-timeout";
 
 interface Testimonial {
   id: string;
@@ -23,27 +24,33 @@ const fallbackTestimonials: Testimonial[] = [
 const TestimonialsSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const { data: testimonials, isLoading, isError } = useQuery({
+  const { data: testimonials = fallbackTestimonials, isLoading } = useQuery({
     queryKey: ["testimonials-preview"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("testimonials")
-        .select("*")
-        .eq("is_active", true)
-        .order("is_featured", { ascending: false })
-        .limit(6);
-      if (error) throw error;
-      return (data && data.length > 0 ? data : fallbackTestimonials) as Testimonial[];
+      try {
+        const { data, error } = await withTimeout(
+          supabase
+            .from("testimonials")
+            .select("*")
+            .eq("is_active", true)
+            .order("is_featured", { ascending: false })
+            .limit(6),
+          4000,
+          "Testimonials request timed out"
+        );
+
+        if (error || !data?.length) return fallbackTestimonials;
+        return data as Testimonial[];
+      } catch {
+        return fallbackTestimonials;
+      }
     },
-    staleTime: 5 * 60 * 1000,
   });
 
-  const displayTestimonials = isError ? fallbackTestimonials : (testimonials || fallbackTestimonials);
+  const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % Math.max(1, testimonials.length - 2));
+  const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + Math.max(1, testimonials.length - 2)) % Math.max(1, testimonials.length - 2));
 
-  const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % Math.max(1, displayTestimonials.length - 2));
-  const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + Math.max(1, displayTestimonials.length - 2)) % Math.max(1, displayTestimonials.length - 2));
-
-  if (isLoading && !isError) {
+  if (isLoading) {
     return (
       <section className="section-padding bg-gradient-to-b from-secondary to-background">
         <div className="container-custom">
@@ -76,7 +83,7 @@ const TestimonialsSection = () => {
             <div>
               <div className="flex items-center gap-1">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                  <Star key={i} className="w-4 h-4 fill-primary text-primary" />
                 ))}
               </div>
               <p className="text-sm text-muted-foreground mt-0.5">4.9 (500+ reviews)</p>
@@ -87,13 +94,13 @@ const TestimonialsSection = () => {
         <div className="relative">
           <div className="overflow-hidden">
             <div className="flex transition-transform duration-500 ease-out gap-6" style={{ transform: `translateX(-${currentIndex * (100 / 3 + 2)}%)` }}>
-              {displayTestimonials.map((testimonial) => (
+              {testimonials.map((testimonial) => (
                 <div key={testimonial.id} className="flex-shrink-0 w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]">
                   <div className="bg-card rounded-3xl p-8 border border-border/50 shadow-soft h-full relative group hover:shadow-medium hover:-translate-y-1 transition-all duration-300">
                     <Quote className="absolute top-6 right-6 w-12 h-12 text-primary/10" />
                     <div className="flex gap-1 mb-6">
                       {[...Array(testimonial.rating || 5)].map((_, i) => (
-                        <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                        <Star key={i} className="w-5 h-5 fill-primary text-primary" />
                       ))}
                     </div>
                     <p className="text-foreground leading-relaxed mb-6 line-clamp-4">"{testimonial.review_text}"</p>
@@ -116,7 +123,7 @@ const TestimonialsSection = () => {
             </div>
           </div>
 
-          {displayTestimonials.length > 3 && (
+          {testimonials.length > 3 && (
             <div className="flex justify-center gap-4 mt-8">
               <Button variant="outline" size="icon" onClick={prevSlide} className="rounded-full w-12 h-12 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors">
                 <ChevronLeft className="w-5 h-5" />

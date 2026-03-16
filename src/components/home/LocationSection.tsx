@@ -5,6 +5,7 @@ import { MapPin, Phone, Clock, MessageCircle, Mail, ExternalLink } from "lucide-
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { withTimeout } from "@/lib/with-timeout";
 
 interface Location {
   id: string;
@@ -17,25 +18,46 @@ interface Location {
   map_embed_url: string | null;
 }
 
+const fallbackLocations: Location[] = [
+  {
+    id: "fallback-location",
+    name: "Main Clinic",
+    address: "Bengaluru, Karnataka, India",
+    phone: "+91 63663 60115",
+    email: "info@dentalcare.in",
+    whatsapp: "6366360115",
+    working_hours: "Mon - Sat: 9 AM - 8 PM",
+    map_embed_url: null,
+  },
+];
+
 const LocationSection = () => {
   const [activeLocation, setActiveLocation] = useState(0);
   const [mapLoaded, setMapLoaded] = useState(false);
 
-  const { data: locations = [], isLoading, isError } = useQuery({
+  const { data: locations = fallbackLocations, isLoading } = useQuery({
     queryKey: ["locations-preview"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("locations")
-        .select("*")
-        .eq("is_active", true)
-        .order("display_order");
-      if (error) throw error;
-      return (data || []) as Location[];
+      try {
+        const { data, error } = await withTimeout(
+          supabase
+            .from("locations")
+            .select("*")
+            .eq("is_active", true)
+            .order("display_order"),
+          4000,
+          "Locations request timed out"
+        );
+
+        if (error || !data?.length) return fallbackLocations;
+        return data as Location[];
+      } catch {
+        return fallbackLocations;
+      }
     },
-    staleTime: 5 * 60 * 1000,
   });
 
-  const current = locations[activeLocation];
+  const current = locations[activeLocation] || fallbackLocations[0];
 
   const getContactCards = (loc: Location) => [
     { icon: MapPin, title: "Address", content: loc.address, action: null },
@@ -67,7 +89,7 @@ const LocationSection = () => {
           </div>
         )}
 
-        {isLoading && !isError ? (
+        {isLoading ? (
           <div className="grid lg:grid-cols-2 gap-12">
             <div className="grid sm:grid-cols-2 gap-4">
               {[...Array(4)].map((_, i) => (
@@ -80,7 +102,7 @@ const LocationSection = () => {
             </div>
             <Skeleton className="aspect-[4/3] rounded-3xl" />
           </div>
-        ) : current ? (
+        ) : (
           <div className="grid lg:grid-cols-2 gap-12 items-center animate-slide-up">
             <div>
               <h3 className="font-display text-2xl font-bold text-foreground mb-6">{current.name}</h3>
@@ -104,30 +126,44 @@ const LocationSection = () => {
                 <Link to="/book-appointment"><Button size="lg" className="cta-gradient border-0">Book Appointment</Button></Link>
                 <a href={`https://wa.me/91${(current.whatsapp || "6366360115").replace(/\D/g, "")}`} target="_blank" rel="noopener noreferrer">
                   <Button variant="outline" size="lg" className="group">
-                    <MessageCircle className="w-5 h-5 mr-2 text-green-500 group-hover:scale-110 transition-transform" />WhatsApp Us
+                    <MessageCircle className="w-5 h-5 mr-2 text-primary group-hover:scale-110 transition-transform" />WhatsApp Us
                   </Button>
                 </a>
               </div>
             </div>
             <div>
-              <div className="aspect-square lg:aspect-[4/3] rounded-3xl overflow-hidden shadow-medium border border-border/50 relative group">
-                {!mapLoaded && <div className="absolute inset-0 bg-muted animate-pulse rounded-3xl" />}
-                {current.map_embed_url && (
-                  <iframe
-                    key={current.id}
-                    src={current.map_embed_url}
-                    width="100%" height="100%" style={{ border: 0 }}
-                    allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"
-                    title={`${current.name} Location`}
-                    className={`grayscale group-hover:grayscale-0 transition-all duration-500 ${mapLoaded ? "opacity-100" : "opacity-0"}`}
-                    onLoad={() => setMapLoaded(true)}
-                  />
+              <div className="aspect-square lg:aspect-[4/3] rounded-3xl overflow-hidden shadow-medium border border-border/50 relative group bg-secondary">
+                {current.map_embed_url ? (
+                  <>
+                    {!mapLoaded && <div className="absolute inset-0 bg-muted animate-pulse rounded-3xl" />}
+                    <iframe
+                      key={current.id}
+                      src={current.map_embed_url}
+                      width="100%"
+                      height="100%"
+                      style={{ border: 0 }}
+                      allowFullScreen
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      title={`${current.name} Location`}
+                      className={`grayscale group-hover:grayscale-0 transition-all duration-500 ${mapLoaded ? "opacity-100" : "opacity-0"}`}
+                      onLoad={() => setMapLoaded(true)}
+                    />
+                  </>
+                ) : (
+                  <div className="h-full w-full flex items-center justify-center p-8 text-center">
+                    <div>
+                      <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                        <MapPin className="w-8 h-8 text-primary" />
+                      </div>
+                      <h4 className="font-display text-xl font-semibold text-foreground mb-2">Visit Our Clinic</h4>
+                      <p className="text-muted-foreground">{current.address}</p>
+                    </div>
+                  </div>
                 )}
               </div>
             </div>
           </div>
-        ) : (
-          <p className="text-center text-muted-foreground">No locations found.</p>
         )}
       </div>
     </section>

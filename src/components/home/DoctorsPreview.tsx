@@ -6,6 +6,7 @@ import DoctorDetailModal from "./DoctorDetailModal";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { withTimeout } from "@/lib/with-timeout";
 import doctorSarah from "@/assets/doctor-sarah.jpg";
 import doctorMichael from "@/assets/doctor-michael.jpg";
 import doctorEmily from "@/assets/doctor-emily.jpg";
@@ -29,23 +30,70 @@ interface Doctor {
   gallery_images: string[] | null;
 }
 
+const fallbackDoctors: Doctor[] = [
+  {
+    id: "fallback-sarah",
+    name: "Dr. Sarah Johnson",
+    qualification: "BDS, MDS",
+    specialization: "Cosmetic Dentistry",
+    experience_years: 12,
+    bio: "Specialist in smile makeovers, veneers, and aesthetic dental care.",
+    image_url: "doctor-sarah",
+    education: null,
+    awards: null,
+    gallery_images: null,
+  },
+  {
+    id: "fallback-michael",
+    name: "Dr. Michael Chen",
+    qualification: "BDS, Implantologist",
+    specialization: "Dental Implants",
+    experience_years: 10,
+    bio: "Focused on advanced implant procedures and full-mouth rehabilitation.",
+    image_url: "doctor-michael",
+    education: null,
+    awards: null,
+    gallery_images: null,
+  },
+  {
+    id: "fallback-emily",
+    name: "Dr. Emily Williams",
+    qualification: "BDS, Orthodontist",
+    specialization: "Orthodontics",
+    experience_years: 8,
+    bio: "Creates confident smiles with braces and clear aligner treatments.",
+    image_url: "doctor-emily",
+    education: null,
+    awards: null,
+    gallery_images: null,
+  },
+];
+
 const DoctorsPreview = () => {
   const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { data: doctors = [], isLoading, isError } = useQuery({
+  const { data: doctors = fallbackDoctors, isLoading } = useQuery({
     queryKey: ["doctors-preview"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("doctors")
-        .select("*")
-        .eq("is_active", true)
-        .order("display_order", { ascending: true })
-        .limit(3);
-      if (error) throw error;
-      return (data || []) as Doctor[];
+      try {
+        const { data, error } = await withTimeout(
+          supabase
+            .from("doctors")
+            .select("*")
+            .eq("is_active", true)
+            .order("display_order", { ascending: true })
+            .limit(3),
+          4000,
+          "Doctors request timed out"
+        );
+
+        if (error || !data?.length) return fallbackDoctors;
+        return data as Doctor[];
+      } catch {
+        return fallbackDoctors;
+      }
     },
-    staleTime: 5 * 60 * 1000,
   });
 
   const handleDoctorClick = (doctor: Doctor) => {
@@ -69,8 +117,6 @@ const DoctorsPreview = () => {
     );
   }
 
-  if (isError || doctors.length === 0) return null;
-
   return (
     <section className="section-padding bg-secondary">
       <div className="container-custom">
@@ -90,7 +136,7 @@ const DoctorsPreview = () => {
             >
               <div className="aspect-[4/3] bg-gradient-to-br from-teal-light to-secondary relative overflow-hidden">
                 {(() => {
-                  const localKey = Object.keys(localDoctorImages).find(k => doctor.image_url?.includes(k) || doctor.name.toLowerCase().includes(k.replace("doctor-", "")));
+                  const localKey = Object.keys(localDoctorImages).find((k) => doctor.image_url?.includes(k) || doctor.name.toLowerCase().includes(k.replace("doctor-", "")));
                   const imgSrc = localKey ? localDoctorImages[localKey] : doctor.image_url;
                   return imgSrc ? (
                     <img src={imgSrc} alt={doctor.name} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
