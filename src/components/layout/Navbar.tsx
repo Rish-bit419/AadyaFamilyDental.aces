@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Phone, Menu, X, Calendar, User, Moon, Sun } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { supabase } from "@/integrations/supabase/client";
+import { useAuthReady } from "@/hooks/use-auth-ready";
 import SettingsPanel from "./SettingsPanel";
 
 const navLinks = [
@@ -18,9 +18,9 @@ const navLinks = [
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const location = useLocation();
   const { theme, setTheme } = useTheme();
+  const { isAuthenticated } = useAuthReady();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,18 +28,6 @@ const Navbar = () => {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
-      setIsLoggedIn(!!session?.user);
-    });
-
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setIsLoggedIn(!!session?.user);
-    });
-
-    return () => subscription.unsubscribe();
   }, []);
 
   useEffect(() => {
@@ -57,7 +45,6 @@ const Navbar = () => {
       >
         <div className="container-custom">
           <div className="flex items-center justify-between h-20 px-4 md:px-8">
-            {/* Settings Gear + Logo */}
             <div className="flex items-center gap-2">
               <SettingsPanel />
               <Link to="/" className="flex items-center gap-3 group">
@@ -71,7 +58,6 @@ const Navbar = () => {
               </Link>
             </div>
 
-            {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center gap-1">
               {navLinks.map((link) => (
                 <Link
@@ -88,7 +74,6 @@ const Navbar = () => {
               ))}
             </div>
 
-            {/* Desktop CTAs */}
             <div className="hidden lg:flex items-center gap-3">
               <button
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -97,10 +82,10 @@ const Navbar = () => {
               >
                 {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
               </button>
-              <Link to={isLoggedIn ? "/patient/dashboard" : "/patient/auth"}>
+              <Link to={isAuthenticated ? "/patient/dashboard" : "/patient/auth"}>
                 <Button variant="ghost" size="sm" className="gap-2">
                   <User className="w-4 h-4" />
-                  <span className="hidden xl:inline">{isLoggedIn ? "My Portal" : "Patient Login"}</span>
+                  <span className="hidden xl:inline">{isAuthenticated ? "My Portal" : "Patient Login"}</span>
                 </Button>
               </Link>
               <a href="tel:+919876543210">
@@ -117,7 +102,6 @@ const Navbar = () => {
               </Link>
             </div>
 
-            {/* Mobile Menu Button */}
             <button
               className="lg:hidden p-2 text-foreground"
               onClick={() => setIsOpen(!isOpen)}
@@ -128,7 +112,6 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Menu */}
         <div
           className={`lg:hidden absolute top-full left-0 right-0 bg-card/98 backdrop-blur-lg border-b border-border shadow-medium transition-all duration-300 ${
             isOpen ? "opacity-100 visible" : "opacity-0 invisible"
@@ -150,7 +133,7 @@ const Navbar = () => {
                 </Link>
               ))}
             </div>
-            
+
             <div className="flex flex-col gap-3 mt-6 pt-6 border-t border-border">
               <Button
                 variant="outline"
@@ -166,10 +149,10 @@ const Navbar = () => {
                   Call Us Now
                 </Button>
               </a>
-              <Link to={isLoggedIn ? "/patient/dashboard" : "/patient/auth"} className="w-full">
+              <Link to={isAuthenticated ? "/patient/dashboard" : "/patient/auth"} className="w-full">
                 <Button variant="secondary" className="w-full gap-2">
                   <User className="w-4 h-4" />
-                  {isLoggedIn ? "My Portal" : "Patient Login"}
+                  {isAuthenticated ? "My Portal" : "Patient Login"}
                 </Button>
               </Link>
               <Link to="/book-appointment" className="w-full">
@@ -182,8 +165,6 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
-
-
     </>
   );
 };
