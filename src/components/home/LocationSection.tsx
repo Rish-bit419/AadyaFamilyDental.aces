@@ -21,7 +21,7 @@ const LocationSection = () => {
   const [activeLocation, setActiveLocation] = useState(0);
   const [mapLoaded, setMapLoaded] = useState(false);
 
-  const { data: locations = [], isLoading } = useQuery({
+  const { data: locations = [], isLoading, isError } = useQuery({
     queryKey: ["locations-preview"],
     queryFn: async () => {
       const { data, error } = await supabase
