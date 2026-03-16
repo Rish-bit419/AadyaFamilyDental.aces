@@ -28,7 +28,7 @@ const FAQSection = () => {
     staleTime: 5 * 60 * 1000,
   });
 
-  if (isLoading) {
+  if (isLoading && !isError) {
     return (
       <section className="section-padding bg-secondary">
         <div className="container-custom">
