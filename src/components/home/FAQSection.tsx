@@ -13,7 +13,7 @@ interface FAQ {
 }
 
 const FAQSection = () => {
-  const { data: faqs = [], isLoading } = useQuery({
+  const { data: faqs = [], isLoading, isError } = useQuery({
     queryKey: ["faqs-preview"],
     queryFn: async () => {
       const { data, error } = await supabase
