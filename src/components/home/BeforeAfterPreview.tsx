@@ -19,7 +19,7 @@ const BeforeAfterPreview = () => {
   const [activeSliders, setActiveSliders] = useState<Record<string, number>>({});
   const [hoveredImage, setHoveredImage] = useState<string | null>(null);
 
-  const { data: images = [], isLoading } = useQuery({
+  const { data: images = [], isLoading, isError } = useQuery({
     queryKey: ["before-after-preview"],
     queryFn: async () => {
       const { data, error } = await supabase
