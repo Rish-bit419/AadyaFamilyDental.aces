@@ -23,7 +23,7 @@ const fallbackTestimonials: Testimonial[] = [
 const TestimonialsSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const { data: testimonials, isLoading } = useQuery({
+  const { data: testimonials, isLoading, isError } = useQuery({
     queryKey: ["testimonials-preview"],
     queryFn: async () => {
       const { data, error } = await supabase
