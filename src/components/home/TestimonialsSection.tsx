@@ -38,7 +38,7 @@ const TestimonialsSection = () => {
     staleTime: 5 * 60 * 1000,
   });
 
-  const displayTestimonials = testimonials || fallbackTestimonials;
+  const displayTestimonials = isError ? fallbackTestimonials : (testimonials || fallbackTestimonials);
 
   const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % Math.max(1, displayTestimonials.length - 2));
   const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + Math.max(1, displayTestimonials.length - 2)) % Math.max(1, displayTestimonials.length - 2));
