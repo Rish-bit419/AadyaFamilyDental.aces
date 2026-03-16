@@ -13,7 +13,7 @@ interface FAQ {
 }
 
 const FAQSection = () => {
-  const { data: faqs = [], isLoading } = useQuery({
+  const { data: faqs = [], isLoading, isError } = useQuery({
     queryKey: ["faqs-preview"],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -28,7 +28,7 @@ const FAQSection = () => {
     staleTime: 5 * 60 * 1000,
   });
 
-  if (isLoading) {
+  if (isLoading && !isError) {
     return (
       <section className="section-padding bg-secondary">
         <div className="container-custom">
@@ -44,7 +44,7 @@ const FAQSection = () => {
     );
   }
 
-  if (faqs.length === 0) return null;
+  if (isError || faqs.length === 0) return null;
 
   return (
     <section className="section-padding bg-secondary">

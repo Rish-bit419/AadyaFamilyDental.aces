@@ -23,7 +23,7 @@ const fallbackTestimonials: Testimonial[] = [
 const TestimonialsSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const { data: testimonials, isLoading } = useQuery({
+  const { data: testimonials, isLoading, isError } = useQuery({
     queryKey: ["testimonials-preview"],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -38,12 +38,12 @@ const TestimonialsSection = () => {
     staleTime: 5 * 60 * 1000,
   });
 
-  const displayTestimonials = testimonials || fallbackTestimonials;
+  const displayTestimonials = isError ? fallbackTestimonials : (testimonials || fallbackTestimonials);
 
   const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % Math.max(1, displayTestimonials.length - 2));
   const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + Math.max(1, displayTestimonials.length - 2)) % Math.max(1, displayTestimonials.length - 2));
 
-  if (isLoading) {
+  if (isLoading && !isError) {
     return (
       <section className="section-padding bg-gradient-to-b from-secondary to-background">
         <div className="container-custom">

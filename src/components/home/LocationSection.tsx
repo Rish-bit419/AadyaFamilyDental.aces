@@ -21,7 +21,7 @@ const LocationSection = () => {
   const [activeLocation, setActiveLocation] = useState(0);
   const [mapLoaded, setMapLoaded] = useState(false);
 
-  const { data: locations = [], isLoading } = useQuery({
+  const { data: locations = [], isLoading, isError } = useQuery({
     queryKey: ["locations-preview"],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -67,7 +67,7 @@ const LocationSection = () => {
           </div>
         )}
 
-        {isLoading ? (
+        {isLoading && !isError ? (
           <div className="grid lg:grid-cols-2 gap-12">
             <div className="grid sm:grid-cols-2 gap-4">
               {[...Array(4)].map((_, i) => (

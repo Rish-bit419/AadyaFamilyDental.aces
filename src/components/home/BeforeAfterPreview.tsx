@@ -19,7 +19,7 @@ const BeforeAfterPreview = () => {
   const [activeSliders, setActiveSliders] = useState<Record<string, number>>({});
   const [hoveredImage, setHoveredImage] = useState<string | null>(null);
 
-  const { data: images = [], isLoading } = useQuery({
+  const { data: images = [], isLoading, isError } = useQuery({
     queryKey: ["before-after-preview"],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -43,7 +43,7 @@ const BeforeAfterPreview = () => {
     setActiveSliders((prev) => ({ ...prev, [id]: value }));
   };
 
-  if (isLoading) {
+  if (isLoading && !isError) {
     return (
       <section className="section-padding bg-background">
         <div className="container-custom">
