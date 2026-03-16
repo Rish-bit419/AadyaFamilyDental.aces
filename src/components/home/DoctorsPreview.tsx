@@ -33,7 +33,7 @@ const DoctorsPreview = () => {
   const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { data: doctors = [], isLoading } = useQuery({
+  const { data: doctors = [], isLoading, isError } = useQuery({
     queryKey: ["doctors-preview"],
     queryFn: async () => {
       const { data, error } = await supabase
