@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -50,6 +50,7 @@ const BookAppointment = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showSignupBanner, setShowSignupBanner] = useState(true);
+  const [bookedSlots, setBookedSlots] = useState<string[]>([]);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -60,6 +61,25 @@ const BookAppointment = () => {
     message: "",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  // Fetch confirmed/completed slots for the selected date
+  useEffect(() => {
+    if (!formData.date) {
+      setBookedSlots([]);
+      return;
+    }
+    const fetchBookedSlots = async () => {
+      const { data } = await supabase
+        .from("appointments")
+        .select("preferred_time")
+        .eq("preferred_date", formData.date)
+        .in("status", ["confirmed", "completed"]);
+      setBookedSlots(data?.map((a) => a.preferred_time) || []);
+    };
+    fetchBookedSlots();
+    // Clear time if it's now booked
+    setFormData((prev) => ({ ...prev, time: "" }));
+  }, [formData.date]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -290,11 +310,14 @@ const BookAppointment = () => {
                         <SelectValue placeholder="Select time" />
                       </SelectTrigger>
                       <SelectContent>
-                        {timeSlots.map((time) => (
-                          <SelectItem key={time} value={time}>
-                            {time}
-                          </SelectItem>
-                        ))}
+                        {timeSlots.map((time) => {
+                          const isBooked = bookedSlots.includes(time);
+                          return (
+                            <SelectItem key={time} value={time} disabled={isBooked}>
+                              {time}{isBooked ? " (Booked)" : ""}
+                            </SelectItem>
+                          );
+                        })}
                       </SelectContent>
                     </Select>
                     {errors.time && <p className="text-sm text-destructive">{errors.time}</p>}
