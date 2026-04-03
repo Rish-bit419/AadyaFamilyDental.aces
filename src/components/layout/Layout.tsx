@@ -2,6 +2,7 @@ import { ReactNode, useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { Phone } from "lucide-react";
+import PromoBanner from "@/components/PromoBanner";
 import { supabase } from "@/integrations/supabase/client";
 
 interface LayoutProps {
