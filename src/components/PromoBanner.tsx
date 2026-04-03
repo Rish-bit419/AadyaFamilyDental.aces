@@ -11,7 +11,7 @@ const PromoBanner = () => {
       href="https://rrcreatorlab.in"
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed top-[70px] left-1/2 -translate-x-1/2 w-[85%] max-w-[700px] bg-white/90 backdrop-blur-xl px-4 py-2.5 rounded-full flex items-center justify-between gap-3 shadow-lg z-[9999] no-underline transition-all duration-300 hover:scale-[1.01]"
+      className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[85%] max-w-[700px] bg-white/90 backdrop-blur-xl px-4 py-2.5 rounded-full flex items-center justify-between gap-3 shadow-lg z-[9999] no-underline transition-all duration-300 hover:scale-[1.01]"
     >
       <img src={logo} alt="RR Creator Lab" className="w-7 h-7 rounded-full object-cover" />
       <span className="flex-1 text-sm text-gray-700">
