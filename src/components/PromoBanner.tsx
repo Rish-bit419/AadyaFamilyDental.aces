@@ -15,7 +15,7 @@ const PromoBanner = () => {
     >
       <img src={logo} alt="RR Creator Lab" className="w-7 h-7 rounded-full object-cover" />
       <span className="flex-1 text-sm text-gray-700">
-        This website is made by <b className="text-gray-900">RR Creator Lab</b>. Click to get your own 🚀
+        This website is designed by <b className="text-gray-900">RR Creator Lab</b>. Click to get your own 🚀
       </span>
       <span className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-3.5 py-1.5 rounded-full text-xs whitespace-nowrap font-medium">
         ✨ Get Yours
