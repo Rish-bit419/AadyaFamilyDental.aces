@@ -2,6 +2,7 @@ import { ReactNode, useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { Phone } from "lucide-react";
+import PromoBanner from "@/components/PromoBanner";
 import { supabase } from "@/integrations/supabase/client";
 
 interface LayoutProps {
@@ -28,6 +29,7 @@ const Layout = ({ children }: LayoutProps) => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <PromoBanner />
       <Navbar />
       <main className="flex-1 pt-20">
         {children}
