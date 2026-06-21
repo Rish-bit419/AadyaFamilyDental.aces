@@ -59,7 +59,7 @@ const HeroSection = () => {
             src={slide.image}
             alt={`${slide.title} ${slide.highlight}`}
             className="w-full h-full object-cover"
-            fetchPriority={i === 0 ? "high" : "low"}
+            fetchpriority={i === 0 ? "high" : "low"}
             loading={i === 0 ? "eager" : "lazy"}
           />
           {/* Dark overlay for text readability */}
