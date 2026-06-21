@@ -3,7 +3,7 @@ import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { Award, GraduationCap, Heart, Users, CheckCircle, Clock, User } from "lucide-react";
+import { Award, GraduationCap, Heart, Users, CheckCircle, Clock, User, Image as ImageIcon, Sparkles, ArrowRight, Stethoscope } from "lucide-react";
 
 interface Doctor {
   id: string;
@@ -59,11 +59,25 @@ const About = () => {
     fetchDoctors();
   }, []);
 
+  const scrollToId = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const exploreCards = [
+    { id: "gallery", icon: ImageIcon, title: "Gallery", desc: "A look inside our clinic and work.", to: "/gallery", external: true },
+    { id: "doctors", icon: Stethoscope, title: "Our Doctors", desc: "Meet the team behind every smile." },
+    { id: "philosophy", icon: Sparkles, title: "Our Philosophy", desc: "The principles guiding our care." },
+    { id: "values", icon: Heart, title: "Our Values", desc: "What we stand for, every day." },
+  ];
+
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="section-padding bg-gradient-to-b from-secondary to-background">
-        <div className="container-custom">
+      <section className="section-padding bg-gradient-to-b from-secondary to-background relative overflow-hidden">
+        <div className="absolute top-10 -left-20 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-10 -right-20 w-72 h-72 bg-teal-light/40 rounded-full blur-3xl" />
+        <div className="container-custom relative">
           <div className="max-w-3xl mx-auto text-center animate-slide-up">
             <span className="inline-block text-sm font-semibold text-primary uppercase tracking-wider mb-4">
               About Our Clinic
@@ -75,6 +89,33 @@ const About = () => {
               For over 15 years, we've been providing exceptional dental services to our community, 
               helping thousands of patients achieve healthy, beautiful smiles through advanced care and compassion.
             </p>
+          </div>
+
+          {/* Explore Cards */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mt-14 max-w-6xl mx-auto">
+            {exploreCards.map((card, i) => {
+              const Inner = (
+                <div
+                  className="group glass-card rounded-2xl p-6 h-full cursor-pointer hover:-translate-y-2 hover:shadow-medium transition-all duration-500 animate-slide-up"
+                  style={{ animationDelay: `${i * 0.08}s` }}
+                  onClick={() => !card.external && scrollToId(card.id)}
+                >
+                  <div className="w-12 h-12 rounded-xl bg-primary/15 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
+                    <card.icon className="w-6 h-6 text-primary group-hover:text-primary-foreground transition-colors" />
+                  </div>
+                  <h3 className="font-display text-lg font-semibold text-foreground mb-1">{card.title}</h3>
+                  <p className="text-sm text-muted-foreground mb-3">{card.desc}</p>
+                  <span className="inline-flex items-center gap-1 text-sm font-medium text-primary opacity-0 group-hover:opacity-100 group-hover:gap-2 transition-all">
+                    Explore <ArrowRight className="w-4 h-4" />
+                  </span>
+                </div>
+              );
+              return card.external ? (
+                <Link key={card.id} to={card.to!}>{Inner}</Link>
+              ) : (
+                <div key={card.id}>{Inner}</div>
+              );
+            })}
           </div>
         </div>
       </section>
