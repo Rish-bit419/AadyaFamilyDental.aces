@@ -62,7 +62,7 @@ const Testimonials = () => {
             </p>
 
             {/* Google Reviews Badge */}
-            <div className="inline-flex items-center gap-4 bg-card rounded-2xl px-6 py-4 shadow-soft border border-border/50">
+            <div className="inline-flex items-center gap-4 glass-card rounded-2xl px-6 py-4">
               <img 
                 src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" 
                 alt="Google" 
