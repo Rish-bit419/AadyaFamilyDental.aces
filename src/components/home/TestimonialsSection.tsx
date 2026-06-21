@@ -76,7 +76,7 @@ const TestimonialsSection = () => {
             <p className="text-lg text-muted-foreground">Don't just take our word for it. See what our happy patients have to say.</p>
           </div>
 
-          <div className="flex items-center gap-4 bg-card rounded-2xl px-6 py-4 shadow-soft border border-border/50 animate-slide-up">
+          <div className="flex items-center gap-4 glass-card rounded-2xl px-6 py-4 animate-slide-up">
             <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
               <Star className="w-5 h-5 text-primary fill-primary" />
             </div>
