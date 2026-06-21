@@ -81,7 +81,7 @@ const Services = () => {
                   <Link
                     key={service.id}
                     to={`/services/${service.id}`}
-                    className="group bg-card rounded-2xl overflow-hidden border border-border/50 shadow-soft hover:shadow-medium transition-all duration-300 animate-slide-up"
+                    className="group glass-card rounded-2xl overflow-hidden animate-slide-up interactive-card"
                     style={{ animationDelay: `${index * 0.05}s` }}
                   >
                     {/* Icon Header */}
