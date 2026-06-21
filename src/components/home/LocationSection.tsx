@@ -124,9 +124,9 @@ const LocationSection = () => {
               </div>
               <div className="flex flex-wrap gap-4">
                 <Link to="/book-appointment"><Button size="lg" className="cta-gradient border-0">Book Appointment</Button></Link>
-                <a href={`https://wa.me/91${(current.whatsapp || "6366360115").replace(/\D/g, "")}`} target="_blank" rel="noopener noreferrer">
+                <a href={`tel:+91${(current.phone || "6366360115").replace(/\D/g, "")}`}>
                   <Button variant="outline" size="lg" className="group">
-                    <MessageCircle className="w-5 h-5 mr-2 text-primary group-hover:scale-110 transition-transform" />WhatsApp Us
+                    <Phone className="w-5 h-5 mr-2 text-primary group-hover:scale-110 transition-transform" />Call Us
                   </Button>
                 </a>
               </div>
