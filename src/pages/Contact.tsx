@@ -213,7 +213,7 @@ const Contact = () => {
               </div>
 
               {/* Hours */}
-              <div className="card-elevated rounded-2xl p-6 border border-border/50">
+              <div className="glass-card rounded-2xl p-6">
                 <h3 className="font-display text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
                   <Clock className="w-5 h-5 text-primary" />
                   Opening Hours
@@ -235,16 +235,20 @@ const Contact = () => {
       </section>
 
       {/* Emergency CTA */}
-      <section className="section-padding bg-coral-light">
-        <div className="container-custom text-center animate-slide-up">
-          <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
+      <section className="section-padding hero-gradient relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 left-20 w-64 h-64 bg-primary-foreground rounded-full blur-3xl" />
+          <div className="absolute bottom-10 right-20 w-80 h-80 bg-primary-foreground rounded-full blur-3xl" />
+        </div>
+        <div className="container-custom text-center animate-slide-up relative">
+          <h2 className="font-display text-2xl md:text-3xl font-bold text-primary-foreground mb-4">
             Dental Emergency?
           </h2>
-          <p className="text-muted-foreground mb-6">
+          <p className="text-primary-foreground/80 mb-6 max-w-2xl mx-auto">
             We offer same-day emergency appointments. Call us immediately for urgent dental care.
           </p>
-          <a href="tel:+1234567890">
-            <Button variant="cta" size="xl">
+          <a href="tel:+916366360115">
+            <Button variant="hero" size="xl" className="shadow-lg hover:shadow-xl transition-shadow">
               <Phone className="w-5 h-5 mr-2" />
               Call Emergency Line
             </Button>
