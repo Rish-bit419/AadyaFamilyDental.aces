@@ -236,7 +236,7 @@ const About = () => {
       </section>
 
       {/* Doctors Section */}
-      <section className="section-padding bg-background">
+      <section id="doctors" className="section-padding bg-background scroll-mt-24">
         <div className="container-custom">
           <div className="text-center max-w-2xl mx-auto mb-16 animate-slide-up">
             <span className="inline-block text-sm font-semibold text-primary uppercase tracking-wider mb-4">
@@ -253,7 +253,15 @@ const About = () => {
           {isLoading ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="h-[420px] bg-muted rounded-3xl animate-pulse" />
+                <div key={i} className="rounded-3xl overflow-hidden border border-border/50 bg-card">
+                  <div className="aspect-[4/3] skeleton-shimmer" />
+                  <div className="p-6 space-y-3">
+                    <div className="h-5 w-2/3 rounded skeleton-shimmer" />
+                    <div className="h-4 w-1/2 rounded skeleton-shimmer" />
+                    <div className="h-3 w-full rounded skeleton-shimmer" />
+                    <div className="h-3 w-5/6 rounded skeleton-shimmer" />
+                  </div>
+                </div>
               ))}
             </div>
           ) : doctors.length === 0 ? (
@@ -320,7 +328,7 @@ const About = () => {
       </section>
 
       {/* Philosophy Section */}
-      <section className="section-padding bg-secondary">
+      <section id="philosophy" className="section-padding bg-secondary scroll-mt-24">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center animate-slide-up">
             <span className="inline-block text-sm font-semibold text-primary uppercase tracking-wider mb-4">
