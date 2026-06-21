@@ -126,7 +126,7 @@ const Testimonials = () => {
               {filteredTestimonials.map((testimonial, index) => (
                 <div
                   key={testimonial.id}
-                  className="bg-card rounded-3xl p-8 border border-border/50 shadow-soft hover:shadow-medium transition-all duration-300 relative group animate-slide-up"
+                  className="glass-card rounded-3xl p-8 relative group hover:-translate-y-1 transition-all duration-300 animate-slide-up"
                   style={{ animationDelay: `${index * 0.05}s` }}
                 >
                   <Quote className="absolute top-6 right-6 w-12 h-12 text-primary/10 group-hover:text-primary/20 transition-colors" />
