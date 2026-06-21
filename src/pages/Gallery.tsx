@@ -125,7 +125,7 @@ const Gallery = () => {
               {filteredImages.map((image, index) => (
                 <div
                   key={image.id}
-                  className="group bg-card rounded-2xl overflow-hidden border border-border/50 shadow-soft hover:shadow-medium transition-all duration-300 cursor-pointer animate-slide-up"
+                  className="group glass-card rounded-2xl overflow-hidden cursor-pointer animate-slide-up"
                   style={{ animationDelay: `${index * 0.05}s` }}
                   onClick={() => setSelectedImage(image)}
                 >
