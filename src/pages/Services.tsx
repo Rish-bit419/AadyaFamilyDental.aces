@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { ArrowRight, Clock, Sparkles } from "lucide-react";
 import * as LucideIcons from "lucide-react";
+import { SkeletonServiceCard } from "@/components/ui/skeleton-cards";
 
 interface Service {
   id: string;
