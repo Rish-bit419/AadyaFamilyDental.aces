@@ -70,22 +70,22 @@
      <section ref={sectionRef} className="py-16 bg-gradient-to-r from-primary via-teal-dark to-primary">
        <div className="container-custom">
          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-           {stats.map((stat, index) => (
-             <div
-               key={index}
-               className="text-center animate-slide-up"
-               style={{ animationDelay: `${index * 0.1}s` }}
-             >
-               <div className="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-sm flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                 <stat.icon className="w-8 h-8 text-white" />
-               </div>
-               <div className="text-3xl md:text-4xl font-bold text-white mb-1">
-                 {stat.value < 10 ? counts[index].toFixed(1) : counts[index].toLocaleString()}
-                 {stat.suffix}
-               </div>
-               <div className="text-white/80 text-sm font-medium">{stat.label}</div>
-             </div>
-           ))}
+            {stats.map((stat, index) => (
+              <div
+                key={index}
+                className="glass-card rounded-2xl p-6 text-center animate-slide-up"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-sm flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                  <stat.icon className="w-8 h-8 text-white" />
+                </div>
+                <div className="text-3xl md:text-4xl font-bold text-white mb-1">
+                  {stat.value < 10 ? counts[index].toFixed(1) : counts[index].toLocaleString()}
+                  {stat.suffix}
+                </div>
+                <div className="text-white/80 text-sm font-medium">{stat.label}</div>
+              </div>
+            ))}
          </div>
        </div>
      </section>
