@@ -49,9 +49,11 @@ const FAQSection = () => {
       <section className="section-padding bg-secondary">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto">
-            <div className="space-y-4">
+            <div className="space-y-3">
               {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="h-16 bg-muted rounded-xl animate-pulse" />
+                <div key={i} className="glass-card rounded-xl p-5 animate-pulse">
+                  <div className="h-5 w-3/4 rounded skeleton-shimmer" />
+                </div>
               ))}
             </div>
           </div>
@@ -74,7 +76,7 @@ const FAQSection = () => {
 
           <Accordion type="single" collapsible className="space-y-3 animate-slide-up" style={{ animationDelay: "0.1s" }}>
             {faqs.map((faq) => (
-              <AccordionItem key={faq.id} value={faq.id} className="bg-card rounded-xl border border-border/50 px-6 shadow-soft data-[state=open]:shadow-medium transition-shadow">
+              <AccordionItem key={faq.id} value={faq.id} className="glass-card rounded-xl border border-border/50 px-6 data-[state=open]:shadow-medium transition-shadow">
                 <AccordionTrigger className="text-left font-medium text-foreground hover:no-underline py-5">{faq.question}</AccordionTrigger>
                 <AccordionContent className="text-muted-foreground pb-5">{faq.answer}</AccordionContent>
               </AccordionItem>

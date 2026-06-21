@@ -76,7 +76,7 @@ const TestimonialsSection = () => {
             <p className="text-lg text-muted-foreground">Don't just take our word for it. See what our happy patients have to say.</p>
           </div>
 
-          <div className="flex items-center gap-4 bg-card rounded-2xl px-6 py-4 shadow-soft border border-border/50 animate-slide-up">
+          <div className="flex items-center gap-4 glass-card rounded-2xl px-6 py-4 animate-slide-up">
             <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
               <Star className="w-5 h-5 text-primary fill-primary" />
             </div>
@@ -96,8 +96,8 @@ const TestimonialsSection = () => {
             <div className="flex transition-transform duration-500 ease-out gap-6" style={{ transform: `translateX(-${currentIndex * (100 / 3 + 2)}%)` }}>
               {testimonials.map((testimonial) => (
                 <div key={testimonial.id} className="flex-shrink-0 w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]">
-                  <div className="bg-card rounded-3xl p-8 border border-border/50 shadow-soft h-full relative group hover:shadow-medium hover:-translate-y-1 transition-all duration-300">
-                    <Quote className="absolute top-6 right-6 w-12 h-12 text-primary/10" />
+                  <div className="glass-card rounded-3xl p-8 h-full relative group hover:-translate-y-1 transition-all duration-300">
+                    <Quote className="absolute top-6 right-6 w-12 h-12 text-primary/10 group-hover:text-primary/20 transition-colors" />
                     <div className="flex gap-1 mb-6">
                       {[...Array(testimonial.rating || 5)].map((_, i) => (
                         <Star key={i} className="w-5 h-5 fill-primary text-primary" />

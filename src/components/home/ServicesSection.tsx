@@ -63,7 +63,7 @@ const ServicesSection = () => {
           {services.map((service, index) => (
             <div
               key={service.title}
-              className="group card-elevated rounded-2xl p-8 border border-border/50 animate-slide-up interactive-card cursor-pointer"
+              className="group glass-card rounded-2xl p-8 animate-slide-up interactive-card cursor-pointer"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${service.color} flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg`}>

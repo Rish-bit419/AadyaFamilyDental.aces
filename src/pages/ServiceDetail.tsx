@@ -69,11 +69,20 @@ const ServiceDetail = () => {
     return (
       <Layout>
         <div className="section-padding bg-background">
-          <div className="container-custom">
-            <div className="animate-pulse space-y-8">
-              <div className="h-8 w-32 bg-muted rounded" />
-              <div className="h-12 w-2/3 bg-muted rounded" />
-              <div className="h-64 bg-muted rounded-2xl" />
+          <div className="container-custom max-w-6xl">
+            <div className="h-4 w-32 rounded skeleton-shimmer mb-8" />
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div className="space-y-6">
+                <div className="h-14 w-14 rounded-2xl skeleton-shimmer" />
+                <div className="h-12 w-2/3 rounded skeleton-shimmer" />
+                <div className="h-5 w-full rounded skeleton-shimmer" />
+                <div className="h-5 w-5/6 rounded skeleton-shimmer" />
+                <div className="flex gap-4">
+                  <div className="h-10 w-36 rounded-full skeleton-shimmer" />
+                  <div className="h-10 w-36 rounded-full skeleton-shimmer" />
+                </div>
+              </div>
+              <div className="aspect-square rounded-3xl skeleton-shimmer" />
             </div>
           </div>
         </div>
@@ -197,7 +206,7 @@ const ServiceDetail = () => {
             </p>
 
             <div className="grid sm:grid-cols-3 gap-6 mt-12">
-              <div className="bg-card rounded-2xl p-6 border border-border/50">
+              <div className="glass-card rounded-2xl p-6 text-center">
                 <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xl font-bold mx-auto mb-4">
                   1
                 </div>
@@ -206,7 +215,7 @@ const ServiceDetail = () => {
                   Detailed examination and discussion of treatment options
                 </p>
               </div>
-              <div className="bg-card rounded-2xl p-6 border border-border/50">
+              <div className="glass-card rounded-2xl p-6 text-center">
                 <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xl font-bold mx-auto mb-4">
                   2
                 </div>
@@ -215,7 +224,7 @@ const ServiceDetail = () => {
                   Expert care using advanced technology and techniques
                 </p>
               </div>
-              <div className="bg-card rounded-2xl p-6 border border-border/50">
+              <div className="glass-card rounded-2xl p-6 text-center">
                 <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xl font-bold mx-auto mb-4">
                   3
                 </div>
@@ -244,7 +253,7 @@ const ServiceDetail = () => {
                   <Link
                     key={related.id}
                     to={`/services/${related.id}`}
-                    className="group bg-card rounded-2xl p-6 border border-border/50 shadow-soft hover:shadow-medium transition-all duration-300 animate-slide-up"
+                    className="group glass-card rounded-2xl p-6 animate-slide-up interactive-card"
                     style={{ animationDelay: `${index * 0.1}s` }}
                   >
                     <div className="w-14 h-14 rounded-xl bg-teal-light flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">

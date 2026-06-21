@@ -41,7 +41,7 @@ const WhyChooseUs = () => {
                 className="w-full max-w-lg rounded-2xl object-cover aspect-[4/5] shadow-medium"
               />
               {/* Floating badge */}
-              <div className="absolute top-6 right-0 lg:-right-8 bg-primary text-primary-foreground rounded-2xl px-6 py-5 shadow-lg max-w-[220px]">
+              <div className="absolute top-6 right-0 lg:-right-8 glass-badge text-foreground rounded-2xl px-6 py-5 shadow-lg max-w-[220px] group hover:-translate-y-1 transition-transform duration-300">
                 <p className="text-lg font-semibold leading-snug">
                   Bengaluru's trusted dental care partner
                 </p>

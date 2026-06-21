@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Star, Quote, User } from "lucide-react";
+import { SkeletonTestimonialCard } from "@/components/ui/skeleton-cards";
 
 interface Testimonial {
   id: string;
@@ -61,7 +62,7 @@ const Testimonials = () => {
             </p>
 
             {/* Google Reviews Badge */}
-            <div className="inline-flex items-center gap-4 bg-card rounded-2xl px-6 py-4 shadow-soft border border-border/50">
+            <div className="inline-flex items-center gap-4 glass-card rounded-2xl px-6 py-4">
               <img 
                 src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" 
                 alt="Google" 
@@ -107,7 +108,7 @@ const Testimonials = () => {
           {isLoading ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className="h-64 bg-muted rounded-2xl animate-pulse" />
+                <SkeletonTestimonialCard key={i} />
               ))}
             </div>
           ) : filteredTestimonials.length === 0 ? (
@@ -125,7 +126,7 @@ const Testimonials = () => {
               {filteredTestimonials.map((testimonial, index) => (
                 <div
                   key={testimonial.id}
-                  className="bg-card rounded-3xl p-8 border border-border/50 shadow-soft hover:shadow-medium transition-all duration-300 relative group animate-slide-up"
+                  className="glass-card rounded-3xl p-8 relative group hover:-translate-y-1 transition-all duration-300 animate-slide-up"
                   style={{ animationDelay: `${index * 0.05}s` }}
                 >
                   <Quote className="absolute top-6 right-6 w-12 h-12 text-primary/10 group-hover:text-primary/20 transition-colors" />

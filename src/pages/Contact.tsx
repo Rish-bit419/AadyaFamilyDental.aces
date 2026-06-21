@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Phone, Mail, MapPin, Clock, MessageCircle, Send } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Send } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -11,29 +11,29 @@ const contactInfo = [
   {
     icon: Phone,
     title: "Phone",
-    content: "(123) 456-7890",
-    link: "tel:+1234567890",
+    content: "063663 60115",
+    link: "tel:+916366360115",
     action: "Call us",
   },
   {
-    icon: MessageCircle,
-    title: "WhatsApp",
-    content: "(123) 456-7890",
-    link: "https://wa.me/1234567890",
-    action: "Message us",
+    icon: Phone,
+    title: "Emergency",
+    content: "063663 60115",
+    link: "tel:+916366360115",
+    action: "Call now",
   },
   {
     icon: Mail,
     title: "Email",
-    content: "info@dentalcare.com",
-    link: "mailto:info@dentalcare.com",
+    content: "info@aadyadental.in",
+    link: "mailto:info@aadyadental.in",
     action: "Email us",
   },
   {
     icon: MapPin,
     title: "Location",
-    content: "123 Dental Street, Medical District, City 12345",
-    link: "https://maps.google.com",
+    content: "1st Floor, 66/2, Nallurahalli Main Rd, above Paper & Pie Cafe, Bangalore",
+    link: "https://maps.google.com/?q=Aadya+Dental+Aesthetics+Bengaluru",
     action: "Get directions",
   },
 ];
@@ -108,15 +108,17 @@ const Contact = () => {
                 href={item.link}
                 target={item.link.startsWith("http") ? "_blank" : undefined}
                 rel={item.link.startsWith("http") ? "noopener noreferrer" : undefined}
-                className="card-elevated card-hover rounded-2xl p-6 border border-border/50 text-center animate-slide-up"
+                className="glass-card rounded-2xl p-6 text-center animate-slide-up group"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="w-14 h-14 rounded-xl bg-teal-light flex items-center justify-center mx-auto mb-4">
-                  <item.icon className="w-7 h-7 text-primary" />
+                <div className="w-14 h-14 rounded-xl bg-teal-light flex items-center justify-center mx-auto mb-4 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
+                  <item.icon className="w-7 h-7 text-primary group-hover:text-primary-foreground transition-colors" />
                 </div>
                 <h3 className="font-semibold text-foreground mb-2">{item.title}</h3>
                 <p className="text-sm text-muted-foreground mb-3">{item.content}</p>
-                <span className="text-sm font-medium text-primary">{item.action} →</span>
+                <span className="text-sm font-medium text-primary group-hover:gap-2 inline-flex items-center gap-1 transition-all">
+                  {item.action} →
+                </span>
               </a>
             ))}
           </div>
@@ -211,7 +213,7 @@ const Contact = () => {
               </div>
 
               {/* Hours */}
-              <div className="card-elevated rounded-2xl p-6 border border-border/50">
+              <div className="glass-card rounded-2xl p-6">
                 <h3 className="font-display text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
                   <Clock className="w-5 h-5 text-primary" />
                   Opening Hours
@@ -233,16 +235,20 @@ const Contact = () => {
       </section>
 
       {/* Emergency CTA */}
-      <section className="section-padding bg-coral-light">
-        <div className="container-custom text-center animate-slide-up">
-          <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
+      <section className="section-padding hero-gradient relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 left-20 w-64 h-64 bg-primary-foreground rounded-full blur-3xl" />
+          <div className="absolute bottom-10 right-20 w-80 h-80 bg-primary-foreground rounded-full blur-3xl" />
+        </div>
+        <div className="container-custom text-center animate-slide-up relative">
+          <h2 className="font-display text-2xl md:text-3xl font-bold text-primary-foreground mb-4">
             Dental Emergency?
           </h2>
-          <p className="text-muted-foreground mb-6">
+          <p className="text-primary-foreground/80 mb-6 max-w-2xl mx-auto">
             We offer same-day emergency appointments. Call us immediately for urgent dental care.
           </p>
-          <a href="tel:+1234567890">
-            <Button variant="cta" size="xl">
+          <a href="tel:+916366360115">
+            <Button variant="hero" size="xl" className="shadow-lg hover:shadow-xl transition-shadow">
               <Phone className="w-5 h-5 mr-2" />
               Call Emergency Line
             </Button>

@@ -96,11 +96,11 @@ const About = () => {
             {exploreCards.map((card, i) => {
               const Inner = (
                 <div
-                  className="group glass-card rounded-2xl p-6 h-full cursor-pointer hover:-translate-y-2 hover:shadow-medium transition-all duration-500 animate-slide-up"
+                  className="group glass-card rounded-2xl p-6 h-full cursor-pointer hover:-translate-y-2 transition-all duration-500 animate-slide-up"
                   style={{ animationDelay: `${i * 0.08}s` }}
                   onClick={() => !card.external && scrollToId(card.id)}
                 >
-                  <div className="w-12 h-12 rounded-xl bg-primary/15 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
+                  <div className="w-12 h-12 rounded-xl bg-primary/15 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:scale-110 transition-all duration-300 shadow-sm">
                     <card.icon className="w-6 h-6 text-primary group-hover:text-primary-foreground transition-colors" />
                   </div>
                   <h3 className="font-display text-lg font-semibold text-foreground mb-1">{card.title}</h3>
@@ -184,7 +184,7 @@ const About = () => {
               </div>
               
               {/* Stats Card */}
-              <div className="absolute -bottom-8 -right-8 bg-card rounded-2xl p-6 shadow-medium border border-border/50">
+              <div className="absolute -bottom-8 -right-8 glass-card rounded-2xl p-6">
                 <div className="grid grid-cols-2 gap-6">
                   <div className="text-center">
                     <p className="font-display text-3xl font-bold text-primary">15+</p>
@@ -217,7 +217,7 @@ const About = () => {
             {values.map((value, index) => (
               <div
                 key={value.title}
-                className="bg-card rounded-2xl p-8 text-center border border-border/50 shadow-soft hover:shadow-medium transition-all duration-300 animate-slide-up"
+                className="glass-card rounded-2xl p-8 text-center animate-slide-up hover:-translate-y-1 transition-all duration-300"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
@@ -274,7 +274,7 @@ const About = () => {
               {doctors.map((doctor, index) => (
                 <div
                   key={doctor.id}
-                  className="group bg-card rounded-3xl overflow-hidden border border-border/50 shadow-soft hover:shadow-medium transition-all duration-300 animate-slide-up"
+                  className="group glass-card rounded-3xl overflow-hidden animate-slide-up hover:-translate-y-1 transition-all duration-300"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   {/* Image */}
@@ -330,7 +330,7 @@ const About = () => {
       {/* Philosophy Section */}
       <section id="philosophy" className="section-padding bg-secondary scroll-mt-24">
         <div className="container-custom">
-          <div className="max-w-4xl mx-auto text-center animate-slide-up">
+          <div className="max-w-4xl mx-auto glass-card rounded-3xl p-8 md:p-12 text-center animate-slide-up">
             <span className="inline-block text-sm font-semibold text-primary uppercase tracking-wider mb-4">
               Our Philosophy
             </span>
@@ -354,8 +354,12 @@ const About = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding hero-gradient">
-        <div className="container-custom text-center animate-slide-up">
+      <section className="section-padding hero-gradient relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 left-20 w-64 h-64 bg-primary-foreground rounded-full blur-3xl" />
+          <div className="absolute bottom-10 right-20 w-80 h-80 bg-primary-foreground rounded-full blur-3xl" />
+        </div>
+        <div className="container-custom text-center animate-slide-up relative">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-primary-foreground mb-6">
             Ready to Experience the Difference?
           </h2>
@@ -363,7 +367,7 @@ const About = () => {
             Join our family of satisfied patients and discover why we're the trusted choice for dental care.
           </p>
           <Link to="/book-appointment">
-            <Button variant="hero" size="xl">
+            <Button variant="hero" size="xl" className="shadow-lg hover:shadow-xl transition-shadow">
               Book Your Appointment
             </Button>
           </Link>

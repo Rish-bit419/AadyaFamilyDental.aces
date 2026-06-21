@@ -90,17 +90,17 @@ const LocationSection = () => {
         )}
 
         {isLoading ? (
-          <div className="grid lg:grid-cols-2 gap-12">
+          <div className="grid lg:grid-cols-2 gap-12 animate-slide-up">
             <div className="grid sm:grid-cols-2 gap-4">
               {[...Array(4)].map((_, i) => (
-                <div key={i} className="p-4 bg-secondary rounded-2xl">
-                  <Skeleton className="h-12 w-12 rounded-xl mb-3" />
-                  <Skeleton className="h-4 w-24 mb-2" />
-                  <Skeleton className="h-3 w-full" />
+                <div key={i} className="glass-card rounded-2xl p-4">
+                  <div className="h-12 w-12 rounded-xl skeleton-shimmer mb-3" />
+                  <div className="h-4 w-24 rounded skeleton-shimmer mb-2" />
+                  <div className="h-3 w-full rounded skeleton-shimmer" />
                 </div>
               ))}
             </div>
-            <Skeleton className="aspect-[4/3] rounded-3xl" />
+            <div className="aspect-[4/3] rounded-3xl skeleton-shimmer" />
           </div>
         ) : (
           <div className="grid lg:grid-cols-2 gap-12 items-center animate-slide-up">
@@ -108,7 +108,7 @@ const LocationSection = () => {
               <h3 className="font-display text-2xl font-bold text-foreground mb-6">{current.name}</h3>
               <div className="grid sm:grid-cols-2 gap-4 mb-8">
                 {getContactCards(current).map((card, index) => (
-                  <div key={card.title} className="group flex items-start gap-4 p-4 bg-secondary rounded-2xl hover:bg-card hover:shadow-soft transition-all duration-300" style={{ animationDelay: `${index * 0.1}s` }}>
+                  <div key={card.title} className="group flex items-start gap-4 glass-card rounded-2xl p-4" style={{ animationDelay: `${index * 0.1}s` }}>
                     <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
                       <card.icon className="w-6 h-6 text-primary group-hover:text-primary-foreground transition-colors" />
                     </div>

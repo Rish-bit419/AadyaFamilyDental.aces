@@ -70,14 +70,16 @@ const Blog = () => {
           {isLoading ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[1, 2, 3].map((i) => (
-                <Card key={i} className="overflow-hidden">
-                  <Skeleton className="h-48 w-full" />
+                <Card key={i} className="overflow-hidden border-border/50">
+                  <div className="h-48 skeleton-shimmer" />
                   <CardHeader>
-                    <Skeleton className="h-6 w-3/4" />
-                    <Skeleton className="h-4 w-1/2 mt-2" />
+                    <div className="h-6 w-3/4 rounded skeleton-shimmer mb-2" />
+                    <div className="h-4 w-1/2 rounded skeleton-shimmer" />
                   </CardHeader>
-                  <CardContent>
-                    <Skeleton className="h-20 w-full" />
+                  <CardContent className="space-y-2">
+                    <div className="h-4 w-full rounded skeleton-shimmer" />
+                    <div className="h-4 w-full rounded skeleton-shimmer" />
+                    <div className="h-4 w-2/3 rounded skeleton-shimmer" />
                   </CardContent>
                 </Card>
               ))}
@@ -85,7 +87,7 @@ const Blog = () => {
           ) : posts && posts.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {posts.map((post) => (
-                <Card key={post.id} className="group overflow-hidden hover:shadow-lg transition-all duration-300 border-border/50">
+                <Card key={post.id} className="group glass-card overflow-hidden hover:-translate-y-1 transition-all duration-300 border-border/50">
                   {post.featured_image_url && (
                     <div className="relative h-48 overflow-hidden">
                       <img 

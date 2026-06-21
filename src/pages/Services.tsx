@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { ArrowRight, Clock, Sparkles } from "lucide-react";
 import * as LucideIcons from "lucide-react";
+import { SkeletonServiceCard } from "@/components/ui/skeleton-cards";
 
 interface Service {
   id: string;
@@ -69,7 +70,7 @@ const Services = () => {
           {isLoading ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className="h-72 bg-muted rounded-2xl animate-pulse" />
+                <SkeletonServiceCard key={i} />
               ))}
             </div>
           ) : (
@@ -80,7 +81,7 @@ const Services = () => {
                   <Link
                     key={service.id}
                     to={`/services/${service.id}`}
-                    className="group bg-card rounded-2xl overflow-hidden border border-border/50 shadow-soft hover:shadow-medium transition-all duration-300 animate-slide-up"
+                    className="group glass-card rounded-2xl overflow-hidden animate-slide-up interactive-card"
                     style={{ animationDelay: `${index * 0.05}s` }}
                   >
                     {/* Icon Header */}
@@ -149,8 +150,12 @@ const Services = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding hero-gradient">
-        <div className="container-custom text-center animate-slide-up">
+      <section className="section-padding hero-gradient relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 left-20 w-64 h-64 bg-primary-foreground rounded-full blur-3xl" />
+          <div className="absolute bottom-10 right-20 w-80 h-80 bg-primary-foreground rounded-full blur-3xl" />
+        </div>
+        <div className="container-custom text-center animate-slide-up relative">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-primary-foreground mb-6">
             Not Sure Which Service You Need?
           </h2>
@@ -158,7 +163,7 @@ const Services = () => {
             Book a consultation and our experts will recommend the best treatment plan for your unique needs.
           </p>
           <Link to="/book-appointment">
-            <Button variant="hero" size="xl">
+            <Button variant="hero" size="xl" className="shadow-lg hover:shadow-xl transition-shadow">
               Schedule a Consultation
             </Button>
           </Link>

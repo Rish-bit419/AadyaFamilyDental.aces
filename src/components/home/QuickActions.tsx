@@ -20,8 +20,8 @@ const QuickActions = () => {
                className="group animate-slide-up"
                style={{ animationDelay: `${index * 0.05}s` }}
              >
-               <div className="bg-card rounded-2xl p-4 md:p-6 border border-border/50 shadow-soft hover:shadow-medium transition-all text-center group-hover:-translate-y-1">
-                 <div className={`w-12 h-12 md:w-14 md:h-14 rounded-xl bg-gradient-to-br ${action.color} flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform`}>
+               <div className="glass-card rounded-2xl p-4 md:p-6 text-center group-hover:-translate-y-1 transition-all duration-300">
+                 <div className={`w-12 h-12 md:w-14 md:h-14 rounded-xl bg-gradient-to-br ${action.color} flex items-center justify-center mx-auto mb-3 group-hover:scale-110 group-hover:rotate-3 transition-transform shadow-md`}>
                    <action.icon className="w-6 h-6 md:w-7 md:h-7 text-white" />
                  </div>
                  <span className="font-medium text-foreground text-xs md:text-sm">{action.label}</span>

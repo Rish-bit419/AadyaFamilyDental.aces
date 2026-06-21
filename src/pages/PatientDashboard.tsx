@@ -108,8 +108,24 @@ const PatientDashboard = () => {
   if (isLoading) {
     return (
       <Layout>
-        <section className="section-padding min-h-[60vh] flex items-center justify-center">
-          <div className="animate-pulse text-muted-foreground">Loading...</div>
+        <section className="section-padding bg-gradient-to-b from-secondary to-background min-h-[60vh]">
+          <div className="container-custom max-w-5xl">
+            <div className="glass-card rounded-3xl p-8 animate-slide-up">
+              <div className="flex flex-col md:flex-row items-start md:items-center gap-6 mb-8">
+                <div className="w-20 h-20 rounded-full skeleton-shimmer" />
+                <div className="space-y-3 flex-1">
+                  <div className="h-8 w-64 rounded skeleton-shimmer" />
+                  <div className="h-5 w-48 rounded skeleton-shimmer" />
+                </div>
+              </div>
+              <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className="h-24 rounded-2xl skeleton-shimmer" />
+                ))}
+              </div>
+              <div className="h-64 rounded-2xl skeleton-shimmer" />
+            </div>
+          </div>
         </section>
       </Layout>
     );

@@ -117,7 +117,7 @@ const BeforeAfterPreview = () => {
           {images.map((image, index) => (
             <div
               key={image.id}
-              className="group bg-card rounded-2xl overflow-hidden border border-border/50 shadow-soft hover:shadow-lg transition-all duration-300 animate-slide-up"
+              className="group glass-card rounded-2xl overflow-hidden animate-slide-up"
               style={{ animationDelay: `${index * 0.1}s` }}
               onMouseEnter={() => setHoveredImage(image.id)}
               onMouseLeave={() => setHoveredImage(null)}
