@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Phone, Mail, MapPin, Clock, MessageCircle, Send } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Send } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -11,29 +11,29 @@ const contactInfo = [
   {
     icon: Phone,
     title: "Phone",
-    content: "(123) 456-7890",
-    link: "tel:+1234567890",
+    content: "063663 60115",
+    link: "tel:+916366360115",
     action: "Call us",
   },
   {
-    icon: MessageCircle,
-    title: "WhatsApp",
-    content: "(123) 456-7890",
-    link: "https://wa.me/1234567890",
-    action: "Message us",
+    icon: Phone,
+    title: "Emergency",
+    content: "063663 60115",
+    link: "tel:+916366360115",
+    action: "Call now",
   },
   {
     icon: Mail,
     title: "Email",
-    content: "info@dentalcare.com",
-    link: "mailto:info@dentalcare.com",
+    content: "info@aadyadental.in",
+    link: "mailto:info@aadyadental.in",
     action: "Email us",
   },
   {
     icon: MapPin,
     title: "Location",
-    content: "123 Dental Street, Medical District, City 12345",
-    link: "https://maps.google.com",
+    content: "1st Floor, 66/2, Nallurahalli Main Rd, above Paper & Pie Cafe, Bangalore",
+    link: "https://maps.google.com/?q=Aadya+Dental+Aesthetics+Bengaluru",
     action: "Get directions",
   },
 ];
