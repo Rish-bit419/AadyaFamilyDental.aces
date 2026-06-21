@@ -87,7 +87,7 @@ const Blog = () => {
           ) : posts && posts.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {posts.map((post) => (
-                <Card key={post.id} className="group overflow-hidden hover:shadow-lg transition-all duration-300 border-border/50">
+                <Card key={post.id} className="group glass-card overflow-hidden hover:-translate-y-1 transition-all duration-300 border-border/50">
                   {post.featured_image_url && (
                     <div className="relative h-48 overflow-hidden">
                       <img 
