@@ -354,8 +354,12 @@ const About = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding hero-gradient">
-        <div className="container-custom text-center animate-slide-up">
+      <section className="section-padding hero-gradient relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 left-20 w-64 h-64 bg-primary-foreground rounded-full blur-3xl" />
+          <div className="absolute bottom-10 right-20 w-80 h-80 bg-primary-foreground rounded-full blur-3xl" />
+        </div>
+        <div className="container-custom text-center animate-slide-up relative">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-primary-foreground mb-6">
             Ready to Experience the Difference?
           </h2>
@@ -363,7 +367,7 @@ const About = () => {
             Join our family of satisfied patients and discover why we're the trusted choice for dental care.
           </p>
           <Link to="/book-appointment">
-            <Button variant="hero" size="xl">
+            <Button variant="hero" size="xl" className="shadow-lg hover:shadow-xl transition-shadow">
               Book Your Appointment
             </Button>
           </Link>
