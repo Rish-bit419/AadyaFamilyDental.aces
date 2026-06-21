@@ -90,17 +90,17 @@ const LocationSection = () => {
         )}
 
         {isLoading ? (
-          <div className="grid lg:grid-cols-2 gap-12">
+          <div className="grid lg:grid-cols-2 gap-12 animate-slide-up">
             <div className="grid sm:grid-cols-2 gap-4">
               {[...Array(4)].map((_, i) => (
-                <div key={i} className="p-4 bg-secondary rounded-2xl">
-                  <Skeleton className="h-12 w-12 rounded-xl mb-3" />
-                  <Skeleton className="h-4 w-24 mb-2" />
-                  <Skeleton className="h-3 w-full" />
+                <div key={i} className="glass-card rounded-2xl p-4">
+                  <div className="h-12 w-12 rounded-xl skeleton-shimmer mb-3" />
+                  <div className="h-4 w-24 rounded skeleton-shimmer mb-2" />
+                  <div className="h-3 w-full rounded skeleton-shimmer" />
                 </div>
               ))}
             </div>
-            <Skeleton className="aspect-[4/3] rounded-3xl" />
+            <div className="aspect-[4/3] rounded-3xl skeleton-shimmer" />
           </div>
         ) : (
           <div className="grid lg:grid-cols-2 gap-12 items-center animate-slide-up">
