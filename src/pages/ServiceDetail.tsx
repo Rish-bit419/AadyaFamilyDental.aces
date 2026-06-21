@@ -206,7 +206,7 @@ const ServiceDetail = () => {
             </p>
 
             <div className="grid sm:grid-cols-3 gap-6 mt-12">
-              <div className="bg-card rounded-2xl p-6 border border-border/50">
+              <div className="glass-card rounded-2xl p-6 text-center">
                 <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xl font-bold mx-auto mb-4">
                   1
                 </div>
@@ -215,7 +215,7 @@ const ServiceDetail = () => {
                   Detailed examination and discussion of treatment options
                 </p>
               </div>
-              <div className="bg-card rounded-2xl p-6 border border-border/50">
+              <div className="glass-card rounded-2xl p-6 text-center">
                 <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xl font-bold mx-auto mb-4">
                   2
                 </div>
@@ -224,7 +224,7 @@ const ServiceDetail = () => {
                   Expert care using advanced technology and techniques
                 </p>
               </div>
-              <div className="bg-card rounded-2xl p-6 border border-border/50">
+              <div className="glass-card rounded-2xl p-6 text-center">
                 <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xl font-bold mx-auto mb-4">
                   3
                 </div>
