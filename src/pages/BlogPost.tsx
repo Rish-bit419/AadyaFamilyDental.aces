@@ -49,14 +49,16 @@ const BlogPost = () => {
       <Layout>
         <div className="pt-32 pb-20">
           <div className="container-custom px-4 max-w-4xl">
-            <Skeleton className="h-8 w-32 mb-4" />
-            <Skeleton className="h-12 w-3/4 mb-4" />
-            <Skeleton className="h-6 w-1/2 mb-8" />
-            <Skeleton className="h-64 w-full mb-8" />
-            <div className="space-y-4">
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-3/4" />
+            <div className="h-4 w-32 rounded skeleton-shimmer mb-6" />
+            <div className="h-10 w-3/4 rounded skeleton-shimmer mb-4" />
+            <div className="h-5 w-1/2 rounded skeleton-shimmer mb-8" />
+            <div className="h-64 md:h-96 rounded-2xl skeleton-shimmer mb-10" />
+            <div className="space-y-3">
+              <div className="h-4 w-full rounded skeleton-shimmer" />
+              <div className="h-4 w-full rounded skeleton-shimmer" />
+              <div className="h-4 w-5/6 rounded skeleton-shimmer" />
+              <div className="h-4 w-4/5 rounded skeleton-shimmer" />
+              <div className="h-4 w-full rounded skeleton-shimmer" />
             </div>
           </div>
         </div>
