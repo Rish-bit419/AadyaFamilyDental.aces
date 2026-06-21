@@ -330,7 +330,7 @@ const About = () => {
       {/* Philosophy Section */}
       <section id="philosophy" className="section-padding bg-secondary scroll-mt-24">
         <div className="container-custom">
-          <div className="max-w-4xl mx-auto text-center animate-slide-up">
+          <div className="max-w-4xl mx-auto glass-card rounded-3xl p-8 md:p-12 text-center animate-slide-up">
             <span className="inline-block text-sm font-semibold text-primary uppercase tracking-wider mb-4">
               Our Philosophy
             </span>
