@@ -184,7 +184,7 @@ const About = () => {
               </div>
               
               {/* Stats Card */}
-              <div className="absolute -bottom-8 -right-8 bg-card rounded-2xl p-6 shadow-medium border border-border/50">
+              <div className="absolute -bottom-8 -right-8 glass-card rounded-2xl p-6">
                 <div className="grid grid-cols-2 gap-6">
                   <div className="text-center">
                     <p className="font-display text-3xl font-bold text-primary">15+</p>
