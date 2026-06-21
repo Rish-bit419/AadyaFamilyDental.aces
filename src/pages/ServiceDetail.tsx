@@ -69,11 +69,20 @@ const ServiceDetail = () => {
     return (
       <Layout>
         <div className="section-padding bg-background">
-          <div className="container-custom">
-            <div className="animate-pulse space-y-8">
-              <div className="h-8 w-32 bg-muted rounded" />
-              <div className="h-12 w-2/3 bg-muted rounded" />
-              <div className="h-64 bg-muted rounded-2xl" />
+          <div className="container-custom max-w-6xl">
+            <div className="h-4 w-32 rounded skeleton-shimmer mb-8" />
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div className="space-y-6">
+                <div className="h-14 w-14 rounded-2xl skeleton-shimmer" />
+                <div className="h-12 w-2/3 rounded skeleton-shimmer" />
+                <div className="h-5 w-full rounded skeleton-shimmer" />
+                <div className="h-5 w-5/6 rounded skeleton-shimmer" />
+                <div className="flex gap-4">
+                  <div className="h-10 w-36 rounded-full skeleton-shimmer" />
+                  <div className="h-10 w-36 rounded-full skeleton-shimmer" />
+                </div>
+              </div>
+              <div className="aspect-square rounded-3xl skeleton-shimmer" />
             </div>
           </div>
         </div>
