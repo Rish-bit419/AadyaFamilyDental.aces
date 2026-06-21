@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Calendar, Phone, MessageCircle, Sparkles } from "lucide-react";
+import { Calendar, Phone, Sparkles } from "lucide-react";
 
 const CTASection = () => {
   return (
@@ -32,10 +32,10 @@ const CTASection = () => {
                 Book Appointment
               </Button>
             </Link>
-            <a href="https://wa.me/916366360115" target="_blank" rel="noopener noreferrer">
+            <a href="tel:+916366360115">
               <Button variant="hero-outline" size="xl" className="w-full sm:w-auto group">
-                <MessageCircle className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
-                WhatsApp Us
+                <Phone className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
+                Call Us
               </Button>
             </a>
           </div>
