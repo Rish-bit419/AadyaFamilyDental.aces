@@ -70,7 +70,7 @@ const Services = () => {
           {isLoading ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className="h-72 bg-muted rounded-2xl animate-pulse" />
+                <SkeletonServiceCard key={i} />
               ))}
             </div>
           ) : (
