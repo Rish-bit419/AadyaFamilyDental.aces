@@ -253,7 +253,7 @@ const ServiceDetail = () => {
                   <Link
                     key={related.id}
                     to={`/services/${related.id}`}
-                    className="group bg-card rounded-2xl p-6 border border-border/50 shadow-soft hover:shadow-medium transition-all duration-300 animate-slide-up"
+                    className="group glass-card rounded-2xl p-6 animate-slide-up interactive-card"
                     style={{ animationDelay: `${index * 0.1}s` }}
                   >
                     <div className="w-14 h-14 rounded-xl bg-teal-light flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
