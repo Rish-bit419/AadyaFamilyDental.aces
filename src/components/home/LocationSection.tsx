@@ -108,7 +108,7 @@ const LocationSection = () => {
               <h3 className="font-display text-2xl font-bold text-foreground mb-6">{current.name}</h3>
               <div className="grid sm:grid-cols-2 gap-4 mb-8">
                 {getContactCards(current).map((card, index) => (
-                  <div key={card.title} className="group flex items-start gap-4 p-4 bg-secondary rounded-2xl hover:bg-card hover:shadow-soft transition-all duration-300" style={{ animationDelay: `${index * 0.1}s` }}>
+                  <div key={card.title} className="group flex items-start gap-4 glass-card rounded-2xl p-4" style={{ animationDelay: `${index * 0.1}s` }}>
                     <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
                       <card.icon className="w-6 h-6 text-primary group-hover:text-primary-foreground transition-colors" />
                     </div>
