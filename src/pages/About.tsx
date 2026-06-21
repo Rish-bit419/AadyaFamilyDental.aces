@@ -202,7 +202,7 @@ const About = () => {
       </section>
 
       {/* Values Section */}
-      <section className="section-padding bg-secondary">
+      <section id="values" className="section-padding bg-secondary scroll-mt-24">
         <div className="container-custom">
           <div className="text-center max-w-2xl mx-auto mb-16 animate-slide-up">
             <span className="inline-block text-sm font-semibold text-primary uppercase tracking-wider mb-4">
