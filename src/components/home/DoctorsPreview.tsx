@@ -130,7 +130,7 @@ const DoctorsPreview = () => {
           {doctors.map((doctor, index) => (
             <div
               key={doctor.id}
-              className="group bg-card rounded-3xl overflow-hidden border border-border/50 shadow-soft hover:shadow-medium transition-all duration-300 animate-slide-up cursor-pointer"
+              className="group glass-card rounded-3xl overflow-hidden animate-slide-up cursor-pointer hover:-translate-y-1 transition-all duration-300"
               style={{ animationDelay: `${index * 0.1}s` }}
               onClick={() => handleDoctorClick(doctor)}
             >
