@@ -96,11 +96,11 @@ const About = () => {
             {exploreCards.map((card, i) => {
               const Inner = (
                 <div
-                  className="group glass-card rounded-2xl p-6 h-full cursor-pointer hover:-translate-y-2 hover:shadow-medium transition-all duration-500 animate-slide-up"
+                  className="group glass-card rounded-2xl p-6 h-full cursor-pointer hover:-translate-y-2 transition-all duration-500 animate-slide-up"
                   style={{ animationDelay: `${i * 0.08}s` }}
                   onClick={() => !card.external && scrollToId(card.id)}
                 >
-                  <div className="w-12 h-12 rounded-xl bg-primary/15 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
+                  <div className="w-12 h-12 rounded-xl bg-primary/15 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:scale-110 transition-all duration-300 shadow-sm">
                     <card.icon className="w-6 h-6 text-primary group-hover:text-primary-foreground transition-colors" />
                   </div>
                   <h3 className="font-display text-lg font-semibold text-foreground mb-1">{card.title}</h3>
