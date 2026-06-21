@@ -217,7 +217,7 @@ const About = () => {
             {values.map((value, index) => (
               <div
                 key={value.title}
-                className="bg-card rounded-2xl p-8 text-center border border-border/50 shadow-soft hover:shadow-medium transition-all duration-300 animate-slide-up"
+                className="glass-card rounded-2xl p-8 text-center animate-slide-up hover:-translate-y-1 transition-all duration-300"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
