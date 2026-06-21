@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Star, Quote, User } from "lucide-react";
+import { SkeletonTestimonialCard } from "@/components/ui/skeleton-cards";
 
 interface Testimonial {
   id: string;
