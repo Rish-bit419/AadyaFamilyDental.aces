@@ -161,6 +161,12 @@
     -webkit-backdrop-filter: blur(18px) saturate(160%);
     border: 1px solid hsl(0 0% 100% / 0.4);
     box-shadow: 0 8px 32px hsl(var(--primary) / 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .glass-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px hsl(var(--primary) / 0.14);
   }
 
   .glass-dark {
@@ -168,6 +174,14 @@
     backdrop-filter: blur(18px) saturate(150%);
     -webkit-backdrop-filter: blur(18px) saturate(150%);
     border: 1px solid hsl(0 0% 100% / 0.12);
+  }
+
+  .glass-badge {
+    background: hsl(0 0% 100% / 0.7);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    border: 1px solid hsl(0 0% 100% / 0.35);
+    box-shadow: 0 4px 20px hsl(var(--primary) / 0.06);
   }
 
   .skeleton-shimmer {
@@ -312,5 +326,23 @@
   /* Text gradient */
   .text-gradient {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent;
+  }
+
+  /* Glow orb background accents */
+  .glow-orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(60px);
+    pointer-events: none;
+  }
+
+  /* Hover lift */
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-medium;
+  }
+
+  /* Stagger children animation helper */
+  .stagger-children > * {
+    animation-delay: calc(var(--stagger-index, 0) * 0.08s);
   }
 }
