@@ -108,15 +108,17 @@ const Contact = () => {
                 href={item.link}
                 target={item.link.startsWith("http") ? "_blank" : undefined}
                 rel={item.link.startsWith("http") ? "noopener noreferrer" : undefined}
-                className="card-elevated card-hover rounded-2xl p-6 border border-border/50 text-center animate-slide-up"
+                className="glass-card rounded-2xl p-6 text-center animate-slide-up group"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="w-14 h-14 rounded-xl bg-teal-light flex items-center justify-center mx-auto mb-4">
-                  <item.icon className="w-7 h-7 text-primary" />
+                <div className="w-14 h-14 rounded-xl bg-teal-light flex items-center justify-center mx-auto mb-4 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
+                  <item.icon className="w-7 h-7 text-primary group-hover:text-primary-foreground transition-colors" />
                 </div>
                 <h3 className="font-semibold text-foreground mb-2">{item.title}</h3>
                 <p className="text-sm text-muted-foreground mb-3">{item.content}</p>
-                <span className="text-sm font-medium text-primary">{item.action} →</span>
+                <span className="text-sm font-medium text-primary group-hover:gap-2 inline-flex items-center gap-1 transition-all">
+                  {item.action} →
+                </span>
               </a>
             ))}
           </div>
