@@ -140,11 +140,11 @@ const Gallery = () => {
                       className="absolute inset-0 overflow-hidden"
                       style={{ clipPath: `inset(0 ${100 - sliderPositions[image.id]}% 0 0)` }}
                     >
-                      <img
-                        src={image.before_image_url}
-                        alt={`${image.title} - Before`}
-                        className="w-full h-full object-cover"
-                      />
+                        <img
+                          src={image.before_image_url}
+                          alt={`${image.title} - Before`}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        />
                     </div>
 
                     <div
