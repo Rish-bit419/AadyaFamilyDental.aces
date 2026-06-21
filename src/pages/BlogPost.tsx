@@ -188,7 +188,7 @@ const BlogPost = () => {
                 <Link 
                   key={related.id} 
                   to={`/blog/${related.slug}`}
-                  className="group bg-card rounded-xl p-6 border border-border hover:shadow-lg transition-all"
+                  className="group glass-card rounded-xl p-6 hover:-translate-y-1 transition-all"
                 >
                   <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2 mb-2">
                     {related.title}
