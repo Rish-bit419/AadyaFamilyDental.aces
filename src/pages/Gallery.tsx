@@ -134,7 +134,7 @@ const Gallery = () => {
                     <img
                       src={image.after_image_url}
                       alt={`${image.title} - After`}
-                      className="absolute inset-0 w-full h-full object-cover"
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
                     <div
                       className="absolute inset-0 overflow-hidden"
