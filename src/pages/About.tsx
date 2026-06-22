@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Award, GraduationCap, Heart, Users, CheckCircle, Clock, User, Image as ImageIcon, Sparkles, ArrowRight, Stethoscope } from "lucide-react";
+import DoctorDetailModal from "@/components/home/DoctorDetailModal";
 
 interface Doctor {
   id: string;
@@ -13,6 +14,9 @@ interface Doctor {
   experience_years: number | null;
   bio: string | null;
   image_url: string | null;
+  education: string[] | null;
+  awards: string[] | null;
+  gallery_images: string[] | null;
 }
 
 const values = [
@@ -41,6 +45,14 @@ const values = [
 const About = () => {
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openDoctor = (doctor: Doctor) => {
+    setSelectedDoctor(doctor);
+    setIsModalOpen(true);
+  };
+
 
   useEffect(() => {
     const fetchDoctors = async () => {
@@ -274,7 +286,8 @@ const About = () => {
               {doctors.map((doctor, index) => (
                 <div
                   key={doctor.id}
-                  className="group glass-card rounded-3xl overflow-hidden animate-slide-up hover:-translate-y-1 transition-all duration-300"
+                  onClick={() => openDoctor(doctor)}
+                  className="group glass-card rounded-3xl overflow-hidden animate-slide-up hover:-translate-y-1 transition-all duration-300 cursor-pointer"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   {/* Image */}
@@ -373,6 +386,8 @@ const About = () => {
           </Link>
         </div>
       </section>
+
+      <DoctorDetailModal doctor={selectedDoctor} open={isModalOpen} onOpenChange={setIsModalOpen} />
     </Layout>
   );
 };
