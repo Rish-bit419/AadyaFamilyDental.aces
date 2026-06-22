@@ -5,6 +5,7 @@ import StatsCounter from "@/components/home/StatsCounter";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 import ServicesSection from "@/components/home/ServicesSection";
 import DoctorsPreview from "@/components/home/DoctorsPreview";
+import OurMoments from "@/components/home/OurMoments";
 import BeforeAfterPreview from "@/components/home/BeforeAfterPreview";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
 import FAQSection from "@/components/home/FAQSection";
@@ -20,6 +21,7 @@ const Index = () => {
       <WhyChooseUs />
       <ServicesSection />
       <DoctorsPreview />
+      <OurMoments />
       <BeforeAfterPreview />
       <TestimonialsSection />
       <FAQSection />
