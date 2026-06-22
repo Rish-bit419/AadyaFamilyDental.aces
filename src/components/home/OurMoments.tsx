@@ -82,7 +82,16 @@ const OurMoments = () => {
 
         <div className="grid lg:grid-cols-[1.6fr_1fr] gap-6 lg:gap-8 items-start">
           {/* Featured player */}
-          <div className="relative aspect-video rounded-3xl overflow-hidden glass-card shadow-medium group">
+          <div
+            className="relative aspect-video rounded-3xl overflow-hidden glass-card shadow-medium group touch-pan-y"
+            onTouchStart={(e) => ((e.currentTarget as any)._sx = e.touches[0].clientX)}
+            onTouchEnd={(e) => {
+              const sx = (e.currentTarget as any)._sx;
+              if (sx == null) return;
+              const dx = e.changedTouches[0].clientX - sx;
+              if (Math.abs(dx) > 40) goTo(active + (dx < 0 ? 1 : -1));
+            }}
+          >
             {current && (
               <iframe
                 key={current.id}
