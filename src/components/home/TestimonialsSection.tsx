@@ -3,7 +3,7 @@ import { Star, Quote, ChevronLeft, ChevronRight, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SkeletonTestimonialCard } from "@/components/ui/skeleton-cards";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { withTimeout } from "@/lib/with-timeout";
 
 interface Testimonial {
@@ -47,8 +47,18 @@ const TestimonialsSection = () => {
     },
   });
 
-  const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % Math.max(1, testimonials.length - 2));
-  const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + Math.max(1, testimonials.length - 2)) % Math.max(1, testimonials.length - 2));
+  const slideCount = Math.max(1, testimonials.length - 2);
+  const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % slideCount);
+  const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + slideCount) % slideCount);
+
+  // Autoplay testimonials
+  useEffect(() => {
+    if (testimonials.length <= 3) return;
+    const id = window.setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % slideCount);
+    }, 5000);
+    return () => window.clearInterval(id);
+  }, [testimonials.length, slideCount]);
 
   if (isLoading) {
     return (
