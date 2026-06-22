@@ -386,6 +386,8 @@ const About = () => {
           </Link>
         </div>
       </section>
+
+      <DoctorDetailModal doctor={selectedDoctor} open={isModalOpen} onOpenChange={setIsModalOpen} />
     </Layout>
   );
 };
