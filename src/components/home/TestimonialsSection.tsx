@@ -102,7 +102,16 @@ const TestimonialsSection = () => {
         </div>
 
         <div className="relative">
-          <div className="overflow-hidden">
+          <div
+            className="overflow-hidden touch-pan-y"
+            onTouchStart={(e) => ((e.currentTarget as any)._sx = e.touches[0].clientX)}
+            onTouchEnd={(e) => {
+              const sx = (e.currentTarget as any)._sx;
+              if (sx == null) return;
+              const dx = e.changedTouches[0].clientX - sx;
+              if (Math.abs(dx) > 40) (dx < 0 ? nextSlide : prevSlide)();
+            }}
+          >
             <div className="flex transition-transform duration-500 ease-out gap-6" style={{ transform: `translateX(-${currentIndex * (100 / 3 + 2)}%)` }}>
               {testimonials.map((testimonial) => (
                 <div key={testimonial.id} className="flex-shrink-0 w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]">
