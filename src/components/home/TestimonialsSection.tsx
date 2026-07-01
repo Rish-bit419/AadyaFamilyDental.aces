@@ -19,6 +19,12 @@ const fallbackTestimonials: Testimonial[] = [
   { id: "1", patient_name: "Sarah Johnson", patient_image_url: null, rating: 5, review_text: "Amazing experience! The team made me feel so comfortable during my dental implant procedure.", treatment_type: "Dental Implants" },
   { id: "2", patient_name: "Michael Chen", patient_image_url: null, rating: 5, review_text: "I was terrified of dentists until I came here. They made me feel so comfortable, and the procedure was completely painless.", treatment_type: "General Dentistry" },
   { id: "3", patient_name: "Emily Rodriguez", patient_image_url: null, rating: 5, review_text: "Outstanding service from start to finish. The clinic is modern and clean, appointments are always on time.", treatment_type: "Teeth Whitening" },
+  { id: "4", patient_name: "Priya Sharma", patient_image_url: null, rating: 5, review_text: "The cosmetic dentistry work completely transformed my smile. I cannot stop smiling in photos now!", treatment_type: "Smile Makeover" },
+  { id: "5", patient_name: "David Miller", patient_image_url: null, rating: 5, review_text: "My root canal was handled with such care. The dentists explained every step, and I felt zero anxiety.", treatment_type: "Root Canal" },
+  { id: "6", patient_name: "Anita Desai", patient_image_url: null, rating: 5, review_text: "Booked online, got a reminder, and was seen right on time. This is how healthcare should be run.", treatment_type: "Regular Checkup" },
+  { id: "7", patient_name: "James Thompson", patient_image_url: null, rating: 5, review_text: "I brought my kids here and the pediatric team was incredible. They actually look forward to dental visits now.", treatment_type: "Pediatric Dentistry" },
+  { id: "8", patient_name: "Riya Kapoor", patient_image_url: null, rating: 5, review_text: "The braces journey was so smooth. The orthodontists adjusted everything perfectly and on schedule.", treatment_type: "Orthodontics" },
+  { id: "9", patient_name: "Omar Farooq", patient_image_url: null, rating: 5, review_text: "Professional, hygienic, and genuinely friendly. The best dental clinic experience I have had in years.", treatment_type: "Teeth Cleaning" },
 ];
 
 const TestimonialsSection = () => {
