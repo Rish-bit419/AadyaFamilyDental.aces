@@ -1,9 +1,11 @@
 import Layout from "@/components/layout/Layout";
 import HeroSection from "@/components/home/HeroSection";
 import QuickActions from "@/components/home/QuickActions";
+import TrustMarquee from "@/components/home/TrustMarquee";
 import StatsCounter from "@/components/home/StatsCounter";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 import ServicesSection from "@/components/home/ServicesSection";
+import ProcessSteps from "@/components/home/ProcessSteps";
 import DoctorsPreview from "@/components/home/DoctorsPreview";
 import OurMoments from "@/components/home/OurMoments";
 import BeforeAfterPreview from "@/components/home/BeforeAfterPreview";
@@ -17,9 +19,11 @@ const Index = () => {
     <Layout>
       <HeroSection />
       <QuickActions />
+      <TrustMarquee />
       <StatsCounter />
       <WhyChooseUs />
       <ServicesSection />
+      <ProcessSteps />
       <DoctorsPreview />
       <OurMoments />
       <BeforeAfterPreview />

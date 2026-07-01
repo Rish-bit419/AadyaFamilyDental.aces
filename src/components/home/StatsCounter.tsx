@@ -66,30 +66,55 @@
      return () => clearInterval(timer);
    }, [isVisible]);
  
-   return (
-     <section ref={sectionRef} className="py-16 bg-gradient-to-r from-primary via-teal-dark to-primary">
-       <div className="container-custom">
-         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div
-                key={index}
-                className="glass-card rounded-2xl p-6 text-center animate-slide-up"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-sm flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                  <stat.icon className="w-8 h-8 text-white" />
-                </div>
-                <div className="text-3xl md:text-4xl font-bold text-white mb-1">
-                  {stat.value < 10 ? counts[index].toFixed(1) : counts[index].toLocaleString()}
-                  {stat.suffix}
-                </div>
-                <div className="text-white/80 text-sm font-medium">{stat.label}</div>
+  return (
+    <section
+      ref={sectionRef}
+      className="relative py-20 overflow-hidden bg-gradient-to-br from-primary via-teal-dark to-primary"
+    >
+      {/* Decorative dot pattern */}
+      <div
+        className="absolute inset-0 opacity-[0.15] pointer-events-none"
+        style={{
+          backgroundImage:
+            "radial-gradient(hsl(var(--primary-foreground)) 1px, transparent 1px)",
+          backgroundSize: "24px 24px",
+        }}
+      />
+      <div className="absolute -top-20 -left-20 w-72 h-72 bg-accent/20 rounded-full blur-3xl" />
+      <div className="absolute -bottom-20 -right-20 w-80 h-80 bg-primary-foreground/10 rounded-full blur-3xl" />
+
+      <div className="container-custom relative">
+        <div className="text-center mb-12 animate-slide-up">
+          <span className="inline-block text-xs font-semibold text-primary-foreground/80 uppercase tracking-[0.2em] mb-3">
+            By The Numbers
+          </span>
+          <h2 className="font-display text-3xl md:text-4xl font-bold text-primary-foreground">
+            Trusted by thousands across Bengaluru
+          </h2>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+          {stats.map((stat, index) => (
+            <div
+              key={index}
+              className="group relative rounded-3xl p-6 md:p-8 text-center bg-white/10 backdrop-blur-xl border border-white/20 hover:bg-white/15 hover:-translate-y-1 transition-all duration-300 animate-slide-up"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-sm flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-3 transition-transform shadow-lg">
+                <stat.icon className="w-8 h-8 text-primary-foreground" />
               </div>
-            ))}
-         </div>
-       </div>
-     </section>
-   );
+              <div className="text-3xl md:text-5xl font-bold text-primary-foreground mb-1 font-display tracking-tight">
+                {stat.value < 10 ? counts[index].toFixed(1) : counts[index].toLocaleString()}
+                <span className="text-accent">{stat.suffix}</span>
+              </div>
+              <div className="text-primary-foreground/80 text-sm font-medium uppercase tracking-wider">
+                {stat.label}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
  };
  
  export default StatsCounter;
